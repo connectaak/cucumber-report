@@ -3,6 +3,7 @@ import CounterContainer from '../components/CounterContainer';
 import PichartContainer from '../container/PichartContainer';
 import TrendchartContainer from '../container/TrendchartContainer';
 import useReportData from '../hooks/useReportData';
+import GridContainer from '../container/GridContainer';
 
 const Home = () => {
     const {isSuccess}=useReportData()
@@ -13,6 +14,7 @@ const Home = () => {
             <CounterContainer/>
             <PichartContainer/>
            <TrendchartContainer/>
+           <GridContainer/>
     </>:
     <div style={{display:"flex",justifyContent:"center",alignItems:"center",height:"90vh"}}>       
     <h2>Please upload a cucumber json to see the report.</h2>
