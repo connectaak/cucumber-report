@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import CounterContainer from '../components/CounterContainer';
-import PichartContainer from '../container/PichartContainer';
-import TrendchartContainer from '../container/TrendchartContainer';
+import PichartContainer from '../containers/PichartContainer';
+import TrendchartContainer from '../containers/TrendchartContainer';
 import useReportData from '../hooks/useReportData';
 
 const Home = () => {

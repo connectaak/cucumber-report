@@ -30,7 +30,6 @@ export default function TrendchartContainer() {
   let scenarioNumber = 1;
   let stepNumber = 1;
 
- 
   data?.features.forEach((feature) => {
     const featureName = `Feature ${featureNumber++}`;
     let featurePassedDuration = 0;
@@ -90,6 +89,7 @@ export default function TrendchartContainer() {
     });
   });
 
+ 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ marginTop:"20px",display:"flex",justifyContent:'center' }}>
@@ -111,7 +111,7 @@ export default function TrendchartContainer() {
       <TrendChart data={scenarios} title="Scenarios"/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <TrendChart data={steps} title="Steps/Tests"/>
+      <TrendChart data={steps} title="Steps/Tests" steps/>
       </TabPanel>
     </Box>
   );
