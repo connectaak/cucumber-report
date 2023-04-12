@@ -9,14 +9,8 @@ import './App.css';
 import FileUpload from './components/FileUpload';
 import Home from './pages/Home';
 
-// import { createGenerateClassName } from '@material-ui/core/styles';
-const generateClassName = () => {
-  let counter = 0;
-  return (rule, styleSheet) => {
-    counter += 1;
-    return `${styleSheet.options.classNamePrefix}-${rule.key}-${counter}`;
-  };
-};
+
+
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 
