@@ -12,12 +12,13 @@ const TrendChart = ({data:chartData,title,steps}) => {
   const [data, setData] = useState(chartData)
   const [duration, setDuration] = useState(data)
   const [sortOrder, setSortOrder] = useState('asc');
-
+  const [selectedName,setSelectedName]=useState(" ")
 
   const handleChange = (event) => {
     setData(event.target.value);
     setDuration(event.target.value);
-    console.log(event.target.value,"event.target.value")
+    setSelectedName(event.target.value[0].name,)
+    console.log(event.target.value[0].name,"event.target.value")
   };
 
 console.log(data,"data")
@@ -73,7 +74,7 @@ console.log(duration,"duration")
           </MenuItem>
        {title==="Scenarios"? Object.values(featureData).map((item,index)=>{
 
-        return  <MenuItem key={index} value={item.data}>{item.name }</MenuItem>
+        return  <MenuItem key={index} value={item.data}><em>{item.name }</em></MenuItem>
        })
       :chartData.map((item,index)=>{
         return  <MenuItem key={index} value={[item]}>{ item.name}</MenuItem>    

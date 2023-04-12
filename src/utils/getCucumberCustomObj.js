@@ -7,14 +7,8 @@ jsonData.features.forEach(feature => {
   let stepSkip = 0;
   let stepPending = 0;
   let stepUndefined = 0;
-
   let scenariosPassed = 0;
   let scenariosFailed = 0;
-  let scenariosSkip=0;
-let scenariosPending=0;
-let scenariosUndefined=0;
-
-  
   let featureDuration = 0;
   let featureStatus = "Passed";
 
@@ -70,8 +64,6 @@ let scenariosUndefined=0;
     featureStatus: featureStatus
   });
 });
-// feature,stepPassed,stepFailed,stepSkip,stepPending,stepUndefined,stepTotal,scenariosPassed,scenariosFailed,scenariosTotal,featureDuration,featureStatus
-
 
 
 const totalSteps= featuresData.reduce((accumulator, currentValue) => accumulator + currentValue?.stepTotal, 0)

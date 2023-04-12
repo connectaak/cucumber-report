@@ -3,10 +3,9 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { makeStyles } from '@mui/styles';
 import * as React from 'react';
-// import JSONViewer from 'react-json-viewer';
 import ReactJson from 'react-json-view';
 import useReportData from '../hooks/useReportData';
-// import { cucumberCustomData } from '../utils/cucumberSecond';
+
 const style={
     position: 'absolute',
     top: '50%',
@@ -27,23 +26,18 @@ export default function JsonViewer({cucumberJson,handleClose,handleOpen,open}) {
     setData(cucumberJson)
     setIsSuccess(true);
     handleClose()
-    // cucumberCustomData(cucumberJson)
   }
   return (
     <div>
       <Modal
         open={open}
-        // onClose={handleClose}
+       
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
         <Box className={classes.jsonViewerContainer}>
         <ReactJson  src={cucumberJson} theme="monokai" />
-        {/* <JSONViewer 
-        json={cucumberJson}
-      /> */}
-    
         </Box>
         <Box className={classes.btn}>
         
@@ -51,7 +45,6 @@ export default function JsonViewer({cucumberJson,handleClose,handleOpen,open}) {
         }   >SUBMIT</Button>
       
         </Box>
-        
         </Box>
       </Modal>
     </div>

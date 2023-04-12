@@ -1,7 +1,8 @@
 import { StylesProvider } from '@material-ui/core/styles';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from "./App";
+import { App } from "./App";
+import ProjectThemeProvider from './context/ColoProvider';
 import ReportProvider from "./context/usePichart";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -17,7 +18,9 @@ root.render(
   <React.StrictMode>
      <StylesProvider generateClassName={generateClassName()}  injectFirst>
      <ReportProvider>
-    <App/>
+     <ProjectThemeProvider>
+     <App/>
+     </ProjectThemeProvider>
      </ReportProvider>
      </StylesProvider>
   </React.StrictMode>

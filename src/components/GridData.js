@@ -1,10 +1,14 @@
-import React from 'react'
-import { useState } from 'react';
+
 import { makeStyles } from '@material-ui/core/styles';
 import {
-    Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
-} from '@material-ui/core';
-import { styled } from '@material-ui/core/styles';
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow
+} from '@mui/material';
+import React from 'react';
 
 const GridData = ({data}) => {
     const classes = useStyles();
@@ -25,13 +29,12 @@ const GridData = ({data}) => {
                 return '#FFFFFF';
         }
     };
-   console.log(data)
   return (
-    <TableContainer component={Paper}>
-    <Table>
-        <TableHead>
-            <TableRow style={{ backgroundColor: '#f1f1f1' }}>
-                <TableCell>Features</TableCell>
+    <TableContainer className={classes.TableContainer} >
+    <Table  className={classes.table}   >
+        <TableHead >
+            <TableRow >
+                <TableCell  >Features</TableCell>
                 <TableCell>Features Duration</TableCell>
                 <TableCell>Features Status</TableCell>
                 <TableCell>Scenarios</TableCell>
@@ -93,5 +96,13 @@ export default GridData
 const useStyles = makeStyles({
     table: {
       minWidth: 650,
+      border:"1px solid gray",
+      color:'primary.main',
+      
     },
+    TableContainer:{
+      width:"100%",
+      padding:"20px"
+    },
+   
   });

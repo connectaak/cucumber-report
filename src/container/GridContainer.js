@@ -1,7 +1,6 @@
-import React from 'react'
-import GridData from '../components/GridData'
+import React from 'react';
+import GridData from '../components/GridData';
 import useReportData from '../hooks/useReportData';
-import { Box } from '@material-ui/core';
 
 const GridContainer = () => {
     const{data}=useReportData()
@@ -40,12 +39,10 @@ const GridContainer = () => {
       
         griddata.features.push(featureObj);
       });
-      console.log("griddata",griddata)
+      
       
   return (
-    <Box sx={{ width: '100%' }}>
-        <GridData data={griddata} />
-        </Box>
+        <GridData data={griddata} />   
   )
 }
 
