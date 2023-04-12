@@ -9,11 +9,9 @@ const CounterCart = ({title, value,time}) => {
        <Box className={classes.mainContainer}>
             <Box className={classes.container} item xs={8}>
            <Typography  className={classes.text} >{value}</Typography>
-          
            {time&&<Typography  className={classes.text} >{time}</Typography>}
            </Box>
-            <Typography className={classes.btn}>{title}</Typography>
-           
+           <Typography className={classes.btn}>{title}</Typography>
        </Box>
     );
 };

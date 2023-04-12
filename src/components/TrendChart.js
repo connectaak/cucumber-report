@@ -1,6 +1,6 @@
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { Button, FormControl, MenuItem, Select } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
@@ -12,18 +12,13 @@ const TrendChart = ({data:chartData,title,steps}) => {
   const [data, setData] = useState(chartData)
   const [duration, setDuration] = useState(data)
   const [sortOrder, setSortOrder] = useState('asc');
-  const [selectedName,setSelectedName]=useState(" ")
+  const [selectedType,setSelectedType]=useState()
 
   const handleChange = (event) => {
-    setData(event.target.value);
-    setDuration(event.target.value);
-    setSelectedName(event.target.value[0].name,)
-    console.log(event.target.value[0].name,"event.target.value")
+    setData(event.target.value.data);
+    setDuration(event.target.value.data);
+    setSelectedType(event.target.value)
   };
-
-console.log(data,"data")
-console.log(duration,"duration")
-
   const handleSort=()=>{
     // Duration Low To High
     const durationLowToHigh=[...data?.sort((a, b) => (a.duration > b.duration ? 1 : -1))]
@@ -51,8 +46,9 @@ console.log(duration,"duration")
   }
   featureData[scenario.featureName].data.push(scenario);
 });
-  
-  console.log( Object.values(featureData),"featureData")
+
+const allData={name:"all",data:chartData}
+
   return (
     <Box className={classes.root}>
      <Box className={classes.header}>
@@ -64,28 +60,39 @@ console.log(duration,"duration")
       Sort {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
       </Button>
      {!steps&& <FormControl sx={{ m: 1, minWidth: 120,border:"none" }}  size="small">
+     <InputLabel id="demo-simple-select-label">All</InputLabel>
         <Select
-          value={data}
+          value={selectedType}
           onChange={handleChange}
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
           inputProps={{ 'aria-label': 'Without label' }}
+          renderValue={(selected) => {
+            if (selected.name === "all") {
+              return <em>All</em>;
+            }else {
+              return selected.name
+              }
+          }}
         >
-          <MenuItem value={chartData}>
+          <MenuItem value={allData}>
             <em>All</em>
           </MenuItem>
        {title==="Scenarios"? Object.values(featureData).map((item,index)=>{
-
-        return  <MenuItem key={index} value={item.data}><em>{item.name }</em></MenuItem>
+        const data={name:item.name,data:item.data}
+        return  <MenuItem key={index} value={data}><em>{item.name }</em></MenuItem>
        })
+       
       :chartData.map((item,index)=>{
-        return  <MenuItem key={index} value={[item]}>{ item.name}</MenuItem>    
+        const data={name:item.name,data:[item]}
+        return  <MenuItem key={index} value={data}>{ item.name}</MenuItem>    
       })
       }
-        
-
         </Select>
       </FormControl>}
       </Box>
      </Box>
+
       <div className={classes.chartContainer}>
       <ResponsiveContainer width="100%" height={400}>
       <BarChart
@@ -135,5 +142,6 @@ const useStyles = makeStyles((theme) => ({
     secondContainer:{
       display:"flex",
       alignItems:"center",
-    }
+    },
+   
   }));
