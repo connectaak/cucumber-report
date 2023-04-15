@@ -2,7 +2,7 @@
 export const cucumberReportCustomData = (report)=>{
 
 // Extract the data for the feature chart
-const featureChartData = report.features.map(feature => {
+const featureChartData = report.map(feature => {
     const status = feature.elements.some(scenario => scenario.steps.some(step => step.result.status === 'failed'))
       ? 'failed'
       : 'passed';
@@ -18,7 +18,7 @@ const featureChartData = report.features.map(feature => {
   const featureData = Object.values(featureDataGroupedByStatus);
 
   // Extract the data for the scenario chart
-  const scenarioChartData = report.features.flatMap(feature => {
+  const scenarioChartData = report.flatMap(feature => {
     return feature.elements.map(scenario => {
       const status = scenario.steps.some(step => step.result.status === 'failed')
         ? 'failed'
@@ -38,7 +38,7 @@ const featureChartData = report.features.map(feature => {
   const scenarioData = Object.values(scenarioDataGroupedByStatus);
 
   // Extract the data for the step chart
-  const stepChartData = report.features.flatMap(feature => {
+  const stepChartData = report.flatMap(feature => {
     return feature.elements.flatMap(scenario => {
       return scenario.steps.map(step => {
         const status = step.result.status;

@@ -2,7 +2,9 @@ import { Box, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { Fragment } from 'react';
 import CounterContainer from '../components/CounterContainer';
-import GridContainer from '../container/GridContainer';
+// import GridContainer from '../container/GridContainer';
+// import DrillDownChart from '../components/testChart';
+import DataGrid from '../containers/DataGrid';
 import PichartContainer from '../containers/PichartContainer';
 import TrendchartContainer from '../containers/TrendchartContainer';
 import useReportData from '../hooks/useReportData';
@@ -17,7 +19,11 @@ const Home = () => {
     <CounterContainer/>
     <PichartContainer/>
     <TrendchartContainer/>
-    <GridContainer/>
+    {/* <DrillDownChart/> */}
+    {/* <GridContainer/> */}
+    {/* <Grid/> */}
+    <DataGrid/>
+ 
     </>
     :
     <Box className={classes.container}>       

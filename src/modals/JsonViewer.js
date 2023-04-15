@@ -19,11 +19,11 @@ const style={
     p: 4,}
 
 export default function JsonViewer({cucumberJson,handleClose,handleOpen,open}) {
-  const {setData,setIsSuccess}=useReportData()
+  const {setData,data,setIsSuccess}=useReportData()
  const classes = useStyles();
 
  const handleSubmit=()=>{
-    setData(cucumberJson)
+    setData(data.concat(cucumberJson.features))
     setIsSuccess(true);
     handleClose()
   }

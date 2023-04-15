@@ -19,7 +19,14 @@ const ProjectThemeProvider = ({ children }) => {
         createTheme({
           palette: {
             mode,
-          }
+          },
+          overrides: {
+            MuiLink: {
+              root: {
+                color: '#ff0000', // red
+              },
+            },
+          },
         }),
       [mode]
     );

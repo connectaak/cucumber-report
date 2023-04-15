@@ -1,7 +1,7 @@
 export const cucumberCustomObject=(jsonData)=>{
     const featuresData = [];
 
-jsonData.features.forEach(feature => {
+jsonData.forEach(feature => {
   let stepPassed = 0;
   let stepFailed = 0;
   let stepSkip = 0;
@@ -137,5 +137,29 @@ data: [
 ]
 
 
-return {chartData,counterData};
+const gridData = featuresData.map(item => {
+  return {
+    name: item.feature,
+    steps: {
+      passed: item.stepPassed,
+      failed: item.stepFailed,
+      skipped: item.stepSkip,
+      undefined: item.stepUndefined,
+      pending: item.stepPending,
+      total: item.stepTotal
+    },
+    scenarios: {
+      passed: item.scenariosPassed,
+      failed: item.scenariosFailed,
+      total: item.scenariosTotal
+    },
+    features: {
+      duration: `${Math.floor(item.featureDuration / 1000)}s ${item.featureDuration % 1000}ms`,
+      status: item.featureStatus
+    }
+  }
+});
+
+
+return {chartData,counterData,gridData};
 }

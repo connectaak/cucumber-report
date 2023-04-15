@@ -20,8 +20,8 @@ export default CustomTooltip;
 const useStyles = makeStyles({
     
 container:{
-    border:"1px solid #000",
     padding:"10px", 
+    backgroundColor:"white"
 },
 lebel:{
     color:"black",

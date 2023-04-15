@@ -23,6 +23,7 @@ const FileUpload = () => {
             const content = readerEvent.target.result;
             const cucumberJsonObject = convert(JSON.parse(content))
             if( typeof cucumberJsonObject === "object"){
+              console.log(cucumberJson,"cucumber json")
                 setCucumberJson(cucumberJsonObject)
                 handleOpen()
               }
@@ -54,8 +55,8 @@ const FileUpload = () => {
           }}
         />
         <label className={classes.btnContainer} htmlFor="file">
-        <Button  variant="outlined" color="success" component="span" endIcon={<UploadFileRoundedIcon rounded />}>
-        Upload your cucumber json
+        <Button  variant="contained" color="success" component="span" endIcon={<UploadFileRoundedIcon rounded />}>
+        Upload json
         </Button>
         </label> 
         

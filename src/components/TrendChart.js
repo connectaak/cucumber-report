@@ -2,29 +2,33 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import CustomTooltip from './CustomTooltip';
 
 const TrendChart = ({data:chartData,title,steps}) => {
   const COLORS = {passed:"#4caf50", failed:"#f44336", skipped:"#0088FE",pending:"#8609F5", undefined:"#9F1090"};
   const classes = useStyles();
-  const [data, setData] = useState(chartData)
-  const [duration, setDuration] = useState(data)
+  // const [data, setData] = useState(chartData)
+  const [duration, setDuration] = useState(chartData)
   const [sortOrder, setSortOrder] = useState('asc');
   const [selectedType,setSelectedType]=useState()
 
+useEffect(()=>{
+  setDuration(chartData);
+},[chartData])
+
   const handleChange = (event) => {
-    setData(event.target.value.data);
+    // setData(event.target.value.data);
     setDuration(event.target.value.data);
     setSelectedType(event.target.value)
   };
   const handleSort=()=>{
     // Duration Low To High
-    const durationLowToHigh=[...data?.sort((a, b) => (a.duration > b.duration ? 1 : -1))]
+    const durationLowToHigh=[...duration?.sort((a, b) => (a.duration > b.duration ? 1 : -1))]
 
     // Duration High To Low
-   const durationHighToLow= [...data?.sort((a, b) => (a.duration > b.duration ? -1 : 1))]
+   const durationHighToLow= [...duration?.sort((a, b) => (a.duration > b.duration ? -1 : 1))]
 
    const newSortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
    setSortOrder(newSortOrder);

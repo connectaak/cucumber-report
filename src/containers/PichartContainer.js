@@ -13,9 +13,10 @@ useEffect(() => {
     const {chartData,counterData}= cucumberCustomObject(data)
     setCounterData(counterData)
     setChartData(chartData)
+   
 }, [data, setCounterData])
     return (
-        <Box style={{display:"flex",flexWrap:"wrap ",gap:"10px",justifyContent:"center "}} >
+        <Box id="pichart" style={{display:"flex",flexWrap:"wrap ",gap:"10px",justifyContent:"center "}} >
          {
             chartData.map((item,index)=>(
                 <PichartCart key={index} data={item.data} title={item.title}/>

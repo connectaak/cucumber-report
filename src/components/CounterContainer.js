@@ -10,7 +10,7 @@ const CounterContainer = () => {
     const classes=useStyles();
   
     return (
-        <Box className={classes.container}>
+        <Box id="counter" className={classes.container}>
             {
                 counterData.map((item,index)=>(
                     <CounterCart key={index} title={item.title} value={item.value} />
