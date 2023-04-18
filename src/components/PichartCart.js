@@ -5,7 +5,7 @@ import React from "react";
 import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, Tooltip, XAxis, YAxis } from "recharts";
 import PichartFooter from "./PichartFooter";
 
-const COLORS = {passed:"#4caf50", failed:"#f44336", skipped:"#0088FE",pending:"#8609F5", undefined:"#9F1090"};
+const COLORS = {passed:"#00C49F", failed:"#FF8042", skipped:"#0088FE",pending:"#FFBB28", undefined:"#B068F9"};
 const PichartCart = ({title,data}) => {
     const classes = useStyles();
     const [checked, setChecked] = React.useState(true);
@@ -113,8 +113,8 @@ const PichartCart = ({title,data}) => {
 
   </CardContent>
         <Box className={classes.footer}>
-            <PichartFooter title="Successful" value={isNaN(successfulPercentage)?0:successfulPercentage} color="#4caf50"/>
-            <PichartFooter title="Failed" value={isNaN(failedPercentage)?0:failedPercentage} color="#f44336" />
+            <PichartFooter title="Successful" value={isNaN(successfulPercentage)?0:successfulPercentage} color={COLORS["passed"]}/>
+            <PichartFooter title="Failed" value={isNaN(failedPercentage)?0:failedPercentage}color={COLORS["failed"]} />
             <PichartFooter title="Others" value={isNaN(othersPercentage)?0:othersPercentage} color="#9e9e9e"/>
           </Box>
 </Box>
@@ -198,7 +198,7 @@ const useStyles = makeStyles((theme) => ({
     bottom:"0 !important",
     left:"0 !important",
     right:"0 !important",
-    padding:"10px !important", 
+    padding:"8px !important", 
   }
 
 }));

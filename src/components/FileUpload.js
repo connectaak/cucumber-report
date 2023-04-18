@@ -2,16 +2,24 @@ import { convert } from '@cucumber/cucumber-json-converter';
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded';
 import { Button } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import React, { useState } from 'react';
+import React from 'react';
 import swal from 'sweetalert';
-import JsonViewer from '../modals/JsonViewer';
+import useReportData from '../hooks/useReportData';
+import { cucumberCustomObject } from '../utils/getCucumberCustomObj';
+
 
 const FileUpload = () => {
-    const [cucumberJson, setCucumberJson] = useState({});
-    const [open, setOpen] = React.useState(false);
+   
+  
+    const {setData,data,setIsSuccess,
+      setTotalReport,totalReport}=useReportData()
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+
+      const hasCommonString = (arr1, arr2) => {
+        const arr1Strings = arr1.map(obj => obj.name);
+        const arr2Strings = arr2.map(obj => obj.feature);
+        return arr1Strings.some(str => arr2Strings.includes(str));
+      };
     const handleFileUpload = (event) => {
       const file = event.target.files[0];
       const reader = new FileReader(); 
@@ -22,11 +30,33 @@ const FileUpload = () => {
             // Try to run this code 
             const content = readerEvent.target.result;
             const cucumberJsonObject = convert(JSON.parse(content))
-            if( typeof cucumberJsonObject === "object"){
-              console.log(cucumberJson,"cucumber json")
-                setCucumberJson(cucumberJsonObject)
-                handleOpen()
-              }
+            setData([...data,...cucumberJsonObject.features])
+            setIsSuccess(true);
+            setTotalReport(totalReport+1)
+            console.log(cucumberJsonObject,"main data")
+            if(data.length>0){
+              const {featuresData}= cucumberCustomObject(data)
+             console.log( featuresData)
+            // if( hasCommonString(cucumberJsonObject,featuresData)){
+            //   swal({
+            //     title: "Are you sure?",
+            //     text: "Once deleted, you will not be able to recover this imaginary file!",
+            //     icon: "warning",
+            //     buttons: true,
+            //     dangerMode: true,
+            //   })
+            //   .then((willDelete) => {
+            //     if (willDelete) {
+            //       swal("Poof! Your imaginary file has been deleted!", {
+            //         icon: "success",
+            //       });
+            //     } else {
+            //       swal("Your imaginary file is safe!");
+            //     }
+            //   });
+              
+            // }
+            }
           }
           catch(err) {
             // if any error, Code throws the error
@@ -56,11 +86,9 @@ const FileUpload = () => {
         />
         <label className={classes.btnContainer} htmlFor="file">
         <Button  variant="contained" color="success" component="span" endIcon={<UploadFileRoundedIcon rounded />}>
-        Upload json
+      { data.length>0?"Upload More Json":"Upload json"}
         </Button>
         </label> 
-        
-        <JsonViewer open={open} handleClose={handleClose} handleOpen={handleOpen} cucumberJson={cucumberJson}/>
     </div>
     );
 };

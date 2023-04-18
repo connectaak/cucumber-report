@@ -161,5 +161,5 @@ const gridData = featuresData.map(item => {
 });
 
 
-return {chartData,counterData,gridData};
+return {featuresData,chartData,counterData,gridData};
 }

@@ -13,7 +13,7 @@ const DataGrid = () => {
   const{data}=useReportData()
   const {gridData,}= cucumberCustomObject(data)
     return (
-        <Box className={classes.subContainer}>
+        <Box id="grid" className={classes.subContainer}>
         <Grid className={classes.tableContainer} container>
         <GridHeader/>
         <GirdSubHeader/>

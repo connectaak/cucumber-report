@@ -41,7 +41,7 @@ const GridRow = ({data}) => {
 
         <Grid container item xs={2}>
         <Grid className={classes.borderLine} item xs={7} >   <Typography className={classes.text}  >{data.features.duration}  </Typography> </Grid>
-       <Grid className={classes.borderLine} item xs={5} style={{background:data.features.status=="passed"?bgColors.passed:bgColors.failed}}>  <Typography className={classes.text}  >{data.features.status}</Typography> </Grid>
+       <Grid className={classes.borderLine} item xs={5} style={{background:data.features.status=="Passed"?bgColors.passed:bgColors.failed}}>  <Typography className={classes.text}  >{data.features.status}</Typography> </Grid>
         </Grid>
       </>
     );
