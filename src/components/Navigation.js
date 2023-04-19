@@ -78,10 +78,11 @@ const useStyles= makeStyles({
         alignItems:"center",
         padding:"0px 20px",
         position: "sticky",
-        top: 10,
+        top: 0,
         zIndex:"10",
-        margin:"0 20px 10px 20px",
-        borderRadius:"5px",
+        marginBottom:"10px",
+        // borderRadius:"5px",
+        backgroundColor:"#DCF857 !important"
         // boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.3)',
     },
     logo:{

@@ -154,11 +154,11 @@ const useStyles = makeStyles((theme) => ({
 
   title:{
     fontSize:"25px !important",
-    fontWeight:"550 !important",
+    fontWeight:"400 !important",
     lineHeight:"22px !important",
     marginBottom:"20px !important",
-    backgroundColor:"#58DC58 !important",
-    color:"white !important",
+    backgroundColor:"#DCF857 !important",
+    color:"black !important",
     borderRadius:"5px !important",
     padding:"5px 15px !important",
     display:"inline-block !important",

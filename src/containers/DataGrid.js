@@ -11,7 +11,8 @@ import { cucumberCustomObject } from '../utils/getCucumberCustomObj';
 const DataGrid = () => {
   const classes = useStyles();
   const{data}=useReportData()
-  const {gridData,}= cucumberCustomObject(data)
+  const {gridData}= cucumberCustomObject(data)
+  console.log(gridData,"grid Data")
     return (
         <Box id="grid" className={classes.subContainer}>
         <Grid className={classes.tableContainer} container>

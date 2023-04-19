@@ -76,7 +76,7 @@ const counterData=[
   {title:"Features",value:featuresData.length},
   {title:"Scenarios",value:totalScenarios},
   {title:"Test/Steps",value: totalSteps},
-  {title:"Duration",value:(totalDuration/1000000)+" "+"sec"},
+  {title:"Duration",value:(Math.floor(totalDuration/1000000))+" "+"s"},
 ] 
 
 const chartData = [
@@ -139,26 +139,42 @@ data: [
 
 const gridData = featuresData.map(item => {
   return {
-    name: item.feature,
-    steps: {
-      passed: item.stepPassed,
-      failed: item.stepFailed,
-      skipped: item.stepSkip,
-      undefined: item.stepUndefined,
-      pending: item.stepPending,
-      total: item.stepTotal
-    },
-    scenarios: {
-      passed: item.scenariosPassed,
-      failed: item.scenariosFailed,
-      total: item.scenariosTotal
-    },
-    features: {
-      duration: `${Math.floor(item.featureDuration / 1000)}s ${item.featureDuration % 1000}ms`,
+      name: item.feature,
+      stepsPassed: item.stepPassed,
+      stepsFailed: item.stepFailed,
+      stepsSkipped: item.stepSkip,
+      stepsUndefined: item.stepUndefined,
+      stepsPending: item.stepPending,
+      stepsTotal: item.stepTotal,
+      scenariosPassed: item.scenariosPassed,
+      scenariosFailed: item.scenariosFailed,
+      scenariosTotal: item.scenariosTotal,
+      duration: `${Math.floor(item.featureDuration / 1000000)}s`,
       status: item.featureStatus
-    }
   }
 });
+// const gridData = featuresData.map(item => {
+//   return {
+//     name: item.feature,
+//     steps: {
+//       passed: item.stepPassed,
+//       failed: item.stepFailed,
+//       skipped: item.stepSkip,
+//       undefined: item.stepUndefined,
+//       pending: item.stepPending,
+//       total: item.stepTotal
+//     },
+//     scenarios: {
+//       passed: item.scenariosPassed,
+//       failed: item.scenariosFailed,
+//       total: item.scenariosTotal
+//     },
+//     features: {
+//       duration: `${Math.floor(item.featureDuration / 1000)}s ${item.featureDuration % 1000}ms`,
+//       status: item.featureStatus
+//     }
+//   }
+// });
 
 
 return {featuresData,chartData,counterData,gridData};
