@@ -17,24 +17,24 @@ export default PichartFooter;
 const useStyles = makeStyles({
     
 container:{
-    // border:({color})=>`1px solid ${color} !important`,
     display:"flex !important",
-    width:"32% !important"
+    width:"32% !important",
+    borderRadius:"3px"
 },
 firstSection:{
-    // backgroundColor:`${props.color} !important`,
-  
     padding:"2px 2px",
     color:"white",
-    width:"30%",
-    fontSize:"16px ",
+    width:"38%",
+    fontSize:"13px ",
+    textAlign:"center"
 },
 secondSection:{
     textAlign:"center !important",
     backgroundColor:"white !important",
-   width:"70%",
+    width:"62%",
     padding:"2px !important",
     // color:(props)=>props.color,
-    fontSize:"16px !important",
+    fontSize:"14px !important",
+    
 }
 });

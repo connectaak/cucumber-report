@@ -6,9 +6,9 @@ import { cucumberCustomObject } from '../utils/getCucumberCustomObj';
 
 
 const PichartContainer = () => {
-    const{data, setCounterData}=useReportData()
+    const{data, setCounterData,totalReport}=useReportData()
     const [chartData, setChartData] = useState([])
-    
+    console.log(totalReport,"adata")
 useEffect(() => {
     const {chartData,counterData}= cucumberCustomObject(data)
     setCounterData(counterData)

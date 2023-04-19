@@ -7,7 +7,7 @@ import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis
 import CustomTooltip from './CustomTooltip';
 
 const TrendChart = ({data:chartData,title,steps}) => {
-  const COLORS = {passed:"#4caf50", failed:"#f44336", skipped:"#0088FE",pending:"#8609F5", undefined:"#9F1090"};
+  const COLORS = {passed:"#00C49F", failed:"#FF8042", skipped:"#0088FE",pending:"#FFBB28", undefined:"#B068F9"};
   const classes = useStyles();
   // const [data, setData] = useState(chartData)
   const [duration, setDuration] = useState(chartData)
@@ -18,6 +18,7 @@ useEffect(()=>{
   setDuration(chartData);
 },[chartData])
 
+console.log(chartData,"chart Data")
   const handleChange = (event) => {
     // setData(event.target.value.data);
     setDuration(event.target.value.data);
