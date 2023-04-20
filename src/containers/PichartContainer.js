@@ -8,7 +8,7 @@ import { cucumberCustomObject } from '../utils/getCucumberCustomObj';
 const PichartContainer = () => {
     const{data, setCounterData,totalReport}=useReportData()
     const [chartData, setChartData] = useState([])
-    console.log(totalReport,"adata")
+    // console.log(totalReport,"adata")
 useEffect(() => {
     const {chartData,counterData}= cucumberCustomObject(data)
     setCounterData(counterData)
@@ -16,7 +16,7 @@ useEffect(() => {
    
 }, [data, setCounterData])
     return (
-        <Box id="pichart" style={{display:"flex",flexWrap:"wrap ",gap:"10px",justifyContent:"center "}} >
+        <Box id="pichart" style={{display:"flex",flexWrap:"wrap ",gap:"10px",justifyContent:"center ",marginTop:"25px"}} >
          {
             chartData.map((item,index)=>(
                 <PichartCart key={index} data={item.data} title={item.title}/>

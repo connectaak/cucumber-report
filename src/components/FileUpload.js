@@ -33,10 +33,10 @@ const FileUpload = () => {
             setData([...data,...cucumberJsonObject.features])
             setIsSuccess(true);
             setTotalReport(totalReport+1)
-            console.log(cucumberJsonObject,"main data")
+            // console.log(cucumberJsonObject,"main data")
             if(data.length>0){
               const {featuresData}= cucumberCustomObject(data)
-             console.log( featuresData)
+            //  console.log( featuresData)
             // if( hasCommonString(cucumberJsonObject,featuresData)){
             //   swal({
             //     title: "Are you sure?",
@@ -85,7 +85,7 @@ const FileUpload = () => {
           }}
         />
         <label className={classes.btnContainer} htmlFor="file">
-        <Button  variant="contained" color="success" component="span" endIcon={<UploadFileRoundedIcon rounded />}>
+        <Button className={classes.btnBG}  variant="contained" component="span" endIcon={<UploadFileRoundedIcon rounded />}>
       { data.length>0?"Upload More Json":"Upload json"}
         </Button>
         </label> 
@@ -101,5 +101,9 @@ btnContainer:{
   display:"flex",
   justifyContent:"center",
   margin:"10px 0"
-}
+},
+  btnBG:{
+background: "#0476B5 !important"
+  }
+
 })
