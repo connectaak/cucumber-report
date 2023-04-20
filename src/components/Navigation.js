@@ -40,7 +40,7 @@ const Navigation = () => {
            <NavLink style={({ isActive, isPending }) => {
     return {
       color: "black",
-      background:isActive?"#FFDAB9":"" ,
+      background:isActive?"#0476B5":"" ,
      
     };
   }}  className={classes.text} to="/json"><Typography>JSON</Typography></NavLink>
