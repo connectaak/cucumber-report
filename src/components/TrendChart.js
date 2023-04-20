@@ -18,7 +18,7 @@ useEffect(()=>{
   setDuration(chartData);
 },[chartData])
 
-// console.log(chartData,"chart Data")
+
   const handleChange = (event) => {
     // setData(event.target.value.data);
     setDuration(event.target.value.data);

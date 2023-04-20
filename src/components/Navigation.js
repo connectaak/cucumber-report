@@ -23,7 +23,7 @@ const Navigation = () => {
     threshold: 0,
   });
   const location = useLocation();
-// console.log(location.pathname);
+
     return (
         <Box sx={{bgcolor: "background.default"}} className={`${classes.container} ${trigger ? classes.shadow : ''}`}>
           <NavLink activeClassName='is-active'   className={classes.text} to="/"><img className={classes.logo} src={logo} alt=''/></NavLink> 

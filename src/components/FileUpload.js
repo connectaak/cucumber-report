@@ -33,10 +33,10 @@ const FileUpload = () => {
             setData([...data,...cucumberJsonObject.features])
             setIsSuccess(true);
             setTotalReport(totalReport+1)
-            // console.log(cucumberJsonObject,"main data")
+           
             if(data.length>0){
               const {featuresData}= cucumberCustomObject(data)
-            //  console.log( featuresData)
+          
             // if( hasCommonString(cucumberJsonObject,featuresData)){
             //   swal({
             //     title: "Are you sure?",
