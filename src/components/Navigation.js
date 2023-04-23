@@ -8,7 +8,7 @@ import { makeStyles } from '@mui/styles';
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import Scrollspy from 'react-scrollspy';
-import logo from '../assets/images/cucumverView.png';
+import logo from '../assets/images/logo.png';
 import { ColorModeContext } from '../context/ColoProvider';
 import useReportData from "../hooks/useReportData";
 import FileUpload from './FileUpload';
@@ -23,7 +23,7 @@ const Navigation = () => {
     threshold: 0,
   });
   const location = useLocation();
-console.log(location.pathname);
+
     return (
         <Box sx={{bgcolor: "background.default"}} className={`${classes.container} ${trigger ? classes.shadow : ''}`}>
           <NavLink activeClassName='is-active'   className={classes.text} to="/"><img className={classes.logo} src={logo} alt=''/></NavLink> 
@@ -40,7 +40,7 @@ console.log(location.pathname);
            <NavLink style={({ isActive, isPending }) => {
     return {
       color: "black",
-      background:isActive?"#FFDAB9":"white" ,
+      background:isActive?"#0476B5":"" ,
      
     };
   }}  className={classes.text} to="/json"><Typography>JSON</Typography></NavLink>
@@ -82,11 +82,11 @@ const useStyles= makeStyles({
         zIndex:"10",
         marginBottom:"10px",
         // borderRadius:"5px",
-        backgroundColor:"#DCF857 !important"
+        backgroundColor:"#FCD73C !important"
         // boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.3)',
     },
     logo:{
-      width:"200px",
+      width:"auto",
       height:"50px",
       objectFit: "cover"
 
@@ -100,7 +100,7 @@ const useStyles= makeStyles({
       // gap:"10px !important"
     },
     current:{
-      background:"#FFDAB9 !important",
+      background:"#0476B5 !important",
       color:"black !important",
     },
     shadow: {

@@ -24,7 +24,7 @@ export default function TrendchartContainer() {
     setValue(newValue);
   };
 const {scenarios, features,steps}=getTrendChartData(data);
- 
+
   return (
     <Box id="trendchart" sx={{ width: '100%' }}>
       <Box sx={{ marginTop:"20px",display:"flex",justifyContent:'center' }}>
