@@ -153,29 +153,44 @@ const gridData = featuresData.map(item => {
       status: item.featureStatus
   }
 });
-// const gridData = featuresData.map(item => {
-//   return {
-//     name: item.feature,
-//     steps: {
-//       passed: item.stepPassed,
-//       failed: item.stepFailed,
-//       skipped: item.stepSkip,
-//       undefined: item.stepUndefined,
-//       pending: item.stepPending,
-//       total: item.stepTotal
-//     },
-//     scenarios: {
-//       passed: item.scenariosPassed,
-//       failed: item.scenariosFailed,
-//       total: item.scenariosTotal
-//     },
-//     features: {
-//       duration: `${Math.floor(item.featureDuration / 1000)}s ${item.featureDuration % 1000}ms`,
-//       status: item.featureStatus
-//     }
-//   }
-// });
+const data = [
+  {"name":"decaying","stepsPassed":2,"stepsFailed":1,"stepsSkipped":1,"stepsUndefined":0,"stepsPending":0,"stepsTotal":4,"scenariosPassed":1,"scenariosFailed":1,"scenariosTotal":2,"duration":"2s","status":"Failed"},
+  {"name":"background","stepsPassed":4,"stepsFailed":0,"stepsSkipped":0,"stepsUndefined":0,"stepsPending":0,"stepsTotal":4,"scenariosPassed":2,"scenariosFailed":0,"scenariosTotal":2,"duration":"2s","status":"Passed"},
+  {"name":"decayingbackground","stepsPassed":3,"stepsFailed":0,"stepsSkipped":1,"stepsUndefined":0,"stepsPending":0,"stepsTotal":4,"scenariosPassed":1,"scenariosFailed":1,"scenariosTotal":2,"duration":"2s","status":"Failed"}
+];
 
+// let totalStepsPassed = 0;
+// let totalStepsFailed = 0;
+// let totalStepsSkipped = 0;
+// let totalStepsUndefined = 0;
+// let totalStepsPending = 0;
+// let totalStepsTotal = 0;
+// let totalScenariosPassed = 0;
+// let totalScenariosFailed = 0;
+// let totalScenariosTotal = 0;
+
+// for (let i = 0; i < data.length; i++) {
+//   const item = data[i];
+//   totalStepsPassed += item.stepsPassed;
+//   totalStepsFailed += item.stepsFailed;
+//   totalStepsSkipped += item.stepsSkipped;
+//   totalStepsUndefined += item.stepsUndefined;
+//   totalStepsPending += item.stepsPending;
+//   totalStepsTotal += item.stepsTotal;
+//   totalScenariosPassed += item.scenariosPassed;
+//   totalScenariosFailed += item.scenariosFailed;
+//   totalScenariosTotal += item.scenariosTotal;
+// }
+// console.log(JSON.stringify(gridData),"gridData")
+// const gridSummary={totalStepsPassed,
+//    totalStepsFailed ,
+// totalStepsSkipped,
+//   totalStepsUndefined,
+//   totalStepsPending,
+//   totalStepsTotal,
+//   totalScenariosPassed, 
+//   totalScenariosFailed,
+//   totalScenariosTotal}
 
 return {featuresData,chartData,counterData,gridData};
 }

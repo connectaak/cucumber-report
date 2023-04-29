@@ -1,6 +1,6 @@
 import { convert } from '@cucumber/cucumber-json-converter';
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 import swal from 'sweetalert';
@@ -86,7 +86,8 @@ const FileUpload = () => {
         />
         <label className={classes.btnContainer} htmlFor="file">
         <Button className={classes.btnBG}  variant="contained" component="span" endIcon={<UploadFileRoundedIcon rounded />}>
-      { data.length>0?"Upload More Json":"Upload json"}
+      <Typography sx={{ display: { xs: 'none', md: 'flex' }}}>{ data.length>0?"Upload More Json":"Upload json"}</Typography>
+      <Typography sx={{  display: { xs: 'flex', md: 'none',m:0,p:"0" },}}></Typography>
         </Button>
         </label> 
     </div>

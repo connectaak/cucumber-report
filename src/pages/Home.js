@@ -1,11 +1,13 @@
-import React, { Fragment, useRef } from 'react';
-import Pdf from 'react-to-pdf';
+
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import { Box, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { Fragment, useRef, useState } from 'react';
+import Pdf from 'react-to-pdf';
+import TableTest from '../components/TableTest';
 import CounterContainer from '../containers/CounterContainer';
 import PichartContainer from '../containers/PichartContainer';
 import TrendchartContainer from '../containers/TrendchartContainer';
-import TableTest from '../components/TableTest';
 import useReportData from '../hooks/useReportData';
 
 const Home = () => {
@@ -13,18 +15,69 @@ const Home = () => {
   const classes = useStyles();
   const ref = useRef();
 
+  const features=[
+    <CounterContainer />,
+    <PichartContainer />,
+    <TrendchartContainer />,
+    <TableTest />
+  ]
+  const [featuresItems, setfeaturesItems] = useState(features)
+
+  const dragItem = useRef(null)
+  const dragOverItem = useRef(null)
+
+//const handle drag sorting
+const handleSort = (e) => {
+  //duplicate items
+  let _featuresItems = [...featuresItems]
+
+  //remove and save the dragged item content
+  const draggedItemContent = _featuresItems.splice(dragItem.current, 1)[0]
+
+  //switch the position
+  _featuresItems.splice(dragOverItem.current, 0, draggedItemContent)
+
+  //reset the position ref
+  dragItem.current = null
+  dragOverItem.current = null
+
+  //update the actual array
+  setfeaturesItems(_featuresItems)
+
+  
+  // auto-scroll when dragging near the top or bottom of the screen
+  const scrollZoneHeight = 100 // number of pixels near the top/bottom to start scrolling
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+  const windowHeight = window.innerHeight || document.documentElement.clientHeight
+  const bottomScrollLimit = document.body.clientHeight - windowHeight - scrollZoneHeight
+
+  if (e.clientY < scrollZoneHeight && scrollTop > 0) {
+    window.scrollTo(0, scrollTop - 10)
+  } else if (e.clientY > windowHeight - scrollZoneHeight && scrollTop < bottomScrollLimit) {
+    window.scrollTo(0, scrollTop + 10)
+  }
+}
+
   return (
     <Fragment>
       {isSuccess ? (
         <div>
           <Pdf targetRef={ref} filename="code-example.pdf" scale={0.52} options={{ dpi: 600 }}>
-            {({ toPdf }) => <button onClick={toPdf}>Generate Pdf</button>}
+            {({ toPdf }) =><ArrowCircleDownIcon size={50} onClick={toPdf}/>}
           </Pdf>
           <div ref={ref} style={{ width: '100%', height: '100%' }}>
-            <CounterContainer />
-            <PichartContainer />
-            <TrendchartContainer />
-            <TableTest />
+          {featuresItems.map((EventComp,index)=>{
+                  return <div
+                   key={EventComp.key}
+                   className="mt-5"
+                   draggable
+                   onDragStart={(e)=>{dragItem.current=index}}
+                   onDragEnter={(e)=>(dragOverItem.current=index)}
+                   onDragEnd={handleSort}
+                   onDragOver={(e)=>e.preventDefault()}>
+                    {EventComp}
+                  </div>
+                })}
           </div>
         </div>
       ) : (
@@ -48,3 +101,117 @@ const useStyles = makeStyles({
     height: '95vh',
   },
 });
+
+// import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
+// import { Box, Typography } from '@mui/material';
+// import { makeStyles } from '@mui/styles';
+// import { Fragment, useRef, useState } from 'react';
+// import Pdf from 'react-to-pdf';
+// import TableTest from '../components/TableTest';
+// import CounterContainer from '../containers/CounterContainer';
+// import PichartContainer from '../containers/PichartContainer';
+// import TrendchartContainer from '../containers/TrendchartContainer';
+// import useReportData from '../hooks/useReportData';
+
+// const Home = () => {
+//   const { isSuccess } = useReportData();
+//   const classes = useStyles();
+//   const ref = useRef();
+//   const scrollRef = useRef();
+//   const [featuresItems, setfeaturesItems] = useState([
+//     <CounterContainer />,
+//     <PichartContainer />,
+//     <TrendchartContainer />,
+//     <TableTest />
+//   ]);
+//   const dragItem = useRef(null);
+//   const dragOverItem = useRef(null);
+//   const scrollInterval = useRef(null);
+
+//   const handleSort = () => {
+//     let _featuresItems = [...featuresItems];
+//     const draggedItemContent = _featuresItems.splice(dragItem.current, 1)[0];
+//     _featuresItems.splice(dragOverItem.current, 0, draggedItemContent);
+//     dragItem.current = null;
+//     dragOverItem.current = null;
+//     setfeaturesItems(_featuresItems);
+//   };
+
+//   const handleDragOver = (e) => {
+//     e.preventDefault();
+//     const container = scrollRef.current;
+//     const scrollOffset = 10;
+//     const topBound = container.offsetTop + scrollOffset;
+//     const bottomBound = container.offsetTop + container.offsetHeight - scrollOffset;
+//     const { clientY } = e;
+//     const scrollSpeed = 5;
+
+//     if (clientY < topBound) {
+//       if (!scrollInterval.current) {
+//         scrollInterval.current = setInterval(() => {
+//           container.scrollTop -= scrollSpeed;
+//         }, 10);
+//       }
+//     } else if (clientY > bottomBound) {
+//       if (!scrollInterval.current) {
+//         scrollInterval.current = setInterval(() => {
+//           container.scrollTop += scrollSpeed;
+//         }, 10);
+//       }
+//     } else {
+//       clearInterval(scrollInterval.current);
+//       scrollInterval.current = null;
+//     }
+//   };
+
+//   return (
+//     <Fragment>
+//       {isSuccess ? (
+//         <div>
+//           <Pdf targetRef={ref} filename="code-example.pdf" scale={0.52} options={{ dpi: 600 }}>
+//             {({ toPdf }) =><ArrowCircleDownIcon size={50} onClick={toPdf}/>}
+//           </Pdf>
+//           <div ref={ref} style={{ width: '100%', height: '100%' }}>
+//             <div
+//               ref={scrollRef}
+//               style={{ height: '100%', overflowY: 'auto' }}
+//               onDragOver={handleDragOver}
+//             >
+//               {featuresItems.map((EventComp,index)=>{
+//                 return (
+//                   <div
+//                     key={index}
+//                     className="mt-5"
+//                     draggable
+//                     onDragStart={(e)=>{dragItem.current=index}}
+//                     onDragEnter={(e)=>{dragOverItem.current=index}}
+//                     onDragEnd={handleSort}
+//                   >
+//                     {EventComp}
+//                   </div>
+//                 )
+//               })}
+//             </div>
+//           </div>
+//         </div>
+//       ) : (
+//         <Box className={classes.container}>
+//           <Typography variant="h5" align="center">
+//             Please upload a cucumber json to see the report.
+//           </Typography>
+//         </Box>
+//       )}
+//     </Fragment>
+//   );
+// };
+
+// export default Home;
+
+// const useStyles = makeStyles({
+//   container: {
+//     display: 'flex',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     height: '95vh',
+//   },
+// });

@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { makeStyles } from '@mui/styles';
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import Navigation from "./components/Navigation";
 import Home from './pages/Home';
@@ -13,13 +13,13 @@ import Json from "./pages/Json";
     <Box className={classes.container} sx={{ bgcolor: "background.default",
     color: "text.primary",}} >
     
-      <BrowserRouter>
+      <HashRouter>
       <Navigation/>
       <Routes>
       <Route exact path='/' element={<Home/>} />
       <Route path='/json' element={<Json/>} />
       </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </Box>
 
   );
