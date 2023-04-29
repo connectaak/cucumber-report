@@ -1,9 +1,10 @@
 
-import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
-import { Box, Typography } from '@mui/material';
+import DownloadIcon from '@mui/icons-material/Download';
+import { Box, Button, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { Fragment, useRef, useState } from 'react';
-import Pdf from 'react-to-pdf';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import React, { Fragment, useRef, useState } from 'react';
 import TableTest from '../components/TableTest';
 import CounterContainer from '../containers/CounterContainer';
 import PichartContainer from '../containers/PichartContainer';
@@ -57,14 +58,24 @@ const handleSort = (e) => {
     window.scrollTo(0, scrollTop + 10)
   }
 }
+  const handlePdfExport = () => {
+    html2canvas(ref.current, { scale: 2 }).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('l', 'mm', [ref.current.offsetWidth, ref.current.offsetHeight]);
+      pdf.addImage(imgData, 'PNG', 0, 0, ref.current.offsetWidth, ref.current.offsetHeight);
+      pdf.save('website-screen.pdf');
+    });
+  };
 
   return (
     <Fragment>
       {isSuccess ? (
         <div>
-          <Pdf targetRef={ref} filename="code-example.pdf" scale={0.52} options={{ dpi: 600 }}>
-            {({ toPdf }) =><ArrowCircleDownIcon size={50} onClick={toPdf}/>}
-          </Pdf>
+            <div className={classes.btnContainer}>
+            <Button className={classes.btnBG} disableRipple onClick={handlePdfExport} variant="contained" component="span" endIcon={<DownloadIcon rounded />}>
+              PDF
+            </Button>
+          </div>
           <div ref={ref} style={{ width: '100%', height: '100%' }}>
           {featuresItems.map((EventComp,index)=>{
                   return <div
@@ -78,7 +89,9 @@ const handleSort = (e) => {
                     {EventComp}
                   </div>
                 })}
-          </div>
+        
+        
+        </div>
         </div>
       ) : (
         <Box className={classes.container}>
@@ -99,6 +112,20 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     height: '95vh',
+  },
+  btnContainer: {
+    display: 'flex',
+    justifyContent: 'end',
+    position: 'fixed',
+    // top: '75px',
+    bottom: '20px',
+    left:'5px',
+    width: '100%',
+    margin: '10px 0',
+    zIndex: '999',
+  },
+  btnBG: {
+    background: '#0476B5 !important',
   },
 });
 
@@ -190,7 +217,7 @@ const useStyles = makeStyles({
 //                     {EventComp}
 //                   </div>
 //                 )
-//               })}
+//               {'}'})}
 //             </div>
 //           </div>
 //         </div>

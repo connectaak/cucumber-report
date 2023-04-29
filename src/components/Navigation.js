@@ -16,11 +16,11 @@ import useReportData from "../hooks/useReportData";
 import FileUpload from './FileUpload';
 
 const Navigation = () => {
-    const theme = useTheme();
-   const colorMode = React.useContext(ColorModeContext);
-   const classes=useStyles()
-   const {isSuccess}=useReportData()
-   const trigger = useScrollTrigger({
+  const theme = useTheme();
+  const colorMode = React.useContext(ColorModeContext);
+  const classes = useStyles();
+  const { isSuccess } = useReportData();
+  const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
   });
