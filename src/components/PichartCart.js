@@ -5,7 +5,7 @@ import React from "react";
 import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, Tooltip, XAxis, YAxis } from "recharts";
 import PichartFooter from "./PichartFooter";
 
-const COLORS = {passed:"#00C49F", failed:"#FF8042", skipped:"#0088FE",pending:"#FFBB28", undefined:"#B068F9"};
+const COLORS = {passed:"#00C49F", failed:"#FF0000", skipped:"#0088FE",pending:"#FFBB28", undefined:"#B068F9"};
 const PichartCart = ({title,data}) => {
     const classes = useStyles();
     const [checked, setChecked] = React.useState(true);

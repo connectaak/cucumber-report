@@ -50,7 +50,13 @@ const Navigation = () => {
       // background:isActive?"#FFDAB9":"white" 
     };
   }}   className={classes.text} to="/"><Typography>HOME</Typography></NavLink>
-                   
+                 <NavLink style={({ isActive, isPending }) => {
+    return {
+      color: "black",
+      background:isActive?"#0476B5":"" ,
+     
+    };
+  }}  className={classes.text} to="/comparison"><Typography >COMPARISON</Typography></NavLink>   
           {isSuccess&&
           <>
            <NavLink style={({ isActive, isPending }) => {
@@ -127,8 +133,37 @@ const Navigation = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
+<MenuItem  onClick={handleCloseNavMenu}> 
+                      <NavLink style={({ isActive, isPending }) => {
+    return {
+      color: "black",
+     
+     
+    };
+  }}  className={classes.text} to="/"><Typography >HOME</Typography></NavLink>
+                      </MenuItem>
+                      <MenuItem  onClick={handleCloseNavMenu}> 
+                      <NavLink style={({ isActive, isPending }) => {
+    return {
+      color: "black",
+      background:isActive?"#0476B5":"" ,
+     
+    };
+  }}  className={classes.text} to="/comparison"><Typography >COMPARISON</Typography></NavLink>
+                      </MenuItem>
 
+                      {isSuccess&&
+          <><MenuItem  onClick={handleCloseNavMenu}> 
+                      <NavLink style={({ isActive, isPending }) => {
+    return {
+      color: "black",
+      background:isActive?"#0476B5":"" ,
+     
+    };
+  }}  className={classes.text} to="/json"><Typography >JSON</Typography></NavLink>
+                      </MenuItem>
 {location.pathname=="/"&& <Scrollspy  className={classes.spyContainerMobile}  items={ ['counter', 'pichart', 'trendchart',"grid"] } currentClassName={classes.current}>
+                      
                       <MenuItem  onClick={handleCloseNavMenu}> 
                       <Link sx={{color: "text.primary"}}  className={classes.text} href="#counter"><Typography >COUNTER</Typography>
                       </Link>
@@ -143,11 +178,8 @@ const Navigation = () => {
                       <Link sx={{color: "text.primary"}}  className={classes.text} href="#grid"><Typography>GRID</Typography></Link>
                       </MenuItem>
                     </Scrollspy>}
-              {/* {pages.map((page) => ( */}
-                <MenuItem  onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">heeee</Typography>
-                </MenuItem>
-              {/* ))} */}
+                    </>
+}
             </Menu>
           </Box>
          </>

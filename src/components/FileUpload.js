@@ -3,23 +3,22 @@ import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded';
 import { Button, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React from 'react';
+import { useLocation } from "react-router-dom";
 import swal from 'sweetalert';
 import useReportData from '../hooks/useReportData';
+import { getComparisonData } from '../utils/getCompareData';
 import { cucumberCustomObject } from '../utils/getCucumberCustomObj';
 
-
 const FileUpload = () => {
-   
+  let location = useLocation();
   
     const {setData,data,setIsSuccess,
-      setTotalReport,totalReport}=useReportData()
-
-
-      const hasCommonString = (arr1, arr2) => {
-        const arr1Strings = arr1.map(obj => obj.name);
-        const arr2Strings = arr2.map(obj => obj.feature);
-        return arr1Strings.some(str => arr2Strings.includes(str));
-      };
+      setTotalReport,compareData,setCompareData,totalReport}=useReportData()
+      console.log(location,"location")
+      console.log(compareData,"compareData")
+      
+      console.log(data,"data")
+     
     const handleFileUpload = (event) => {
       const file = event.target.files[0];
       const reader = new FileReader(); 
@@ -30,7 +29,14 @@ const FileUpload = () => {
             // Try to run this code 
             const content = readerEvent.target.result;
             const cucumberJsonObject = convert(JSON.parse(content))
+            console.log(cucumberJsonObject,"cucumberJsonObject")
+           if( location.pathname ==="/comparison"){
+            const {featuresData}=getComparisonData(cucumberJsonObject.features)
+            console.log(featuresData,"featuresData")
+            setCompareData([...compareData,...[featuresData]])
+           }else{
             setData([...data,...cucumberJsonObject.features])
+           }
             setIsSuccess(true);
             setTotalReport(totalReport+1)
            

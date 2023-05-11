@@ -24,13 +24,13 @@ export default function TrendchartContainer() {
     setValue(newValue);
   };
 const {scenarios, features,steps}=getTrendChartData(data);
-
+console.log({scenarios, features,steps},"trendChart")
   return (
     <Box id="trendchart" sx={{ width: '100%' }}>
       <Box sx={{ marginTop:"20px",display:"flex",justifyContent:'center' }}>
         <Tabs textColor='red' TabIndicatorProps={{
     style: {
-      backgroundColor: "#4caf50",
+      backgroundColor: "#FCD73C",
       TextColor:"red"
     }
   }} value={value} onChange={handleChange} aria-label="basic tabs example">

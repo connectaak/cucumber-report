@@ -5,14 +5,15 @@ import { makeStyles } from '@mui/styles';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import React, { Fragment, useRef, useState } from 'react';
+// import CompareTest from '../components/CompareTest';
 import TableTest from '../components/TableTest';
+// import Test from "../components/Test";
 import CounterContainer from '../containers/CounterContainer';
 import PichartContainer from '../containers/PichartContainer';
 import TrendchartContainer from '../containers/TrendchartContainer';
 import useReportData from '../hooks/useReportData';
-
 const Home = () => {
-  const { isSuccess } = useReportData();
+  const { isSuccess,data } = useReportData();
   const classes = useStyles();
   const ref = useRef();
 
@@ -20,7 +21,9 @@ const Home = () => {
     <CounterContainer />,
     <PichartContainer />,
     <TrendchartContainer />,
-    <TableTest />
+    <TableTest />,
+    // <Test/>,
+    // <CompareTest data1={data}data2={data} />
   ]
   const [featuresItems, setfeaturesItems] = useState(features)
 
@@ -76,7 +79,7 @@ const handleSort = (e) => {
               PDF
             </Button>
           </div>
-          <div ref={ref} style={{ width: '100%', height: '100%' }}>
+          <div ref={ref} >
           {featuresItems.map((EventComp,index)=>{
                   return <div
                    key={EventComp.key}
