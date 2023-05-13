@@ -14,10 +14,8 @@ const FileUpload = () => {
   
     const {setData,data,setIsSuccess,
       setTotalReport,compareData,setCompareData,totalReport}=useReportData()
-      console.log(location,"location")
-      console.log(compareData,"compareData")
-      
-      console.log(data,"data")
+    
+
      
     const handleFileUpload = (event) => {
       const file = event.target.files[0];
@@ -29,10 +27,8 @@ const FileUpload = () => {
             // Try to run this code 
             const content = readerEvent.target.result;
             const cucumberJsonObject = convert(JSON.parse(content))
-            console.log(cucumberJsonObject,"cucumberJsonObject")
            if( location.pathname ==="/comparison"){
             const {featuresData}=getComparisonData(cucumberJsonObject.features)
-            console.log(featuresData,"featuresData")
             setCompareData([...compareData,...[featuresData]])
            }else{
             setData([...data,...cucumberJsonObject.features])
@@ -92,7 +88,9 @@ const FileUpload = () => {
         />
         <label className={classes.btnContainer} htmlFor="file">
         <Button className={classes.btnBG}  variant="contained" component="span" endIcon={<UploadFileRoundedIcon rounded />}>
-      <Typography sx={{ display: { xs: 'none', md: 'flex' }}}>{ data.length>0?"Upload More Json":"Upload json"}</Typography>
+      <Typography sx={{ display: { xs: 'none', md: 'flex' }}}>
+     { location.pathname ==="/comparison"?compareData.length>0?"Upload More Json":"Upload JSOn":data.length>0?"Upload More Json":"Upload json"}</Typography>
+
       <Typography sx={{  display: { xs: 'flex', md: 'none',m:0,p:"0" },}}></Typography>
         </Button>
         </label> 

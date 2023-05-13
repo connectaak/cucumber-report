@@ -40,10 +40,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -247,9 +243,6 @@ function EnhancedTableToolbar(props) {
   );
 }
 
-// EnhancedTableToolbar.propTypes = {
-//   numSelected: PropTypes.number.isRequired,
-// };
 
 export default function TableTest() {
   const [order, setOrder] = React.useState(DEFAULT_ORDER);
@@ -260,14 +253,18 @@ export default function TableTest() {
   const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE);
   const [paddingHeight, setPaddingHeight] = React.useState(0);
   const{data}=useReportData()
-  const {gridData,counterData}= cucumberCustomObject(data)
+  
   const [search,setSearch]=React.useState("");
-  const[rows,setRows]=React.useState(gridData);
-
+  const[rows,setRows]=React.useState([]);
+  const [counterData,setCounterData]=React.useState([]);
   React.useEffect(()=>{
-    const data=gridData.filter(item=>item.name.includes(search))
-    setRows(data);
-   },[gridData, search])
+    const {gridData,counterData:cdata}= cucumberCustomObject(data)
+    setRows(gridData)
+    setCounterData(cdata)
+    const filterData=gridData.filter(item=>item.name.includes(search))
+    setRows(filterData);
+    
+   },[data, search])
 
   React.useEffect(() => {
     let rowsOnMount = stableSort(
@@ -280,7 +277,8 @@ export default function TableTest() {
       0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE,
     );
     setVisibleRows(rowsOnMount);
-  }, [data, rows]);
+ 
+  }, [rows]);
   
   const handleRequestSort = React.useCallback(
     (event, newOrderBy) => {
@@ -454,7 +452,7 @@ totalStepsSkipped,
             <TableBody>
               {visibleRows
                 ?
-                 visibleRows.map((row, index) => {
+                 visibleRows?.map((row, index) => {
                     const isItemSelected = isSelected(row.name);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -502,7 +500,7 @@ totalStepsSkipped,
                         
                       >
                        
-                       <TableCell className={classes.border} >
+                       <TableCell rowSpan={10}  className={classes.border} >
                         <Typography   className={classes.summaryItem}>summary</Typography>
                         </TableCell>
                        <TableCell className={classes.border}   align="center">
@@ -533,7 +531,7 @@ totalStepsSkipped,
                         <Typography className={classes.summaryItem} >{gridSummary.totalScenariosTotal}</Typography>
                         </TableCell>
                        <TableCell className={classes.border}   align="center">
-                        <Typography className={classes.summaryItem} >{counterData[3].value}</Typography>
+                        <Typography className={classes.summaryItem} >{counterData[3]?.value}</Typography>
                         </TableCell>
                        <TableCell className={classes.border}   align="center">
                         <Typography className={classes.summaryItem} >--</Typography>

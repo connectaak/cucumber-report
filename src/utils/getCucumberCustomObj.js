@@ -12,7 +12,6 @@ jsonData.forEach(feature => {
   let featureDuration = 0;
   let featureStatus = "Passed";
 
-
   
   feature.elements.forEach(element => {
     element.steps.forEach(step => {
@@ -42,13 +41,14 @@ jsonData.forEach(feature => {
       featureStatus = "Failed";
     }
   });
-
-  featureDuration = feature.elements.reduce((total, element) => {
-    return total + element.steps.reduce((total, step) => {
-      return total + step.result.duration;
-    }, 0);
-  }, 0);
-
+ 
+  feature?.elements?.forEach((scenario) => {
+    scenario?.steps?.forEach((step) => {
+      featureDuration += step?.result?.duration || 0; // add duration to feature duration
+    });
+  });
+  featureDuration /= 1000000;
+  
   featuresData.push({
     feature: feature.name,
     stepPassed: stepPassed,
@@ -60,7 +60,7 @@ jsonData.forEach(feature => {
     scenariosPassed: scenariosPassed,
     scenariosFailed: scenariosFailed,
     scenariosTotal: scenariosPassed + scenariosFailed,
-    featureDuration: featureDuration,
+    featureDuration:  featureDuration.toFixed(0),
     featureStatus: featureStatus
   });
 });
@@ -70,13 +70,12 @@ const totalSteps= featuresData.reduce((accumulator, currentValue) => accumulator
 
 const totalScenarios= featuresData.reduce((accumulator, currentValue) => accumulator + currentValue?.scenariosTotal, 0)
 
-const totalDuration= featuresData.reduce((accumulator, currentValue) => accumulator + currentValue?.featureDuration, 0)
-
+const totalDuration= featuresData.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue?.featureDuration), 0)
 const counterData=[
   {title:"Features",value:featuresData.length},
   {title:"Scenarios",value:totalScenarios},
   {title:"Test/Steps",value: totalSteps},
-  {title:"Duration",value:(Math.floor(totalDuration/1000000))+" "+"s"},
+  {title:"Duration",value:`${totalDuration}s`}
 ] 
 
 const chartData = [
@@ -149,48 +148,10 @@ const gridData = featuresData.map(item => {
       scenariosPassed: item.scenariosPassed,
       scenariosFailed: item.scenariosFailed,
       scenariosTotal: item.scenariosTotal,
-      duration: `${Math.floor(item.featureDuration / 1000000)}s`,
+      duration: `${item.featureDuration}s`,
       status: item.featureStatus
   }
 });
-const data = [
-  {"name":"decaying","stepsPassed":2,"stepsFailed":1,"stepsSkipped":1,"stepsUndefined":0,"stepsPending":0,"stepsTotal":4,"scenariosPassed":1,"scenariosFailed":1,"scenariosTotal":2,"duration":"2s","status":"Failed"},
-  {"name":"background","stepsPassed":4,"stepsFailed":0,"stepsSkipped":0,"stepsUndefined":0,"stepsPending":0,"stepsTotal":4,"scenariosPassed":2,"scenariosFailed":0,"scenariosTotal":2,"duration":"2s","status":"Passed"},
-  {"name":"decayingbackground","stepsPassed":3,"stepsFailed":0,"stepsSkipped":1,"stepsUndefined":0,"stepsPending":0,"stepsTotal":4,"scenariosPassed":1,"scenariosFailed":1,"scenariosTotal":2,"duration":"2s","status":"Failed"}
-];
-
-// let totalStepsPassed = 0;
-// let totalStepsFailed = 0;
-// let totalStepsSkipped = 0;
-// let totalStepsUndefined = 0;
-// let totalStepsPending = 0;
-// let totalStepsTotal = 0;
-// let totalScenariosPassed = 0;
-// let totalScenariosFailed = 0;
-// let totalScenariosTotal = 0;
-
-// for (let i = 0; i < data.length; i++) {
-//   const item = data[i];
-//   totalStepsPassed += item.stepsPassed;
-//   totalStepsFailed += item.stepsFailed;
-//   totalStepsSkipped += item.stepsSkipped;
-//   totalStepsUndefined += item.stepsUndefined;
-//   totalStepsPending += item.stepsPending;
-//   totalStepsTotal += item.stepsTotal;
-//   totalScenariosPassed += item.scenariosPassed;
-//   totalScenariosFailed += item.scenariosFailed;
-//   totalScenariosTotal += item.scenariosTotal;
-// }
-// console.log(JSON.stringify(gridData),"gridData")
-// const gridSummary={totalStepsPassed,
-//    totalStepsFailed ,
-// totalStepsSkipped,
-//   totalStepsUndefined,
-//   totalStepsPending,
-//   totalStepsTotal,
-//   totalScenariosPassed, 
-//   totalScenariosFailed,
-//   totalScenariosTotal}
 
 return {featuresData,chartData,counterData,gridData};
 }

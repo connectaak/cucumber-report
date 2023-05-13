@@ -22,7 +22,7 @@ export const getTrendChartData = (data) => {
         scenarioDuration += step?.result?.duration || 0; // add duration to scenario duration
         steps.push({
           name: `Step ${stepNumber++}`,
-          duration: (step?.result?.duration || 0) / 1000000,
+          duration: ((step?.result?.duration || 0) / 1000000).toFixed(0),
           scenarioName,
           featureName,
           status: step?.result?.status === 'passed' ? 'passed' : 'failed', // if step passed, status is passed, else failed
@@ -32,7 +32,7 @@ export const getTrendChartData = (data) => {
       featureDuration += scenarioDuration;
       scenarios.push({
         name: scenarioName,
-        duration: scenarioDuration,
+        duration: scenarioDuration.toFixed(0), // format duration to 9 decimal places
         featureName,
         status: scenarioStatus,
       });
@@ -43,7 +43,7 @@ export const getTrendChartData = (data) => {
     featureDuration *= 1000000;
     features.push({
       name: featureName,
-      duration: featureDuration / 1000000,
+      duration: (featureDuration / 1000000).toFixed(0), // format duration to 9 decimal places
       status: featureStatus,
     });
   });
