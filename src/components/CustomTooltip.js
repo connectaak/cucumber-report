@@ -10,7 +10,7 @@ const CustomTooltip = ({ active, payload, label }) => {
             {payload[0].payload.scenarioName&&
           <p className={classes.lebel}>{payload[0].payload.scenarioName}</p>}
           <p className={classes.lebel}>{label}</p>
-          <p className={classes.lebel}>Duration : {payload[0].value}</p>
+          <p className={classes.lebel}>Duration : {payload[0].value}s</p>
         </Box>
       );
     }

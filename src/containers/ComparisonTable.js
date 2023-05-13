@@ -1,8 +1,5 @@
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { TextField } from '@mui/material';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -12,16 +9,13 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import { alpha } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import { CSVLink } from 'react-csv';
 import useReportData from '../hooks/useReportData';
+import { getCompareTable } from '../utils/getCompareTable';
 import { cucumberCustomObject } from '../utils/getCucumberCustomObj';
 
 function descendingComparator(a, b, orderBy) {
@@ -59,6 +53,12 @@ const headCells = [
     disablePadding: true,
     label: 'Features',
   },
+//   {
+//     id: 'counter',
+//     numeric: false,
+//     disablePadding: true,
+//     label: 'Feature No',
+//   },
   {
     id: 'stepsPassed',
     numeric: true,
@@ -192,59 +192,7 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Nutrition
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-}
-
-
-export default function TableTest() {
+export default function ComparisonTable() {
   const [order, setOrder] = React.useState(DEFAULT_ORDER);
   const [orderBy, setOrderBy] = React.useState(DEFAULT_ORDER_BY);
   const [selected, setSelected] = React.useState([]);
@@ -252,15 +200,18 @@ export default function TableTest() {
   const [visibleRows, setVisibleRows] = React.useState(null);
   const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE);
   const [paddingHeight, setPaddingHeight] = React.useState(0);
-  const{data}=useReportData()
+  const{data,compareData}=useReportData()
   const {gridData,counterData}= cucumberCustomObject(data)
+    const tableData= getCompareTable(compareData);
   const [search,setSearch]=React.useState("");
-  const[rows,setRows]=React.useState(gridData);
+  const[rows,setRows]=React.useState(tableData);
+ 
+
 
   React.useEffect(()=>{
-    const data=gridData.filter(item=>item.name.includes(search))
+    // const data=tableData.filter(item=>item.name.includes(search))
     setRows(data);
-   },[gridData, search])
+   },[tableData, search])
 
   React.useEffect(() => {
     let rowsOnMount = stableSort(
@@ -335,12 +286,6 @@ export default function TableTest() {
 
       setVisibleRows(updatedRows);
 
-      // Avoid a layout jump when reaching the last page with empty rows.
-    //   const numEmptyRows =
-    //     newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - rows.length) : 0;
-
-      // const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
-      // setPaddingHeight(newPaddingHeight);
     },
     [order, orderBy, rows, rowsPerPage],
   );
@@ -371,63 +316,66 @@ export default function TableTest() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const classes=useStyles();
-  let csvFile=rows.map(item=>{
-    return[item.name,
-      item.stepsPassed,
-      item.stepsFailed,
-      item.stepsSkipped,
-      item.stepsUndefined,
-      item.stepsPending,
-      item.stepsTotal,
-      item.scenariosPassed,
-      item.scenariosFailed,
-      item.scenariosTotal,
-      item.duration,
-      item.status]
-  })
-  csvFile.unshift(["Features","stepsPassed","stepsFailed","stepsSkipped","stepsUndefined","stepsPending","stepsTotal","scenariosPassed","scenariosFailed","scenariosTotal","duration","status"])
+  // let csvFile=rows.map(item=>{
+  //   return[item.name,
+  //     item.stepsPassed,
+  //     item.stepsFailed,
+  //     item.stepsSkipped,
+  //     item.stepsUndefined,
+  //     item.stepsPending,
+  //     item.stepsTotal,
+  //     item.scenariosPassed,
+  //     item.scenariosFailed,
+  //     item.scenariosTotal,
+  //     item.duration,
+  //     item.status]
+  // })
+  // csvFile.unshift(["Features","stepsPassed","stepsFailed","stepsSkipped","stepsUndefined","stepsPending","stepsTotal","scenariosPassed","scenariosFailed","scenariosTotal","duration","status"])
   
-let totalStepsPassed = 0;
-let totalStepsFailed = 0;
-let totalStepsSkipped = 0;
-let totalStepsUndefined = 0;
-let totalStepsPending = 0;
-let totalStepsTotal = 0;
-let totalScenariosPassed = 0;
-let totalScenariosFailed = 0;
-let totalScenariosTotal = 0;
+// let totalStepsPassed = 0;
+// let totalStepsFailed = 0;
+// let totalStepsSkipped = 0;
+// let totalStepsUndefined = 0;
+// let totalStepsPending = 0;
+// let totalStepsTotal = 0;
+// let totalScenariosPassed = 0;
+// let totalScenariosFailed = 0;
+// let totalScenariosTotal = 0;
 
-for (let i = 0; i < rows.length; i++) {
-  const item = rows[i];
-  totalStepsPassed += item.stepsPassed;
-  totalStepsFailed += item.stepsFailed;
-  totalStepsSkipped += item.stepsSkipped;
-  totalStepsUndefined += item.stepsUndefined;
-  totalStepsPending += item.stepsPending;
-  totalStepsTotal += item.stepsTotal;
-  totalScenariosPassed += item.scenariosPassed;
-  totalScenariosFailed += item.scenariosFailed;
-  totalScenariosTotal += item.scenariosTotal;
-}
+// React.useEffect(()=>{
+//   for (let i = 0; i < rows.length; i++) {
+//     const item = rows[i];
+//     totalStepsPassed += item.stepsPassed;
+//     totalStepsFailed += item.stepsFailed;
+//     totalStepsSkipped += item.stepsSkipped;
+//     totalStepsUndefined += item.stepsUndefined;
+//     totalStepsPending += item.stepsPending;
+//     totalStepsTotal += item.stepsTotal;
+//     totalScenariosPassed += item.scenariosPassed;
+//     totalScenariosFailed += item.scenariosFailed;
+//     totalScenariosTotal += item.scenariosTotal;
+//   }
+  
 
-const gridSummary={totalStepsPassed,
-   totalStepsFailed ,
-totalStepsSkipped,
-  totalStepsUndefined,
-  totalStepsPending,
-  totalStepsTotal,
-  totalScenariosPassed, 
-  totalScenariosFailed,
-  totalScenariosTotal}
-
-
+  
+// },[rows])
+// const gridSummary={totalStepsPassed,
+//   totalStepsFailed ,
+// totalStepsSkipped,
+//  totalStepsUndefined,
+//  totalStepsPending,
+//  totalStepsTotal,
+//  totalScenariosPassed, 
+//  totalScenariosFailed,
+//  totalScenariosTotal}
+console.log(visibleRows,"visibleRows")
   return (
     <Box sx={{ margin:"20px"}}>
       {/* <CSVLink data={csvFile}>Download me</CSVLink>; */}
       <Paper sx={{ width: '100%', mb: 2 }}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <Box sx={{display:"flex", justifyContent:"space-between",alignItems:"center",margin:"10px 0"}}>
-        <CSVLink data={csvFile}>Export CSV</CSVLink>;
+        {/* <CSVLink data={csvFile}>Export CSV</CSVLink>; */}
           <TextField size='small' id="outlined-basic" onChange={(e)=>setSearch(e.target.value)} label="Search" variant="outlined" type='search' placeholder='Search by Feature name'/>
         </Box>
         <TableContainer>
@@ -443,37 +391,43 @@ totalStepsSkipped,
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
-              csvFile={csvFile}
+              // csvFile={csvFile}
             />
             <TableBody>
+                
               {visibleRows
                 ?
-                 visibleRows.map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
+                 visibleRows.map((item, index) => {
+                    const isItemSelected = isSelected(item[0].name);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
+                      <React.Fragment>
                       <TableRow
                         hover
-                        onClick={(event) => handleClick(event, row.name)}
+                        onClick={(event) => handleClick(event, item[0].name)}
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
-                        key={row.name}
+                        key={item[0].name}
                         selected={isItemSelected}
                         sx={{ cursor: 'pointer' }}
                       >
-                       
                         <TableCell
-                       className={classes.border}
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
+                        className={classes.border}
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
+                        rowSpan={item.length+1}
                         >
-                        <Typography sx={{paddingLeft:"10px"}}>{row.name}</Typography>
+                        <Typography sx={{paddingLeft:"10px"}}>{item[0].name}</Typography>
                         </TableCell>
-                        <TableCell className={classes.border}   sx={{bgcolor:!row.stepsPassed==0?COLORS["Passed"]:""}} align="center">{row.stepsPassed}</TableCell>
+                      </TableRow>
+                      {
+                        item.map((row,index)=>(
+                    <TableRow>
+                      <TableCell className={classes.border}   sx={{bgcolor:!row.stepsPassed==0?COLORS["Passed"]:""}} align="center">{row.stepsPassed}</TableCell>
                         <TableCell className={classes.border}  sx={{bgcolor:!row.stepsFailed==0?COLORS["Failed"]:""}} align="center">{row.stepsFailed}</TableCell>
                         <TableCell  className={classes.border} sx={{bgcolor:!row.stepsSkipped==0?COLORS["Skipped"]:""}} align="center">{row.stepsSkipped}</TableCell>
                         <TableCell className={classes.border} sx={{bgcolor:!row.stepsUndefined==0?COLORS["Undefined"]:""}} align="center">{row.stepsUndefined}</TableCell>
@@ -484,21 +438,22 @@ totalStepsSkipped,
                         <TableCell className={classes.border} sx={{bgcolor:!row.stepsTotal==0?COLORS["Total"]:""}} align="center">{row.scenariosTotal}</TableCell>
                         <TableCell className={classes.border} align="center">{row.duration}</TableCell>
                         <TableCell className={classes.border} sx={{bgcolor:COLORS[row.status]}} align="center">{row.status}</TableCell>
-                      </TableRow>
+                      </TableRow>        
+                        ))
+                      }
+                        
+                      </React.Fragment>
                     );
                   })
                   
                        
                 : null}
-                <TableRow
-                     
-                        style={{ cursor: 'pointer'}}
-                        
-                      >
-                       
-                       <TableCell rowSpan={10}  className={classes.border} >
+           
+                    {/* <TableRow>
+                       <TableCell className={classes.border} >
                         <Typography   className={classes.summaryItem}>summary</Typography>
                         </TableCell>
+                        
                        <TableCell className={classes.border}   align="center">
                         <Typography className={classes.summaryItem} >{gridSummary.totalStepsPassed}</Typography>
                         </TableCell>
@@ -532,7 +487,11 @@ totalStepsSkipped,
                        <TableCell className={classes.border}   align="center">
                         <Typography className={classes.summaryItem} >--</Typography>
                         </TableCell>
-                        </TableRow>
+                       
+                  
+                    </TableRow> */}
+              
+                
               {paddingHeight > 0 && (
                 <TableRow
                   style={{

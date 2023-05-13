@@ -19,7 +19,7 @@ const Navigation = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
   const classes = useStyles();
-  const { isSuccess } = useReportData();
+  const { data } = useReportData();
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0,
@@ -57,7 +57,7 @@ const Navigation = () => {
      
     };
   }}  className={classes.text} to="/comparison"><Typography >COMPARISON</Typography></NavLink>   
-          {isSuccess&&
+          {data.length>0&&
           <>
            <NavLink style={({ isActive, isPending }) => {
     return {
@@ -152,7 +152,7 @@ const Navigation = () => {
   }}  className={classes.text} to="/comparison"><Typography >COMPARISON</Typography></NavLink>
                       </MenuItem>
 
-                      {isSuccess&&
+                      {data.length>0&&
           <><MenuItem  onClick={handleCloseNavMenu}> 
                       <NavLink style={({ isActive, isPending }) => {
     return {

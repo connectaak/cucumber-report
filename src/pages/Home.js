@@ -6,14 +6,14 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import React, { Fragment, useRef, useState } from 'react';
 // import CompareTest from '../components/CompareTest';
-import TableTest from '../components/TableTest';
 // import Test from "../components/Test";
+import TableTest from "../components/TableTest";
 import CounterContainer from '../containers/CounterContainer';
 import PichartContainer from '../containers/PichartContainer';
 import TrendchartContainer from '../containers/TrendchartContainer';
 import useReportData from '../hooks/useReportData';
 const Home = () => {
-  const { isSuccess,data } = useReportData();
+  const { data } = useReportData();
   const classes = useStyles();
   const ref = useRef();
 
@@ -72,7 +72,7 @@ const handleSort = (e) => {
 
   return (
     <Fragment>
-      {isSuccess ? (
+      {data.length>0 ? (
         <div>
             <div className={classes.btnContainer}>
             <Button className={classes.btnBG} disableRipple onClick={handlePdfExport} variant="contained" component="span" endIcon={<DownloadIcon rounded />}>
@@ -121,7 +121,7 @@ const useStyles = makeStyles({
     justifyContent: 'end',
     position: 'fixed',
     // top: '75px',
-    bottom: '20px',
+    bottom: '80px',
     left:'5px',
     width: '100%',
     margin: '10px 0',
