@@ -368,7 +368,7 @@ export default function ComparisonTable() {
 //  totalScenariosPassed, 
 //  totalScenariosFailed,
 //  totalScenariosTotal}
-console.log(visibleRows,"visibleRows")
+
   return (
     <Box sx={{ margin:"20px"}}>
       {/* <CSVLink data={csvFile}>Download me</CSVLink>; */}

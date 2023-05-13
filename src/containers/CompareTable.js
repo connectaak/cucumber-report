@@ -92,7 +92,7 @@ const CompareTable = () => {
         <Box  sx={{ margin:"20px"}}>
         <TableContainer>
             <Table
-                        sx={{ minWidth: 750,border:"1px solid gray" }}
+                        sx={{ minWidth: 850,border:"1px solid gray" }}
                         aria-labelledby="tableTitle"
                         size='small'>
             <TableHead>
