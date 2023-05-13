@@ -7,7 +7,7 @@ import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis
 import CustomTooltip from './CustomTooltip';
 
 const TrendChart = ({data:chartData,title,steps}) => {
-  const COLORS = {passed:"#00C49F", failed:"#FF8042", skipped:"#0088FE",pending:"#FFBB28", undefined:"#B068F9"};
+  const COLORS = {passed:"#00C49F", failed:"#FF0000", skipped:"#0088FE",pending:"#FFBB28", undefined:"#B068F9"};
   const classes = useStyles();
   // const [data, setData] = useState(chartData)
   const [duration, setDuration] = useState(chartData)
@@ -61,7 +61,7 @@ const allData={name:"all",data:chartData}
        {title}
       </Typography>
       <Box className={classes.secondContainer}>
-      <Button variant="contained" color="success" onClick={handleSort} >
+      <Button  variant="contained"style={{backgroundColor:"#0476B5"}} onClick={handleSort} >
       Sort {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
       </Button>
      {!steps&& <FormControl sx={{ m: 1, minWidth: 120,border:"none" }}  size="small">

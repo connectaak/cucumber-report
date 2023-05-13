@@ -1,5 +1,6 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import { TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
@@ -19,36 +20,9 @@ import { makeStyles } from '@mui/styles';
 import { visuallyHidden } from '@mui/utils';
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import { CSVLink } from 'react-csv';
 import useReportData from '../hooks/useReportData';
 import { cucumberCustomObject } from '../utils/getCucumberCustomObj';
-
-
-function createData(name, calories, fat, carbs, protein) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-  };
-}
-
-
-// const rows = [
-//   createData('Cupcake', 305, 3.7, 67, 4.3),
-//   createData('Donut', 452, 25.0, 51, 4.9),
-//   createData('Eclair', 262, 16.0, 24, 6.0),
-//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//   createData('Gingerbread', 356, 16.0, 49, 3.9),
-//   createData('Honeycomb', 408, 3.2, 87, 6.5),
-//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//   createData('Jelly Bean', 375, 0.0, 94, 0.0),
-//   createData('KitKat', 518, 26.0, 65, 7.0),
-//   createData('Lollipop', 392, 0.2, 98, 0.0),
-//   createData('Marshmallow', 318, 0, 81, 2.0),
-//   createData('Nougat', 360, 19.0, 9, 37.0),
-//   createData('Oreo', 437, 18.0, 63, 4.0),
-// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -160,7 +134,7 @@ const headCells = [
 const DEFAULT_ORDER = 'asc';
 const DEFAULT_ORDER_BY = 'calories';
 const DEFAULT_ROWS_PER_PAGE = 5;
-const COLORS = {Passed:"#00C49F", Failed:"#FF8042", Skipped:"#0088FE",Pending:"#FFBB28", Undefined:"#B068F9", Total: "#D5D2D2"};
+const COLORS = {Passed:"#8fdc93", Failed:"#f29191", Skipped:"#83abf9",Pending:"#f3f68b", Undefined:"#f7b96f", Total: "#d3d1d2",Header:"#60cbf1"};
 
 function EnhancedTableHead(props) {
   const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
@@ -172,32 +146,32 @@ const classes=useStyles()
   return (
     <TableHead>
         <TableRow>
-           <TableCell sx={{bgcolor:'#FCD73C'}} className={classes.border} />
-            <TableCell sx={{bgcolor:'#FCD73C'}} className={classes.border} colSpan={6} align="center"><Typography >Steps</Typography></TableCell>
+           <TableCell  sx={{bgcolor:COLORS["Header"],padding:"0 130px"}} className={classes.border} />
+           
+            <TableCell sx={{bgcolor:COLORS["Header"]}} className={classes.border} colSpan={6} align="center"><Typography >Steps</Typography></TableCell>
             
-            <TableCell sx={{bgcolor:'#FCD73C'}} className={classes.border}colSpan={3} align="center"><Typography  >Scenarios</Typography> </TableCell>
+            <TableCell sx={{bgcolor:COLORS["Header"]}} className={classes.border}colSpan={3} align="center"><Typography  >Scenarios</Typography> </TableCell>
 
-            <TableCell sx={{bgcolor:'#FCD73C'}} className={classes.border} colSpan={2} align="center"><Typography  >Features</Typography> </TableCell>
+            <TableCell sx={{bgcolor:COLORS["Header"]}} className={classes.border} colSpan={2} align="center"><Typography  >Features</Typography> </TableCell>
            
           
           </TableRow>
       <TableRow>
-        {/* <TableCell padding="checkbox">
-         
-        </TableCell> */}
-        {headCells.map((headCell) => (
+        {headCells.map((headCell,index) => (
           <TableCell
             key={headCell.id}
             align="center"
             padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
             className={classes.border}
+            // colSpan={index==0&&"2"}
             sx={{bgcolor:COLORS[headCell.label]}}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
+              // colSpan={headCell.id=="name"&&"2"}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
@@ -286,7 +260,14 @@ export default function TableTest() {
   const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE);
   const [paddingHeight, setPaddingHeight] = React.useState(0);
   const{data}=useReportData()
-  const {gridData:rows}= cucumberCustomObject(data)
+  const {gridData,counterData}= cucumberCustomObject(data)
+  const [search,setSearch]=React.useState("");
+  const[rows,setRows]=React.useState(gridData);
+
+  React.useEffect(()=>{
+    const data=gridData.filter(item=>item.name.includes(search))
+    setRows(data);
+   },[gridData, search])
 
   React.useEffect(() => {
     let rowsOnMount = stableSort(
@@ -299,8 +280,8 @@ export default function TableTest() {
       0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE,
     );
     setVisibleRows(rowsOnMount);
-  }, [data]);
-
+  }, [data, rows]);
+  
   const handleRequestSort = React.useCallback(
     (event, newOrderBy) => {
       const isAsc = orderBy === newOrderBy && order === 'asc';
@@ -364,8 +345,8 @@ export default function TableTest() {
     //   const numEmptyRows =
     //     newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - rows.length) : 0;
 
-    //   const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
-    //   setPaddingHeight(newPaddingHeight);
+      // const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
+      // setPaddingHeight(newPaddingHeight);
     },
     [order, orderBy, rows, rowsPerPage],
   );
@@ -396,15 +377,70 @@ export default function TableTest() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const classes=useStyles();
+  let csvFile=rows.map(item=>{
+    return[item.name,
+      item.stepsPassed,
+      item.stepsFailed,
+      item.stepsSkipped,
+      item.stepsUndefined,
+      item.stepsPending,
+      item.stepsTotal,
+      item.scenariosPassed,
+      item.scenariosFailed,
+      item.scenariosTotal,
+      item.duration,
+      item.status]
+  })
+  csvFile.unshift(["Features","stepsPassed","stepsFailed","stepsSkipped","stepsUndefined","stepsPending","stepsTotal","scenariosPassed","scenariosFailed","scenariosTotal","duration","status"])
+  
+let totalStepsPassed = 0;
+let totalStepsFailed = 0;
+let totalStepsSkipped = 0;
+let totalStepsUndefined = 0;
+let totalStepsPending = 0;
+let totalStepsTotal = 0;
+let totalScenariosPassed = 0;
+let totalScenariosFailed = 0;
+let totalScenariosTotal = 0;
+
+for (let i = 0; i < rows.length; i++) {
+  const item = rows[i];
+  totalStepsPassed += item.stepsPassed;
+  totalStepsFailed += item.stepsFailed;
+  totalStepsSkipped += item.stepsSkipped;
+  totalStepsUndefined += item.stepsUndefined;
+  totalStepsPending += item.stepsPending;
+  totalStepsTotal += item.stepsTotal;
+  totalScenariosPassed += item.scenariosPassed;
+  totalScenariosFailed += item.scenariosFailed;
+  totalScenariosTotal += item.scenariosTotal;
+}
+
+const gridSummary={totalStepsPassed,
+   totalStepsFailed ,
+totalStepsSkipped,
+  totalStepsUndefined,
+  totalStepsPending,
+  totalStepsTotal,
+  totalScenariosPassed, 
+  totalScenariosFailed,
+  totalScenariosTotal}
+
+
   return (
     <Box sx={{ margin:"20px"}}>
+      {/* <CSVLink data={csvFile}>Download me</CSVLink>; */}
       <Paper sx={{ width: '100%', mb: 2 }}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
+        <Box sx={{display:"flex", justifyContent:"space-between",alignItems:"center",margin:"10px 0"}}>
+        <CSVLink data={csvFile}>Export CSV</CSVLink>;
+          <TextField size='small' id="outlined-basic" onChange={(e)=>setSearch(e.target.value)} label="Search" variant="outlined" type='search' placeholder='Search by Feature name'/>
+        </Box>
         <TableContainer>
           <Table
-            sx={{ minWidth: 750 }}
+            sx={{ minWidth: 750,border:"1px solid gray" }}
             aria-labelledby="tableTitle"
-            size='medium'
+            size='small'
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -413,10 +449,12 @@ export default function TableTest() {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              csvFile={csvFile}
             />
             <TableBody>
               {visibleRows
-                ? visibleRows.map((row, index) => {
+                ?
+                 visibleRows.map((row, index) => {
                     const isItemSelected = isSelected(row.name);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -433,12 +471,13 @@ export default function TableTest() {
                       >
                        
                         <TableCell
+                       className={classes.border}
                           component="th"
                           id={labelId}
                           scope="row"
                           padding="none"
                         >
-                          {row.name}
+                        <Typography sx={{paddingLeft:"10px"}}>{row.name}</Typography>
                         </TableCell>
                         <TableCell className={classes.border}   sx={{bgcolor:!row.stepsPassed==0?COLORS["Passed"]:""}} align="center">{row.stepsPassed}</TableCell>
                         <TableCell className={classes.border}  sx={{bgcolor:!row.stepsFailed==0?COLORS["Failed"]:""}} align="center">{row.stepsFailed}</TableCell>
@@ -454,7 +493,52 @@ export default function TableTest() {
                       </TableRow>
                     );
                   })
+                  
+                       
                 : null}
+                <TableRow
+                     
+                        style={{ cursor: 'pointer'}}
+                        
+                      >
+                       
+                       <TableCell className={classes.border} >
+                        <Typography   className={classes.summaryItem}>summary</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} >{gridSummary.totalStepsPassed}</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} >{gridSummary.totalStepsFailed}</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem}>{gridSummary.totalStepsSkipped}</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} >{gridSummary.totalStepsUndefined}</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem}>{gridSummary.totalStepsPending}</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem}>{gridSummary.totalStepsTotal}</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} >{gridSummary.totalScenariosPassed}</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography  className={classes.summaryItem}>{gridSummary.totalScenariosFailed}</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} >{gridSummary.totalScenariosTotal}</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} >{counterData[3].value}</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} >--</Typography>
+                        </TableCell>
+                        </TableRow>
               {paddingHeight > 0 && (
                 <TableRow
                   style={{
@@ -466,7 +550,7 @@ export default function TableTest() {
               )}
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer>   
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
@@ -476,6 +560,8 @@ export default function TableTest() {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
+       
+       
       </Paper>
      
     </Box>
@@ -483,6 +569,10 @@ export default function TableTest() {
 }
 const useStyles =makeStyles({
 border:{
-  border:"1px solid #ccc"
-}
+  border:"1px solid black !important"
+},
+summaryItem:{
+  fontWeight:"700 !important"
+},
+
 })
