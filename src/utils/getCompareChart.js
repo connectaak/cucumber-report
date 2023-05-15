@@ -1,4 +1,5 @@
 export const getCompareChart=(featuresData)=>{
+
  const sortData=(data)=>{
     data.sort((a, b) => {
         if (a.status === "passed" && b.status === "failed") {
@@ -15,25 +16,25 @@ const featureData= featuresData.map((features,index)=>
 
     {
         let data
-        const failedlength= features.filter(item => item.featureStatus === 'Failed').length
-      const passedlength=  features.filter(item => item.featureStatus === 'Passed').length
+        const failedlength= features.data.filter(item => item.featureStatus === 'Failed').length
+      const passedlength=  features.data.filter(item => item.featureStatus === 'Passed').length
     
       if(passedlength>0&&failedlength>0){
-       data=[{ name: `File ${index+1}`,
+       data=[{ name: features.name,
         status:"passed",
          value: passedlength},
-         { name: `File ${index+1}`,
+         { name:  features.name,
         status:"failed",
          value: failedlength}]
         
       }
      else if(failedlength>0){
-        data=[{ name: `File ${index+1}`,
+        data=[{ name:  features.name,
         status:"failed",
          value: failedlength}]
       }
     else if(passedlength>0){
-        data=[{ name: `File ${index+1}`,
+        data=[{ name:  features.name,
         status:"passed",
          value: passedlength}]
       }
@@ -44,29 +45,30 @@ const featureData= featuresData.map((features,index)=>
 const ScenariosData=featuresData.map((features,index)=>{
 
     return[{
-        name: `File ${index+1}` ,
+        name:  features.name ,
         status:"failed",
-        value: features.reduce((total, item) => total + item.scenariosFailed, 0)
+        value: features.data.reduce((total, item) => total + item.scenariosFailed, 0)
       },
       {
-        name: `File ${index+1}`,
+        name:  features.name,
         status:'passed',
-        value: features.reduce((total, item) => total + item.scenariosPassed, 0)
+        value: features.data.reduce((total, item) => total + item.scenariosPassed, 0)
       }]    
    }) 
 const stepsData=featuresData.map((features,index)=>{
 
     return[{
-        name: `File ${index+1}` ,
+        name: features.name ,
         status:"failed",
-        value: features.reduce((total, item) => total + item.stepFailed, 0)
+        value: features.data.reduce((total, item) => total + item.stepFailed, 0)
       },
       {
-        name: `File ${index+1}`,
+        name:  features.name,
         status:'passed',
-        value: features.reduce((total, item) => total + item.stepPassed, 0)
+        value: features.data.reduce((total, item) => total + item.stepPassed, 0)
       }]    
    }) 
+  
    
     const chartData = [
         {

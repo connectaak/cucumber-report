@@ -5,8 +5,11 @@ import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis
 const SummaryCompare = ({data}) => {
     const classes = useStyles();
     const COLORS = {passed:"#00C49F", failed:"#FF0000", skipped:"#0088FE",pending:"#FFBB28", undefined:"#B068F9"};
+
+
     return (
         <div className={classes.chartContainer}>
+           
         <ResponsiveContainer width="100%" height={400}>
         <BarChart
               width="100%"
@@ -25,7 +28,7 @@ const SummaryCompare = ({data}) => {
               <Tooltip />
            <Bar dataKey="value"  >
             {data?.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[entry.status]} />
+              <Cell key={`cell-${index}`} fill={COLORS[entry?.status]} />
             ))}
               </Bar> 
             </BarChart>

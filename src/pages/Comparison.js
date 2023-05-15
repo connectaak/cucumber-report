@@ -7,6 +7,7 @@ import useReportData from '../hooks/useReportData';
 
 const Comparison = () => {
     const { compareData } = useReportData();
+   
     const classes=useStyles()
     return (
        <Fragment>
