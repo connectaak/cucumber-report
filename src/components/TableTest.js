@@ -1,4 +1,5 @@
 import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { TextField } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -23,7 +24,6 @@ import * as React from 'react';
 import { CSVLink } from 'react-csv';
 import useReportData from '../hooks/useReportData';
 import { cucumberCustomObject } from '../utils/getCucumberCustomObj';
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -447,12 +447,12 @@ const totalScenariosFailedPercent =((totalScenariosFailed / totalScenariosTotal)
 
 
   return (
-    <Box sx={{ margin:"20px"}}>
+    <Box sx={{ margin:"20px",}}>
       {/* <CSVLink data={csvFile}>Download me</CSVLink>; */}
-      <Paper sx={{ width: '100%', mb: 2 }}>
+      <Paper sx={{ width: '100%', mb: 2, boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.3)'}}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
-        <Box sx={{display:"flex", justifyContent:"space-between",alignItems:"center",margin:"10px 0"}}>
-        <CSVLink data={csvFile}>Export CSV</CSVLink>;
+        <Box sx={{display:"flex", justifyContent:"space-between",alignItems:"center",padding:"10px"}}>
+        <CSVLink data={csvFile}><DownloadForOfflineIcon sx={{color:"#0476B5"}} /></CSVLink>
           <TextField size='small' id="outlined-basic" onChange={(e)=>setSearch(e.target.value)} label="Search" variant="outlined" type='search' placeholder='Search by Feature name'/>
         </Box>
         <TableContainer>

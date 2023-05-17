@@ -8,10 +8,10 @@ const CompareTable = ({data:tableData}) => {
     const classes=useStyles();
     
     return (
-        <Paper  sx={{ margin:"20px"}}>
+        <Paper  sx={{ margin:"20px", boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.3)'}}>
         <TableContainer>
             <Table
-                        sx={{ minWidth: 850,border:"1px solid gray" }}
+                        sx={{ minWidth: 850, border:"1px solid gray" }}
                         aria-labelledby="tableTitle"
                         size='small'>
             <TableHead>
