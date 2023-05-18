@@ -1,98 +1,17 @@
-import FirstPageIcon from '@mui/icons-material/FirstPage';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import LastPageIcon from '@mui/icons-material/LastPage';
-import { Box, IconButton, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { Fragment } from 'react';
-import useReportData from '../hooks/useReportData';
-import { getCompareTable } from '../utils/getCompareTable';
 
-import { useTheme } from '@mui/material/styles';
-
-function TablePaginationActions(props) {
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
-
-  const handleFirstPageButtonClick = (event) => {
-    onPageChange(event, 0);
-  };
-
-  const handleBackButtonClick = (event) => {
-    onPageChange(event, page - 1);
-  };
-
-  const handleNextButtonClick = (event) => {
-    onPageChange(event, page + 1);
-  };
-
-  const handleLastPageButtonClick = (event) => {
-    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
-
-  return (
-    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label="first page"
-      >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="previous page"
-      >
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="next page"
-      >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
-      >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
-    </Box>
-  );
-}
-
-
-const CompareTable = () => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(2);
-  const{compareData}=useReportData()
-  const tableData= getCompareTable(compareData);
-
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - tableData.length) : 0;
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
+const CompareTable = ({data:tableData}) => {
     const COLORS = {Passed:"#8fdc93", Failed:"#f29191", Skipped:"#83abf9",Pending:"#f3f68b", Undefined:"#f7b96f", Total: "#d3d1d2",Header:"#60cbf1"};
       const header=["Features","Features No","Passed","Failed","Skipped","Undefined","Pending","Total","Passed","Failed","Total","Duration","Status"]
     const classes=useStyles();
     
     return (
-        <Box  sx={{ margin:"20px"}}>
+        <Paper  sx={{ margin:"20px", boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.3)'}}>
         <TableContainer>
             <Table
-                        sx={{ minWidth: 850,border:"1px solid gray" }}
+                        sx={{ minWidth: 850, border:"1px solid gray" }}
                         aria-labelledby="tableTitle"
                         size='small'>
             <TableHead>
@@ -124,7 +43,7 @@ const CompareTable = () => {
                 </TableRow>
                 {item.map((row,index)=>(
                     <TableRow>
-                    <TableCell className={`${classes.border} ${classes.width}`}  align="center">{index+1}</TableCell>
+                    <TableCell className={`${classes.border} ${classes.width}`}  align="center">{row.file}</TableCell>
                     <TableCell className={`${classes.border} ${classes.width}`}   sx={{bgcolor:!row.stepsPassed==0?COLORS["Passed"]:""}} align="center">{row.stepsPassed}</TableCell>
                     <TableCell className={`${classes.border} ${classes.width}`}  sx={{bgcolor:!row.stepsFailed==0?COLORS["Failed"]:""}} align="center">{row.stepsFailed}</TableCell>
                     <TableCell  className={`${classes.border} ${classes.width}`} sx={{bgcolor:!row.stepsSkipped==0?COLORS["Skipped"]:""}} align="center">{row.stepsSkipped}</TableCell>
@@ -140,32 +59,11 @@ const CompareTable = () => {
                 ))}
                 </Fragment>
                 ))}
-
-{/* <TableFooter> */}
-          {/* <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={tableData.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow> */}
-        {/* </TableFooter> */}
       </TableBody>
       </Table>
       </TableContainer>
       
-      </Box>
+      </Paper>
     );
 };
 

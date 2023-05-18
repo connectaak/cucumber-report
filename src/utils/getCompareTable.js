@@ -1,11 +1,14 @@
 export const getCompareTable=(featuresData)=>{
+
     const subArrays = [];
-    for (let i = 0; i < featuresData[0]?.length; i++) {
+    for (let i = 0; i < featuresData[0]?.data?.length; i++) {
       const subArray = [];
       for (let j = 0; j < featuresData.length; j++) {
-        const element = featuresData[j][i];
+        const element = featuresData[j].data[i];
+  
        const finalData= {
             name: element.feature,
+            file: featuresData[j].name,
             stepsPassed: element.stepPassed,
             stepsFailed: element.stepFailed,
             stepsSkipped: element.stepSkip,
@@ -22,5 +25,6 @@ export const getCompareTable=(featuresData)=>{
       }
       subArrays.push(subArray);
     }
+
   return subArrays 
 }

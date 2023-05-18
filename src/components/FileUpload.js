@@ -28,7 +28,9 @@ const FileUpload = () => {
             const content = readerEvent.target.result;
             const cucumberJsonObject = convert(JSON.parse(content))
            if( location.pathname ==="/comparison"){
+     
             const {featuresData}=getComparisonData(cucumberJsonObject.features)
+     
             setCompareData([...compareData,...[featuresData]])
            }else{
             setData([...data,...cucumberJsonObject.features])

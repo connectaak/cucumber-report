@@ -6,9 +6,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import SummaryCompareItem from '../components/SummaryCompare';
 import { TabPanel } from '../components/TabPanel';
-import useReportData from '../hooks/useReportData';
 import { a11yProps } from '../utils/a11yProps';
-import { getCompareChart } from '../utils/getCompareChart';
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -16,26 +14,17 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export default function SummaryCompare() {
+export default function SummaryCompare({data}) {
   const [value, setValue] = useState(0);
-  const{compareData}=useReportData()
-  // const [chartData, setChartData] = useState([])
-  const handleChange = (event, newValue) => {
+ 
+const handleChange = (event, newValue) => {
     setValue(newValue);
-  };
+};
 
-//  const {featuresData}= getComparisonData(compareData) 
- const chartData= getCompareChart(compareData)
-
-// React.useEffect(() => {
-    
-
-    // setChartData(chartData)
-  //  console.log(featuresData,"featuresData")
-// }, [compareData])
   return (
     <Box id="trendchart" sx={{ width: '100%' }}>
-      <Box sx={{ marginTop:"20px",display:"flex",justifyContent:'center' }}>
+      <Box sx={{ margin:"20px 20px",display:"flex",justifyContent:'center' }}>
+   
         <Tabs textColor='red' TabIndicatorProps={{
     style: {
       backgroundColor: "#4caf50",
@@ -46,9 +35,10 @@ export default function SummaryCompare() {
           <Tab label="Scenarios" {...a11yProps(1)} />
           <Tab label="Steps/Tests" {...a11yProps(2)} />
         </Tabs>
+        
       </Box>
       {
-            chartData.map((item,index)=>(
+            data?.map((item,index)=>(
                 <TabPanel value={value} index={index}>
                 <SummaryCompareItem  key={index} data={item.data} title={item.title}/>
                 </TabPanel>

@@ -1,4 +1,5 @@
 import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { TextField } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -23,7 +24,6 @@ import * as React from 'react';
 import { CSVLink } from 'react-csv';
 import useReportData from '../hooks/useReportData';
 import { cucumberCustomObject } from '../utils/getCucumberCustomObj';
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -400,6 +400,8 @@ let totalStepsTotal = 0;
 let totalScenariosPassed = 0;
 let totalScenariosFailed = 0;
 let totalScenariosTotal = 0;
+let totalFeatures=0;
+
 
 for (let i = 0; i < rows.length; i++) {
   const item = rows[i];
@@ -413,7 +415,7 @@ for (let i = 0; i < rows.length; i++) {
   totalScenariosFailed += item.scenariosFailed;
   totalScenariosTotal += item.scenariosTotal;
 }
-
+totalFeatures+=rows.length;
 const gridSummary={totalStepsPassed,
    totalStepsFailed ,
 totalStepsSkipped,
@@ -423,15 +425,34 @@ totalStepsSkipped,
   totalScenariosPassed, 
   totalScenariosFailed,
   totalScenariosTotal}
+ 
+const totalStepsPassedPercent =((totalStepsPassed / totalStepsTotal) * 100).toFixed(0);
+const totalStepsFailedPercent =((totalStepsFailed / totalStepsTotal) * 100).toFixed(0);
+const totalStepsSkippedPercent =((totalStepsSkipped / totalStepsTotal) * 100).toFixed(0);
+const totalStepsUndefinedPercent =((totalStepsUndefined / totalStepsTotal) * 100).toFixed(0);
+const totalStepsPendingPercent =  ((totalStepsPending / totalStepsTotal) * 100).toFixed(0);
+
+const totalScenariosPassedPercent =((totalScenariosPassed / totalScenariosTotal) * 100).toFixed(0);
+const totalScenariosFailedPercent =((totalScenariosFailed / totalScenariosTotal) * 100).toFixed(0);
+  const gridSummaryPercentage={
+    totalStepsPassedPercent,
+    totalStepsFailedPercent,
+    totalStepsSkippedPercent,
+    totalStepsUndefinedPercent,
+    totalStepsPendingPercent,
+    totalScenariosPassedPercent,
+    totalScenariosFailedPercent,
+    totalFeatures
+  }
 
 
   return (
-    <Box sx={{ margin:"20px"}}>
+    <Box sx={{ margin:"20px",}}>
       {/* <CSVLink data={csvFile}>Download me</CSVLink>; */}
-      <Paper sx={{ width: '100%', mb: 2 }}>
+      <Paper sx={{ width: '100%', mb: 2, boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.3)'}}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
-        <Box sx={{display:"flex", justifyContent:"space-between",alignItems:"center",margin:"10px 0"}}>
-        <CSVLink data={csvFile}>Export CSV</CSVLink>;
+        <Box sx={{display:"flex", justifyContent:"space-between",alignItems:"center",padding:"10px"}}>
+        <CSVLink data={csvFile}><DownloadForOfflineIcon sx={{color:"#0476B5"}} /></CSVLink>
           <TextField size='small' id="outlined-basic" onChange={(e)=>setSearch(e.target.value)} label="Search" variant="outlined" type='search' placeholder='Search by Feature name'/>
         </Box>
         <TableContainer>
@@ -494,11 +515,8 @@ totalStepsSkipped,
                   
                        
                 : null}
-                <TableRow
-                     
-                        style={{ cursor: 'pointer'}}
-                        
-                      >
+                   
+                <TableRow>
                        
                        <TableCell rowSpan={10}  className={classes.border} >
                         <Typography   className={classes.summaryItem}>summary</Typography>
@@ -534,9 +552,47 @@ totalStepsSkipped,
                         <Typography className={classes.summaryItem} >{counterData[3]?.value}</Typography>
                         </TableCell>
                        <TableCell className={classes.border}   align="center">
-                        <Typography className={classes.summaryItem} >--</Typography>
+                        <Typography className={classes.summaryItem} >{totalFeatures}</Typography>
                         </TableCell>
-                        </TableRow>
+                </TableRow>
+            
+                <TableRow>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} >{gridSummaryPercentage.totalStepsPassedPercent}%</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} >{gridSummaryPercentage.totalStepsFailedPercent}%</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem}>{gridSummaryPercentage.totalStepsSkippedPercent}%</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} >{gridSummaryPercentage.totalStepsUndefinedPercent}%</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem}>{gridSummaryPercentage.totalStepsPendingPercent}%</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem}></Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} >{gridSummaryPercentage.totalScenariosPassedPercent}% </Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography  className={classes.summaryItem}>{gridSummaryPercentage.totalScenariosFailedPercent}%</Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} ></Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} ></Typography>
+                        </TableCell>
+                       <TableCell className={classes.border}   align="center">
+                        <Typography className={classes.summaryItem} ></Typography>
+                        </TableCell>
+                </TableRow>
+            
+            
               {paddingHeight > 0 && (
                 <TableRow
                   style={{

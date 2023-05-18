@@ -32,7 +32,7 @@ export default function DurationsCompare() {
     
 
     // setChartData(chartData)
-  //  console.log(featuresData,"featuresData")
+
 // }, [compareData])
   return (
     <Box id="trendchart" sx={{ width: '100%' }}>
