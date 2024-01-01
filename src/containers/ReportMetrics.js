@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
 import CounterCart from "../components/CounterCart";
@@ -10,35 +10,39 @@ import logo4 from "../assets/images/icons/steps.png";
 import logo5 from "../assets/images/icons/duration.png";
 import logo6 from "../assets/images/icons/starttime.png";
 
-const ReportMatrics = () => {
+const ReportMetrics = () => {
   const logos = [logo2, logo3, logo4, logo5];
   const { counterData, totalReport } = useReportData();
 
   const classes = useStyles();
 
   return (
-    <Box id="counter" className={classes.container}>
-      <CounterCart title="Total Reports" value={totalReport} logo={logo1} />
-      {counterData.map((item, index) => (
+    <>
+      <Typography mt={5} my={5} align="center" variant="h2">
+        REPORT METRICS
+      </Typography>
+      <Box id="counter" className={classes.container}>
+        <CounterCart title="Total Reports" value={totalReport} logo={logo1} />
+        {counterData.map((item, index) => (
+          <CounterCart
+            key={index}
+            title={item.title}
+            value={item.value}
+            logo={logos[index]}
+          />
+        ))}
         <CounterCart
-          key={index}
-          title={item.title}
-          value={item.value}
-          logo={logos[index]}
+          title="Start Time"
+          value="3/26/2023"
+          time="20:30"
+          logo={logo6}
         />
-      ))}
-      <CounterCart
-        title="Start Time"
-        value="3/26/2023"
-        time="20:30"
-        logo={logo6}
-      />
-      {/* <CounterCart title="End Time" value="3/26/2023" time="20:30"/> */}
-    </Box>
+      </Box>
+    </>
   );
 };
 
-export default ReportMatrics;
+export default ReportMetrics;
 
 const useStyles = makeStyles({
   container: {

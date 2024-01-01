@@ -9,6 +9,7 @@ import TrendChart from "../components/TrendChart";
 import useReportData from "../hooks/useReportData";
 import { a11yProps } from "../utils/a11yProps";
 import { getTrendChartData } from "../utils/getTrendChartData";
+import { Typography } from "@mui/material";
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -25,6 +26,9 @@ export default function DurationSummery() {
   const { scenarios, features, steps } = getTrendChartData(data);
   return (
     <Box id="trendchart" sx={{ width: "100%" }}>
+      <Typography mt={5} my={5} align="center" variant="h2">
+        DURATION SUMMERY
+      </Typography>
       <Box
         sx={{ marginTop: "20px", display: "flex", justifyContent: "center" }}
       >

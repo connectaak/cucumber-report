@@ -521,7 +521,10 @@ export default function GridSummery() {
 
   return (
     <Box sx={{ margin: "20px" }}>
-      {/* <CSVLink data={csvFile}>Download me</CSVLink>; */}
+      <Typography mt={5} my={5} align="center" variant="h2">
+        GRID SUMMERY
+      </Typography>
+
       <Paper
         sx={{
           width: "100%",

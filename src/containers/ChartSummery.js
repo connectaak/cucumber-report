@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import PichartCart from "../components/PichartCart";
 import useReportData from "../hooks/useReportData";
@@ -14,20 +14,25 @@ const ChartSummery = () => {
     setChartData(chartData);
   }, [data, setCounterData]);
   return (
-    <Box
-      id="pichart"
-      style={{
-        display: "flex",
-        flexWrap: "wrap ",
-        gap: "10px",
-        justifyContent: "center ",
-        marginTop: "25px",
-      }}
-    >
-      {chartData.map((item, index) => (
-        <PichartCart key={index} data={item.data} title={item.title} />
-      ))}
-    </Box>
+    <>
+      <Typography mt={5} my={5} align="center" variant="h2">
+        CHART SAMMERY
+      </Typography>
+      <Box
+        id="pichart"
+        style={{
+          display: "flex",
+          flexWrap: "wrap ",
+          gap: "10px",
+          justifyContent: "center ",
+          marginTop: "25px",
+        }}
+      >
+        {chartData.map((item, index) => (
+          <PichartCart key={index} data={item.data} title={item.title} />
+        ))}
+      </Box>
+    </>
   );
 };
 

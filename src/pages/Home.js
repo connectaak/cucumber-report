@@ -5,7 +5,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import React, { Fragment, useRef, useState } from "react";
 import GridSummery from "../components/GridSummery";
-import ReportMatrics from "../containers/ReportMatrics";
+import ReportMetrics from "../containers/ReportMetrics";
 import ChartSummery from "../containers/ChartSummery";
 import DurationSummery from "../containers/DurationSummery";
 import useReportData from "../hooks/useReportData";
@@ -14,8 +14,9 @@ const Home = () => {
   const classes = useStyles();
   const ref = useRef();
 
+  // Metrics.......
   const features = [
-    <ReportMatrics />,
+    <ReportMetrics />,
     <ChartSummery />,
     <DurationSummery />,
     <GridSummery />,
