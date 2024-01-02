@@ -6,23 +6,40 @@ import "./App.css";
 import Navigation from "./components/Navigation";
 import Comparison from "./pages/Comparison";
 import Home from "./pages/Home";
+import ProjectThemeProvider from "./context/ColoProvider";
+import ReportProvider from "./context/usePichart";
+import { StylesProvider } from "@material-ui/core/styles";
 import Json from "./pages/Json";
-export function App() {
+
+export default function App() {
   const classes = useStyles();
+  const generateClassName = () => {
+    let counter = 0;
+    return (rule, styleSheet) => {
+      counter += 1;
+      return `${styleSheet.options.classNamePrefix}-${rule.key}-${counter}`;
+    };
+  };
   return (
-    <HashRouter>
-      <Navigation />
-      <Box
-        className={classes.container}
-        sx={{ bgcolor: "background.default", color: "text.primary" }}
-      >
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/json" element={<Json />} />
-          <Route path="/comparison" element={<Comparison />} />
-        </Routes>
-      </Box>
-    </HashRouter>
+    <StylesProvider generateClassName={generateClassName()} injectFirst>
+      <ProjectThemeProvider>
+        <ReportProvider>
+          <HashRouter>
+            <Navigation />
+            <Box
+              className={classes.container}
+              sx={{ bgcolor: "background.default", color: "text.primary" }}
+            >
+              <Routes>
+                <Route exact path="/" element={<Home />} />
+                <Route path="/json" element={<Json />} />
+                <Route path="/comparison" element={<Comparison />} />
+              </Routes>
+            </Box>
+          </HashRouter>
+        </ReportProvider>
+      </ProjectThemeProvider>
+    </StylesProvider>
   );
 }
 
