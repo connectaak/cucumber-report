@@ -14,7 +14,7 @@ import logo from "../assets/images/logo.png";
 import { ColorModeContext } from "../context/ColoProvider";
 import useReportData from "../hooks/useReportData";
 import FileUpload from "./FileUpload";
-
+import { HashLink } from "react-router-hash-link";
 const Navigation = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
@@ -27,7 +27,7 @@ const Navigation = () => {
   const location = useLocation();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-
+  console.log(location, "location");
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -88,40 +88,40 @@ const Navigation = () => {
               >
                 <Typography>JSON</Typography>
               </NavLink>
-              {location.pathname == "/" && (
+              {location.pathname === "/" && (
                 <Scrollspy
                   className={classes.spyContainer}
                   items={["counter", "pichart", "trendchart", "grid"]}
                   currentClassName={classes.current}
                 >
-                  <Link
+                  <HashLink
                     sx={{ color: "text.primary" }}
                     className={classes.text}
-                    href="#counter"
+                    to="#counter"
                   >
-                    <Typography>COUNTER</Typography>
-                  </Link>
-                  <Link
+                    <Typography>METRICS</Typography>
+                  </HashLink>
+                  <HashLink
                     sx={{ color: "text.primary" }}
                     className={classes.text}
-                    href="#pichart"
+                    to="/#pichart"
                   >
-                    <Typography>PICHART</Typography>
-                  </Link>
-                  <Link
+                    <Typography>CHART</Typography>
+                  </HashLink>
+                  <HashLink
                     sx={{ color: "text.primary" }}
                     className={classes.text}
-                    href="#trendchart"
+                    to="#trendchart"
                   >
-                    <Typography>TRENDCHART</Typography>
-                  </Link>
-                  <Link
+                    <Typography>DURATION</Typography>
+                  </HashLink>
+                  <HashLink
                     sx={{ color: "text.primary" }}
                     className={classes.text}
-                    href="#grid"
+                    to="#grid"
                   >
                     <Typography>GRID</Typography>
-                  </Link>
+                  </HashLink>
                 </Scrollspy>
               )}
             </>

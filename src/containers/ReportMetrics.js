@@ -3,15 +3,15 @@ import { makeStyles } from "@mui/styles";
 import React from "react";
 import CounterCart from "../components/CounterCart";
 import useReportData from "../hooks/useReportData";
-import logo1 from "../assets/images/icons/report.png";
-import logo2 from "../assets/images/icons/features.png";
-import logo3 from "../assets/images/icons/scenarios.png";
-import logo4 from "../assets/images/icons/steps.png";
-import logo5 from "../assets/images/icons/duration.png";
-import logo6 from "../assets/images/icons/starttime.png";
+import totalReports from "../assets/images/icons/report.png";
+import features from "../assets/images/icons/features.png";
+import scenarios from "../assets/images/icons/scenarios.png";
+import steps from "../assets/images/icons/steps.png";
+import duration from "../assets/images/icons/duration.png";
+import startTime from "../assets/images/icons/starttime.png";
 
 const ReportMetrics = () => {
-  const logos = [logo2, logo3, logo4, logo5];
+  const logos = [features, scenarios, steps, duration];
   const { counterData, totalReport } = useReportData();
 
   const classes = useStyles();
@@ -22,7 +22,11 @@ const ReportMetrics = () => {
         REPORT METRICS
       </Typography>
       <Box id="counter" className={classes.container}>
-        <CounterCart title="Total Reports" value={totalReport} logo={logo1} />
+        <CounterCart
+          title="Total Reports"
+          value={totalReport}
+          logo={totalReports}
+        />
         {counterData.map((item, index) => (
           <CounterCart
             key={index}
@@ -35,7 +39,7 @@ const ReportMetrics = () => {
           title="Start Time"
           value="3/26/2023"
           time="20:30"
-          logo={logo6}
+          logo={startTime}
         />
       </Box>
     </>

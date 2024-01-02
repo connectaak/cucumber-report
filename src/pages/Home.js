@@ -14,7 +14,6 @@ const Home = () => {
   const classes = useStyles();
   const ref = useRef();
 
-  // Metrics.......
   const features = [
     <ReportMetrics />,
     <ChartSummery />,
@@ -26,7 +25,7 @@ const Home = () => {
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
 
-  //const handle drag sorting
+  //const handle drag sorting.................
   const handleSort = (e) => {
     //duplicate items
     let _featuresItems = [...featuresItems];
@@ -61,6 +60,8 @@ const Home = () => {
       window.scrollTo(0, scrollTop + 10);
     }
   };
+
+  // Export  PDF ..................
   const handlePdfExport = () => {
     html2canvas(ref.current, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
