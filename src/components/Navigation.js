@@ -25,7 +25,6 @@ const Navigation = () => {
     threshold: 0,
   });
   const location = useLocation();
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   console.log(location, "location");
   const handleOpenNavMenu = (event) => {
