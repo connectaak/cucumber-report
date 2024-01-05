@@ -13,6 +13,7 @@ const ChartSummery = () => {
     setCounterData(counterData);
     setChartData(chartData);
   }, [data, setCounterData]);
+
   return (
     <>
       <Typography mt={5} my={5} align="center" variant="h2">

@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/styles";
 import { Box } from "@mui/material";
 import { NanosecondsConverter } from "../utils/nanosecondConverter";
+
 const CustomTooltip = ({ active, payload, label, summaryCompare }) => {
   const classes = useStyles();
   if (active && payload && payload.length) {
