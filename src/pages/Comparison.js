@@ -29,6 +29,7 @@ const Comparison = () => {
     };
   });
 
+  // Handle Drop Down................
   const handleChangeDropDown = (event) => {
     const selectedValues = event.target.value;
 
@@ -115,8 +116,10 @@ const Comparison = () => {
               </Select>
             </FormControl>
           </Box>
+          {/* summary compare section */}
           <SummaryCompare data={chartData} />
 
+          {/* Grid summary  */}
           <CompareTable data={tableData} />
         </div>
       ) : (

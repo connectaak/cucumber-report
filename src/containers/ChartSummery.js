@@ -8,6 +8,7 @@ const ChartSummery = () => {
   const { data, setCounterData } = useReportData();
   const [chartData, setChartData] = useState([]);
 
+  // Loading chart data...........
   useEffect(() => {
     const { chartData, counterData } = cucumberCustomObject(data);
     setCounterData(counterData);

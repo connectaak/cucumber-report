@@ -6,7 +6,7 @@ import * as React from "react";
 import { useState } from "react";
 import SummaryCompareItem from "../components/SummaryCompare";
 import { TabPanel } from "../components/TabPanel";
-import { a11yProps } from "../utils/a11yProps";
+import { tabProps } from "../utils/tabProps";
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -17,6 +17,7 @@ TabPanel.propTypes = {
 export default function SummaryCompare({ data }) {
   const [value, setValue] = useState(0);
 
+  // Tab navigate.............
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -38,9 +39,9 @@ export default function SummaryCompare({ data }) {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Feature" {...a11yProps(0)} />
-          <Tab label="Scenarios" {...a11yProps(1)} />
-          <Tab label="Steps/Tests" {...a11yProps(2)} />
+          <Tab label="Feature" {...tabProps(0)} />
+          <Tab label="Scenarios" {...tabProps(1)} />
+          <Tab label="Steps/Tests" {...tabProps(2)} />
         </Tabs>
       </Box>
       {data?.map((item, index) => (

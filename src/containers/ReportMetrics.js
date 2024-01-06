@@ -13,7 +13,6 @@ import startTime from "../assets/images/icons/starttime.png";
 const ReportMetrics = () => {
   const logos = [features, scenarios, steps, duration];
   const { counterData, totalReport } = useReportData();
-
   const classes = useStyles();
 
   return (

@@ -13,6 +13,8 @@ import Json from "./pages/Json";
 
 export default function App() {
   const classes = useStyles();
+
+  // make unique ............
   const generateClassName = () => {
     let counter = 0;
     return (rule, styleSheet) => {
@@ -20,6 +22,7 @@ export default function App() {
       return `${styleSheet.options.classNamePrefix}-${rule.key}-${counter}`;
     };
   };
+
   return (
     <StylesProvider generateClassName={generateClassName()} injectFirst>
       <ProjectThemeProvider>
