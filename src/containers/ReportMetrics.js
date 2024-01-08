@@ -14,6 +14,25 @@ const ReportMetrics = () => {
   const logos = [features, scenarios, steps, duration];
   const { counterData, totalReport } = useReportData();
   const classes = useStyles();
+  // Create a new Date object
+  const today = new Date();
+
+  // Get the current date components
+  const month = today.getMonth() + 1; // Month is zero-based, so add 1
+  const day = today.getDate();
+  const year = today.getFullYear();
+
+  // Format the date as a string in MM/DD/YYYY format
+  const formattedDate =
+    (month < 10 ? "0" : "") +
+    month +
+    "/" +
+    (day < 10 ? "0" : "") +
+    day +
+    "/" +
+    year;
+
+  console.log(formattedDate);
 
   return (
     <>
@@ -37,8 +56,8 @@ const ReportMetrics = () => {
         ))}
         <ReportMetricCard
           title="Start Time"
-          value1="3/26/2023"
-          value2="20:30"
+          value1={formattedDate}
+          // value2="20:30"
           logo={startTime}
         />
       </Box>
