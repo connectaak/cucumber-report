@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
-import CounterCart from "../components/CounterCart";
+import ReportMetricCard from "../components/ReportMetricCard";
 import useReportData from "../hooks/useReportData";
 import totalReports from "../assets/images/icons/report.png";
 import features from "../assets/images/icons/features.png";
@@ -21,23 +21,24 @@ const ReportMetrics = () => {
         REPORT METRICS
       </Typography>
       <Box id="counter" className={classes.container}>
-        <CounterCart
+        {/* card */}
+        <ReportMetricCard
           title="Total Reports"
-          value={totalReport}
+          value1={totalReport}
           logo={totalReports}
         />
         {counterData.map((item, index) => (
-          <CounterCart
+          <ReportMetricCard
             key={index}
             title={item.title}
-            value={item.value}
+            value1={item.value}
             logo={logos[index]}
           />
         ))}
-        <CounterCart
+        <ReportMetricCard
           title="Start Time"
-          value="3/26/2023"
-          time="20:30"
+          value1="3/26/2023"
+          value2="20:30"
           logo={startTime}
         />
       </Box>

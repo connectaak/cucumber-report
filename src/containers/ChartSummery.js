@@ -18,7 +18,7 @@ const ChartSummery = () => {
   return (
     <>
       <Typography mt={5} my={5} align="center" variant="h2">
-        CHART SAMMERY
+        CHART SUMMERY
       </Typography>
       <Box
         id="pichart"
