@@ -21,6 +21,10 @@ const ReportMetrics = () => {
   const month = today.getMonth() + 1; // Month is zero-based, so add 1
   const day = today.getDate();
   const year = today.getFullYear();
+  // Get the current time components
+  var hours = today.getHours();
+  var minutes = today.getMinutes();
+  // var seconds = today.getSeconds();
 
   // Format the date as a string in MM/DD/YYYY format
   const formattedDate =
@@ -31,8 +35,8 @@ const ReportMetrics = () => {
     day +
     "/" +
     year;
-
-  console.log(formattedDate);
+  const formattedTime =
+    (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes;
 
   return (
     <>
@@ -40,7 +44,6 @@ const ReportMetrics = () => {
         REPORT METRICS
       </Typography>
       <Box id="counter" className={classes.container}>
-        {/* card */}
         <ReportMetricCard
           title="Total Reports"
           value1={totalReport}
@@ -57,7 +60,7 @@ const ReportMetrics = () => {
         <ReportMetricCard
           title="Start Time"
           value1={formattedDate}
-          // value2="20:30"
+          value2={formattedTime}
           logo={startTime}
         />
       </Box>

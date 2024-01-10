@@ -1,9 +1,11 @@
 import { makeStyles } from "@material-ui/styles";
 import { Box } from "@mui/material";
-import { NanosecondsConverter } from "../utils/nanosecondConverter";
+import { getSecondsToDuration } from "../utils/nanosecondConverter";
+// import { NanosecondsConverter } from "../utils/nanosecondConverter";
 
-const CustomTooltip = ({ active, payload, label, summaryCompare }) => {
+const DurationSummeryTooltip = ({ active, payload, label, summaryCompare }) => {
   const classes = useStyles();
+  // console.log(payload[0].value, "data");
   if (active && payload && payload.length) {
     return (
       <Box>
@@ -22,8 +24,7 @@ const CustomTooltip = ({ active, payload, label, summaryCompare }) => {
             )}
             <p className={classes.lebel}>{label}</p>
             <p className={classes.lebel}>
-              Duration :{" "}
-              {<NanosecondsConverter milliseconds={payload[0].value} />}
+              Duration : {getSecondsToDuration(payload[0].value).totalDuration}
             </p>
           </Box>
         )}
@@ -31,7 +32,7 @@ const CustomTooltip = ({ active, payload, label, summaryCompare }) => {
     );
   }
 };
-export default CustomTooltip;
+export default DurationSummeryTooltip;
 
 const useStyles = makeStyles({
   container: {

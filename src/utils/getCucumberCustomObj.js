@@ -89,7 +89,7 @@ export const cucumberCustomObject = (jsonData) => {
     { title: "Test/Steps", value: totalSteps },
     {
       title: "Duration",
-      value: <NanosecondsConverter milliseconds={totalDuration} />,
+      value: NanosecondsConverter(totalDuration).totalDuration,
     },
   ];
 
@@ -182,7 +182,7 @@ export const cucumberCustomObject = (jsonData) => {
       scenariosPassed: item.scenariosPassed,
       scenariosFailed: item.scenariosFailed,
       scenariosTotal: item.scenariosTotal,
-      duration: <NanosecondsConverter milliseconds={item.featureDuration} />,
+      duration: NanosecondsConverter(item.featureDuration).totalDuration,
       status: item.featureStatus,
     };
   });

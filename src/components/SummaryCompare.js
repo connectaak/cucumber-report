@@ -10,7 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import CustomTooltip from "./CustomTooltip";
+import DurationSummeryTooltip from "./DurationSummeryTooltip";
 
 const SummaryCompare = ({ data }) => {
   const classes = useStyles();
@@ -39,7 +39,7 @@ const SummaryCompare = ({ data }) => {
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis datakey="duration" />
-          <Tooltip content={<CustomTooltip summaryCompare />} />
+          <Tooltip content={<DurationSummeryTooltip summaryCompare />} />
           <Bar dataKey="value">
             {data?.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[entry?.status]} />
