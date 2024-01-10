@@ -21,10 +21,6 @@ const ReportMetrics = () => {
   const month = today.getMonth() + 1; // Month is zero-based, so add 1
   const day = today.getDate();
   const year = today.getFullYear();
-  // Get the current time components
-  var hours = today.getHours();
-  var minutes = today.getMinutes();
-  // var seconds = today.getSeconds();
 
   // Format the date as a string in MM/DD/YYYY format
   const formattedDate =
@@ -35,8 +31,10 @@ const ReportMetrics = () => {
     day +
     "/" +
     year;
-  const formattedTime =
-    (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes;
+  const formattedTime = today.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
     <>

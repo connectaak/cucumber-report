@@ -20,6 +20,7 @@ import {
   YAxis,
 } from "recharts";
 import DurationSummeryTooltip from "./DurationSummeryTooltip";
+import { getSecondsToDuration } from "../utils/nanosecondConverter";
 
 const TrendChart = ({ data: chartData, title, steps }) => {
   const COLORS = {
@@ -34,11 +35,35 @@ const TrendChart = ({ data: chartData, title, steps }) => {
   const [duration, setDuration] = useState(chartData);
   const [sortOrder, setSortOrder] = useState("asc");
   const [selectedType, setSelectedType] = useState();
+  const [durationTime, setDurationTime] = useState();
 
   useEffect(() => {
     setDuration(chartData);
   }, [chartData]);
-
+  console.log(duration);
+  const handleDurationTime = (e) => {
+    const durationValue = e.target.value;
+    setDurationTime(durationValue);
+    if (durationValue === 1) {
+      setDuration(chartData);
+    } else if (durationValue === 2) {
+      const newData = chartData.map((feature) => {
+        return {
+          ...feature,
+          duration: getSecondsToDuration(feature.duration).totalMinutes, // You can replace this with your desired update logic
+        };
+      });
+      setDuration(newData);
+    } else {
+      const newData = chartData.map((feature) => {
+        return {
+          ...feature,
+          duration: getSecondsToDuration(feature.duration).totalHours, // You can replace this with your desired update logic
+        };
+      });
+      setDuration(newData);
+    }
+  };
   const handleChange = (event) => {
     // setData(event.target.value.data);
     setDuration(event.target.value.data);
@@ -77,7 +102,7 @@ const TrendChart = ({ data: chartData, title, steps }) => {
   });
 
   const allData = { name: "all", data: chartData };
-  console.log(duration, "durantionnn");
+
   return (
     <Box className={classes.root}>
       <Box className={classes.header}>
@@ -143,14 +168,20 @@ const TrendChart = ({ data: chartData, title, steps }) => {
               Duration in Second
             </InputLabel>
             <Select
-              // value={selectedType}
-              // onChange={handleChange}
+              value={durationTime}
+              onChange={handleDurationTime}
               labelId="demo-simple-select-label-1"
               id="demo-simple-select"
               inputProps={{ "aria-label": "Without label" }}
             >
-              <MenuItem>
-                <em>All</em>
+              <MenuItem value={1}>
+                <em>Second</em>
+              </MenuItem>
+              <MenuItem value={2}>
+                <em>Minute</em>
+              </MenuItem>
+              <MenuItem value={3}>
+                <em>Hour</em>
               </MenuItem>
             </Select>
           </FormControl>
