@@ -23,9 +23,20 @@ const DurationSummeryTooltip = ({ active, payload, label, summaryCompare }) => {
               <p className={classes.lebel}>{payload[0].payload.scenarioName}</p>
             )}
             <p className={classes.lebel}>{label}</p>
-            <p className={classes.lebel}>
-              Duration : {getSecondsToDuration(payload[0].value).totalDuration}
-            </p>
+            {payload[0].payload.tooltipVlue ? (
+              <p className={classes.lebel}>
+                Duration :{" "}
+                {
+                  getSecondsToDuration(payload[0].payload.tooltipVlue)
+                    .totalDuration
+                }
+              </p>
+            ) : (
+              <p className={classes.lebel}>
+                Duration :{" "}
+                {getSecondsToDuration(payload[0].value).totalDuration}
+              </p>
+            )}
           </Box>
         )}
       </Box>

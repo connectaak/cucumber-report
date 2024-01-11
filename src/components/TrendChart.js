@@ -50,6 +50,7 @@ const TrendChart = ({ data: chartData, title, steps }) => {
       const newData = chartData.map((feature) => {
         return {
           ...feature,
+          tooltipVlue: feature.duration,
           duration: getSecondsToDuration(feature.duration).totalMinutes, // You can replace this with your desired update logic
         };
       });
@@ -58,6 +59,7 @@ const TrendChart = ({ data: chartData, title, steps }) => {
       const newData = chartData.map((feature) => {
         return {
           ...feature,
+          tooltipVlue: feature.duration,
           duration: getSecondsToDuration(feature.duration).totalHours, // You can replace this with your desired update logic
         };
       });
