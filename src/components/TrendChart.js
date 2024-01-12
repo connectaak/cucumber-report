@@ -34,8 +34,11 @@ const TrendChart = ({ data: chartData, title, steps }) => {
   // const [data, setData] = useState(chartData)
   const [duration, setDuration] = useState(chartData);
   const [sortOrder, setSortOrder] = useState("asc");
-  const [selectedType, setSelectedType] = useState();
-  const [durationTime, setDurationTime] = useState();
+  const [selectedType, setSelectedType] = useState({
+    name: "all",
+    data: chartData,
+  });
+  const [durationTime, setDurationTime] = useState(1);
 
   useEffect(() => {
     setDuration(chartData);
@@ -124,7 +127,7 @@ const TrendChart = ({ data: chartData, title, steps }) => {
               sx={{ m: 1, minWidth: 120, border: "none" }}
               size="small"
             >
-              <InputLabel id="demo-simple-select-label">All</InputLabel>
+              {/* <InputLabel id="demo-simple-select-label">All</InputLabel> */}
               <Select
                 value={selectedType}
                 onChange={handleChange}
@@ -166,14 +169,18 @@ const TrendChart = ({ data: chartData, title, steps }) => {
             sx={{ m: 1, minWidth: 200, border: "none" }}
             size="small"
           >
-            <InputLabel id="demo-simple-select-label-1">
-              Duration in Second
-            </InputLabel>
+            {/* <InputLabel id="demo-simple-select-label-1">
+              Duration Time
+            </InputLabel> */}
             <Select
               value={durationTime}
               onChange={handleDurationTime}
               labelId="demo-simple-select-label-1"
               id="demo-simple-select"
+              // sx={{
+              //   border: "1px solid grey",
+              //   "& fieldset": { border: "none" },
+              // }}
               inputProps={{ "aria-label": "Without label" }}
             >
               <MenuItem value={1}>
