@@ -9,19 +9,19 @@ import ReportMetrics from "../containers/ReportMetrics";
 import ChartSummery from "../containers/ChartSummery";
 import DurationSummery from "../containers/DurationSummery";
 import useReportData from "../hooks/useReportData";
+
+const features = [
+  <ReportMetrics />,
+  <ChartSummery />,
+  <DurationSummery />,
+  <GridSummery />,
+];
+
 const Home = () => {
   const { data } = useReportData();
   const classes = useStyles();
   const ref = useRef();
-
-  const features = [
-    <ReportMetrics />,
-    <ChartSummery />,
-    <DurationSummery />,
-    <GridSummery />,
-  ];
   const [featuresItems, setfeaturesItems] = useState(features);
-
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
 
@@ -29,7 +29,6 @@ const Home = () => {
   const handleSort = (e) => {
     //duplicate items
     let _featuresItems = [...featuresItems];
-
     //remove and save the dragged item content
     const draggedItemContent = _featuresItems.splice(dragItem.current, 1)[0];
 

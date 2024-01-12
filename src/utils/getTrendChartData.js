@@ -1,3 +1,5 @@
+import { NanosecondsConverter } from "./nanosecondConverter";
+
 export const getTrendChartData = (data) => {
   let scenarios = [];
   let features = [];
@@ -22,7 +24,8 @@ export const getTrendChartData = (data) => {
         scenarioDuration += step?.result?.duration || 0; // add duration to scenario duration
         steps.push({
           name: `Step ${stepNumber++}`,
-          duration: step?.result?.duration || 0, // keep duration in original format (microseconds)
+          duration: NanosecondsConverter(step?.result?.duration || 0)
+            .totalSeconds, // keep duration in original format (microseconds)
           scenarioName,
           featureName,
           status: step?.result?.status === "passed" ? "passed" : "failed", // if step passed, status is passed, else failed
@@ -31,7 +34,7 @@ export const getTrendChartData = (data) => {
       featureDuration += scenarioDuration;
       scenarios.push({
         name: scenarioName,
-        duration: scenarioDuration, // keep duration in original format (microseconds)
+        duration: NanosecondsConverter(scenarioDuration).totalSeconds, // keep duration in original format (microseconds)
         featureName,
         status: scenarioStatus,
       });
@@ -41,7 +44,7 @@ export const getTrendChartData = (data) => {
     });
     features.push({
       name: featureName,
-      duration: featureDuration, // keep duration in original format (microseconds)
+      duration: NanosecondsConverter(featureDuration).totalSeconds, // keep duration in original format (microseconds)
       status: featureStatus,
     });
   });

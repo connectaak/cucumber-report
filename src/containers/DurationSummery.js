@@ -7,7 +7,7 @@ import { useState } from "react";
 import { TabPanel } from "../components/TabPanel";
 import TrendChart from "../components/TrendChart";
 import useReportData from "../hooks/useReportData";
-import { a11yProps } from "../utils/a11yProps";
+import { tabProps } from "../utils/tabProps";
 import { getTrendChartData } from "../utils/getTrendChartData";
 import { Typography } from "@mui/material";
 
@@ -20,6 +20,8 @@ TabPanel.propTypes = {
 export default function DurationSummery() {
   const [value, setValue] = useState(0);
   const { data } = useReportData();
+
+  // Tab Navigate...........
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -44,9 +46,9 @@ export default function DurationSummery() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Feature" {...a11yProps(0)} />
-          <Tab label="Scenarios" {...a11yProps(1)} />
-          <Tab label="Steps/Tests" {...a11yProps(2)} />
+          <Tab label="Feature" {...tabProps(0)} />
+          <Tab label="Scenarios" {...tabProps(1)} />
+          <Tab label="Steps/Tests" {...tabProps(2)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>

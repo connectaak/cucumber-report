@@ -1,9 +1,6 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import { TextField } from "@mui/material";
 import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -13,10 +10,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import Toolbar from "@mui/material/Toolbar";
-import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { alpha } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import { visuallyHidden } from "@mui/utils";
 import PropTypes from "prop-types";
@@ -24,6 +18,21 @@ import * as React from "react";
 import { CSVLink } from "react-csv";
 import useReportData from "../hooks/useReportData";
 import { cucumberCustomObject } from "../utils/getCucumberCustomObj";
+
+const DEFAULT_ORDER = "asc";
+const DEFAULT_ORDER_BY = "calories";
+const DEFAULT_ROWS_PER_PAGE = 5;
+const COLORS = {
+  Passed: "#8fdc93",
+  Failed: "#f29191",
+  Skipped: "#83abf9",
+  Pending: "#f3f68b",
+  Undefined: "#f7b96f",
+  Total: "#d3d1d2",
+  Header: "#60cbf1",
+};
+
+// Handaling Order...........
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -40,6 +49,7 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+// Handle sorting.............
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -52,6 +62,7 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
+// Head Cells.........
 const headCells = [
   {
     id: "name",
@@ -127,28 +138,9 @@ const headCells = [
   },
 ];
 
-const DEFAULT_ORDER = "asc";
-const DEFAULT_ORDER_BY = "calories";
-const DEFAULT_ROWS_PER_PAGE = 5;
-const COLORS = {
-  Passed: "#8fdc93",
-  Failed: "#f29191",
-  Skipped: "#83abf9",
-  Pending: "#f3f68b",
-  Undefined: "#f7b96f",
-  Total: "#d3d1d2",
-  Header: "#60cbf1",
-};
-
+// Table Head.........
 function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (newOrderBy) => (event) => {
     onRequestSort(event, newOrderBy);
   };
@@ -227,60 +219,6 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
-
-function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Nutrition
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-}
 
 export default function GridSummery() {
   const [order, setOrder] = React.useState(DEFAULT_ORDER);
@@ -377,13 +315,6 @@ export default function GridSummery() {
       );
 
       setVisibleRows(updatedRows);
-
-      // Avoid a layout jump when reaching the last page with empty rows.
-      //   const numEmptyRows =
-      //     newPage > 0 ? Math.max(0, (1 + newPage) * rowsPerPage - rows.length) : 0;
-
-      // const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
-      // setPaddingHeight(newPaddingHeight);
     },
     [order, orderBy, rows, rowsPerPage]
   );
@@ -412,6 +343,8 @@ export default function GridSummery() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const classes = useStyles();
+
+  // csv File data generating>>>>>>>
   let csvFile = rows.map((item) => {
     return [
       item.name,
@@ -443,6 +376,7 @@ export default function GridSummery() {
     "status",
   ]);
 
+  // Generating Table summary ...........
   let totalStepsPassed = 0;
   let totalStepsFailed = 0;
   let totalStepsSkipped = 0;

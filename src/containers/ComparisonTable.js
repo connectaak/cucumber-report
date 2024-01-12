@@ -1,22 +1,22 @@
-import { TextField } from '@mui/material';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Typography from '@mui/material/Typography';
-import { makeStyles } from '@mui/styles';
-import { visuallyHidden } from '@mui/utils';
-import PropTypes from 'prop-types';
-import * as React from 'react';
-import useReportData from '../hooks/useReportData';
-import { getCompareTable } from '../utils/getCompareTable';
-import { cucumberCustomObject } from '../utils/getCucumberCustomObj';
+import { TextField } from "@mui/material";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import Typography from "@mui/material/Typography";
+import { makeStyles } from "@mui/styles";
+import { visuallyHidden } from "@mui/utils";
+import PropTypes from "prop-types";
+import * as React from "react";
+import useReportData from "../hooks/useReportData";
+import { getCompareTable } from "../utils/getCompareTable";
+import { cucumberCustomObject } from "../utils/getCucumberCustomObj";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -29,7 +29,7 @@ function descendingComparator(a, b, orderBy) {
 }
 
 function getComparator(order, orderBy) {
-  return order === 'desc'
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -48,131 +48,167 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'name',
+    id: "name",
     numeric: false,
     disablePadding: true,
-    label: 'Features',
+    label: "Features",
   },
-//   {
-//     id: 'counter',
-//     numeric: false,
-//     disablePadding: true,
-//     label: 'Feature No',
-//   },
+  //   {
+  //     id: 'counter',
+  //     numeric: false,
+  //     disablePadding: true,
+  //     label: 'Feature No',
+  //   },
   {
-    id: 'stepsPassed',
+    id: "stepsPassed",
     numeric: true,
     disablePadding: false,
-    label: 'Passed',
+    label: "Passed",
   },
   {
-    id: 'stepsFailed',
+    id: "stepsFailed",
     numeric: true,
     disablePadding: false,
-    label: 'Failed',
+    label: "Failed",
   },
   {
-    id: 'stepsSkipped',
+    id: "stepsSkipped",
     numeric: true,
     disablePadding: false,
-    label: 'Skipped',
+    label: "Skipped",
   },
   {
-    id: 'stepsUndefined',
+    id: "stepsUndefined",
     numeric: true,
     disablePadding: false,
-    label: 'Undefined',
+    label: "Undefined",
   },
   {
-    id: 'stepsPending',
+    id: "stepsPending",
     numeric: true,
     disablePadding: false,
-    label: 'Pending',
+    label: "Pending",
   },
   {
-    id: 'stepsTotal',
+    id: "stepsTotal",
     numeric: true,
     disablePadding: false,
-    label: 'Total',
+    label: "Total",
   },
   {
-    id: 'scenariosPassed',
+    id: "scenariosPassed",
     numeric: true,
     disablePadding: false,
-    label: 'Passed',
+    label: "Passed",
   },
   {
-    id: 'scenariosFailed',
+    id: "scenariosFailed",
     numeric: true,
     disablePadding: false,
-    label: 'Failed',
+    label: "Failed",
   },
   {
-    id: 'scenariosTotal',
+    id: "scenariosTotal",
     numeric: true,
     disablePadding: false,
-    label: 'Total',
+    label: "Total",
   },
   {
-    id: 'duration',
+    id: "duration",
     numeric: true,
     disablePadding: false,
-    label: 'Duration',
+    label: "Duration",
   },
   {
-    id: 'status',
+    id: "status",
     numeric: true,
     disablePadding: false,
-    label: 'Status',
+    label: "Status",
   },
 ];
 
-const DEFAULT_ORDER = 'asc';
-const DEFAULT_ORDER_BY = 'calories';
+const DEFAULT_ORDER = "asc";
+const DEFAULT_ORDER_BY = "calories";
 const DEFAULT_ROWS_PER_PAGE = 5;
-const COLORS = {Passed:"#8fdc93", Failed:"#f29191", Skipped:"#83abf9",Pending:"#f3f68b", Undefined:"#f7b96f", Total: "#d3d1d2",Header:"#60cbf1"};
+const COLORS = {
+  Passed: "#8fdc93",
+  Failed: "#f29191",
+  Skipped: "#83abf9",
+  Pending: "#f3f68b",
+  Undefined: "#f7b96f",
+  Total: "#d3d1d2",
+  Header: "#60cbf1",
+};
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+  } = props;
   const createSortHandler = (newOrderBy) => (event) => {
     onRequestSort(event, newOrderBy);
   };
-const classes=useStyles()
+  const classes = useStyles();
   return (
     <TableHead>
-        <TableRow>
-           <TableCell  sx={{bgcolor:COLORS["Header"],padding:"0 130px"}} className={classes.border} />
-           
-            <TableCell sx={{bgcolor:COLORS["Header"]}} className={classes.border} colSpan={6} align="center"><Typography >Steps</Typography></TableCell>
-            
-            <TableCell sx={{bgcolor:COLORS["Header"]}} className={classes.border}colSpan={3} align="center"><Typography  >Scenarios</Typography> </TableCell>
-
-            <TableCell sx={{bgcolor:COLORS["Header"]}} className={classes.border} colSpan={2} align="center"><Typography  >Features</Typography> </TableCell>
-           
-          
-          </TableRow>
       <TableRow>
-        {headCells.map((headCell,index) => (
+        <TableCell
+          sx={{ bgcolor: COLORS["Header"], padding: "0 130px" }}
+          className={classes.border}
+        />
+
+        <TableCell
+          sx={{ bgcolor: COLORS["Header"] }}
+          className={classes.border}
+          colSpan={6}
+          align="center"
+        >
+          <Typography>Steps</Typography>
+        </TableCell>
+
+        <TableCell
+          sx={{ bgcolor: COLORS["Header"] }}
+          className={classes.border}
+          colSpan={3}
+          align="center"
+        >
+          <Typography>Scenarios</Typography>{" "}
+        </TableCell>
+
+        <TableCell
+          sx={{ bgcolor: COLORS["Header"] }}
+          className={classes.border}
+          colSpan={2}
+          align="center"
+        >
+          <Typography>Features</Typography>{" "}
+        </TableCell>
+      </TableRow>
+      <TableRow>
+        {headCells.map((headCell, index) => (
           <TableCell
             key={headCell.id}
             align="center"
-            padding={headCell.disablePadding ? 'none' : 'normal'}
+            padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
             className={classes.border}
             // colSpan={index==0&&"2"}
-            sx={{bgcolor:COLORS[headCell.label]}}
+            sx={{ bgcolor: COLORS[headCell.label] }}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
+              direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
               // colSpan={headCell.id=="name"&&"2"}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </Box>
               ) : null}
             </TableSortLabel>
@@ -187,7 +223,7 @@ EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
@@ -200,49 +236,49 @@ export default function ComparisonTable() {
   const [visibleRows, setVisibleRows] = React.useState(null);
   const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE);
   const [paddingHeight, setPaddingHeight] = React.useState(0);
-  const{data,compareData}=useReportData()
-  const {gridData,counterData}= cucumberCustomObject(data)
-    const tableData= getCompareTable(compareData);
-  const [search,setSearch]=React.useState("");
-  const[rows,setRows]=React.useState(tableData);
- 
+  const { data, compareData } = useReportData();
+  const { gridData, counterData } = cucumberCustomObject(data);
+  const tableData = getCompareTable(compareData);
+  const [search, setSearch] = React.useState("");
+  const [rows, setRows] = React.useState(tableData);
 
-
-  React.useEffect(()=>{
+  React.useEffect(() => {
     // const data=tableData.filter(item=>item.name.includes(search))
     setRows(data);
-   },[tableData, search])
+  }, [tableData, search]);
 
   React.useEffect(() => {
     let rowsOnMount = stableSort(
       rows,
-      getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY),
+      getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY)
     );
 
     rowsOnMount = rowsOnMount.slice(
       0 * DEFAULT_ROWS_PER_PAGE,
-      0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE,
+      0 * DEFAULT_ROWS_PER_PAGE + DEFAULT_ROWS_PER_PAGE
     );
     setVisibleRows(rowsOnMount);
- 
   }, [rows]);
-  
+
   const handleRequestSort = React.useCallback(
     (event, newOrderBy) => {
-      const isAsc = orderBy === newOrderBy && order === 'asc';
-      const toggledOrder = isAsc ? 'desc' : 'asc';
+      const isAsc = orderBy === newOrderBy && order === "asc";
+      const toggledOrder = isAsc ? "desc" : "asc";
       setOrder(toggledOrder);
       setOrderBy(newOrderBy);
 
-      const sortedRows = stableSort(rows, getComparator(toggledOrder, newOrderBy));
+      const sortedRows = stableSort(
+        rows,
+        getComparator(toggledOrder, newOrderBy)
+      );
       const updatedRows = sortedRows.slice(
         page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage,
+        page * rowsPerPage + rowsPerPage
       );
 
       setVisibleRows(updatedRows);
     },
-    [order, orderBy, page, rows, rowsPerPage],
+    [order, orderBy, page, rows, rowsPerPage]
   );
 
   const handleSelectAllClick = (event) => {
@@ -267,7 +303,7 @@ export default function ComparisonTable() {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
 
@@ -281,13 +317,12 @@ export default function ComparisonTable() {
       const sortedRows = stableSort(rows, getComparator(order, orderBy));
       const updatedRows = sortedRows.slice(
         newPage * rowsPerPage,
-        newPage * rowsPerPage + rowsPerPage,
+        newPage * rowsPerPage + rowsPerPage
       );
 
       setVisibleRows(updatedRows);
-
     },
-    [order, orderBy, rows, rowsPerPage],
+    [order, orderBy, rows, rowsPerPage]
   );
 
   const handleChangeRowsPerPage = React.useCallback(
@@ -300,7 +335,7 @@ export default function ComparisonTable() {
       const sortedRows = stableSort(rows, getComparator(order, orderBy));
       const updatedRows = sortedRows.slice(
         0 * updatedRowsPerPage,
-        0 * updatedRowsPerPage + updatedRowsPerPage,
+        0 * updatedRowsPerPage + updatedRowsPerPage
       );
 
       setVisibleRows(updatedRows);
@@ -308,14 +343,12 @@ export default function ComparisonTable() {
       // There is no layout jump to handle on the first page.
       setPaddingHeight(0);
     },
-    [order, orderBy, rows],
+    [order, orderBy, rows]
   );
-
-
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const classes=useStyles();
+  const classes = useStyles();
   // let csvFile=rows.map(item=>{
   //   return[item.name,
   //     item.stepsPassed,
@@ -331,58 +364,71 @@ export default function ComparisonTable() {
   //     item.status]
   // })
   // csvFile.unshift(["Features","stepsPassed","stepsFailed","stepsSkipped","stepsUndefined","stepsPending","stepsTotal","scenariosPassed","scenariosFailed","scenariosTotal","duration","status"])
-  
-// let totalStepsPassed = 0;
-// let totalStepsFailed = 0;
-// let totalStepsSkipped = 0;
-// let totalStepsUndefined = 0;
-// let totalStepsPending = 0;
-// let totalStepsTotal = 0;
-// let totalScenariosPassed = 0;
-// let totalScenariosFailed = 0;
-// let totalScenariosTotal = 0;
 
-// React.useEffect(()=>{
-//   for (let i = 0; i < rows.length; i++) {
-//     const item = rows[i];
-//     totalStepsPassed += item.stepsPassed;
-//     totalStepsFailed += item.stepsFailed;
-//     totalStepsSkipped += item.stepsSkipped;
-//     totalStepsUndefined += item.stepsUndefined;
-//     totalStepsPending += item.stepsPending;
-//     totalStepsTotal += item.stepsTotal;
-//     totalScenariosPassed += item.scenariosPassed;
-//     totalScenariosFailed += item.scenariosFailed;
-//     totalScenariosTotal += item.scenariosTotal;
-//   }
-  
+  // let totalStepsPassed = 0;
+  // let totalStepsFailed = 0;
+  // let totalStepsSkipped = 0;
+  // let totalStepsUndefined = 0;
+  // let totalStepsPending = 0;
+  // let totalStepsTotal = 0;
+  // let totalScenariosPassed = 0;
+  // let totalScenariosFailed = 0;
+  // let totalScenariosTotal = 0;
 
-  
-// },[rows])
-// const gridSummary={totalStepsPassed,
-//   totalStepsFailed ,
-// totalStepsSkipped,
-//  totalStepsUndefined,
-//  totalStepsPending,
-//  totalStepsTotal,
-//  totalScenariosPassed, 
-//  totalScenariosFailed,
-//  totalScenariosTotal}
+  // React.useEffect(()=>{
+  //   for (let i = 0; i < rows.length; i++) {
+  //     const item = rows[i];
+  //     totalStepsPassed += item.stepsPassed;
+  //     totalStepsFailed += item.stepsFailed;
+  //     totalStepsSkipped += item.stepsSkipped;
+  //     totalStepsUndefined += item.stepsUndefined;
+  //     totalStepsPending += item.stepsPending;
+  //     totalStepsTotal += item.stepsTotal;
+  //     totalScenariosPassed += item.scenariosPassed;
+  //     totalScenariosFailed += item.scenariosFailed;
+  //     totalScenariosTotal += item.scenariosTotal;
+  //   }
+
+  // },[rows])
+  // const gridSummary={totalStepsPassed,
+  //   totalStepsFailed ,
+  // totalStepsSkipped,
+  //  totalStepsUndefined,
+  //  totalStepsPending,
+  //  totalStepsTotal,
+  //  totalScenariosPassed,
+  //  totalScenariosFailed,
+  //  totalScenariosTotal}
 
   return (
-    <Box sx={{ margin:"20px"}}>
+    <Box sx={{ margin: "20px" }}>
       {/* <CSVLink data={csvFile}>Download me</CSVLink>; */}
-      <Paper sx={{ width: '100%', mb: 2 }}>
+      <Paper sx={{ width: "100%", mb: 2 }}>
         {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
-        <Box sx={{display:"flex", justifyContent:"space-between",alignItems:"center",margin:"10px 0"}}>
-        {/* <CSVLink data={csvFile}>Export CSV</CSVLink>; */}
-          <TextField size='small' id="outlined-basic" onChange={(e)=>setSearch(e.target.value)} label="Search" variant="outlined" type='search' placeholder='Search by Feature name'/>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            margin: "10px 0",
+          }}
+        >
+          {/* <CSVLink data={csvFile}>Export CSV</CSVLink>; */}
+          <TextField
+            size="small"
+            id="outlined-basic"
+            onChange={(e) => setSearch(e.target.value)}
+            label="Search"
+            variant="outlined"
+            type="search"
+            placeholder="Search by Feature name"
+          />
         </Box>
         <TableContainer>
           <Table
-            sx={{ minWidth: 750,border:"1px solid gray" }}
+            sx={{ minWidth: 750, border: "1px solid gray" }}
             aria-labelledby="tableTitle"
-            size='small'
+            size="small"
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -394,62 +440,155 @@ export default function ComparisonTable() {
               // csvFile={csvFile}
             />
             <TableBody>
-                
               {visibleRows
-                ?
-                 visibleRows.map((item, index) => {
+                ? visibleRows.map((item, index) => {
                     const isItemSelected = isSelected(item[0].name);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
                       <React.Fragment>
-                      <TableRow
-                        hover
-                        onClick={(event) => handleClick(event, item[0].name)}
-                        role="checkbox"
-                        aria-checked={isItemSelected}
-                        tabIndex={-1}
-                        key={item[0].name}
-                        selected={isItemSelected}
-                        sx={{ cursor: 'pointer' }}
-                      >
-                        <TableCell
-                        className={classes.border}
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                        rowSpan={item.length+1}
+                        <TableRow
+                          hover
+                          onClick={(event) => handleClick(event, item[0].name)}
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={item[0].name}
+                          selected={isItemSelected}
+                          sx={{ cursor: "pointer" }}
                         >
-                        <Typography sx={{paddingLeft:"10px"}}>{item[0].name}</Typography>
-                        </TableCell>
-                      </TableRow>
-                      {
-                        item.map((row,index)=>(
-                    <TableRow>
-                      <TableCell className={classes.border}   sx={{bgcolor:!row.stepsPassed==0?COLORS["Passed"]:""}} align="center">{row.stepsPassed}</TableCell>
-                        <TableCell className={classes.border}  sx={{bgcolor:!row.stepsFailed==0?COLORS["Failed"]:""}} align="center">{row.stepsFailed}</TableCell>
-                        <TableCell  className={classes.border} sx={{bgcolor:!row.stepsSkipped==0?COLORS["Skipped"]:""}} align="center">{row.stepsSkipped}</TableCell>
-                        <TableCell className={classes.border} sx={{bgcolor:!row.stepsUndefined==0?COLORS["Undefined"]:""}} align="center">{row.stepsUndefined}</TableCell>
-                        <TableCell className={classes.border} sx={{bgcolor:!row.stepsPending==0?COLORS["Pending"]:""}} align="center">{row.stepsPending}</TableCell>
-                        <TableCell className={classes.border} sx={{bgcolor:!row.stepsTotal==0?COLORS["Total"]:""}} align="center">{row.stepsTotal}</TableCell>
-                        <TableCell className={classes.border} sx={{bgcolor:!row.stepsPassed==0?COLORS["Passed"]:""}} align="center">{row.scenariosPassed}</TableCell>
-                        <TableCell className={classes.border} sx={{bgcolor:!row.stepsFailed==0?COLORS["Failed"]:""}} align="center">{row.scenariosFailed}</TableCell>
-                        <TableCell className={classes.border} sx={{bgcolor:!row.stepsTotal==0?COLORS["Total"]:""}} align="center">{row.scenariosTotal}</TableCell>
-                        <TableCell className={classes.border} align="center">{row.duration}</TableCell>
-                        <TableCell className={classes.border} sx={{bgcolor:COLORS[row.status]}} align="center">{row.status}</TableCell>
-                      </TableRow>        
-                        ))
-                      }
-                        
+                          <TableCell
+                            className={classes.border}
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                            rowSpan={item.length + 1}
+                          >
+                            <Typography sx={{ paddingLeft: "10px" }}>
+                              {item[0].name}
+                            </Typography>
+                          </TableCell>
+                        </TableRow>
+                        {item.map((row, index) => (
+                          <TableRow>
+                            <TableCell
+                              className={classes.border}
+                              sx={{
+                                bgcolor:
+                                  !row.stepsPassed == 0 ? COLORS["Passed"] : "",
+                              }}
+                              align="center"
+                            >
+                              {row.stepsPassed}
+                            </TableCell>
+                            <TableCell
+                              className={classes.border}
+                              sx={{
+                                bgcolor:
+                                  !row.stepsFailed == 0 ? COLORS["Failed"] : "",
+                              }}
+                              align="center"
+                            >
+                              {row.stepsFailed}
+                            </TableCell>
+                            <TableCell
+                              className={classes.border}
+                              sx={{
+                                bgcolor:
+                                  !row.stepsSkipped == 0
+                                    ? COLORS["Skipped"]
+                                    : "",
+                              }}
+                              align="center"
+                            >
+                              {row.stepsSkipped}
+                            </TableCell>
+                            <TableCell
+                              className={classes.border}
+                              sx={{
+                                bgcolor:
+                                  !row.stepsUndefined == 0
+                                    ? COLORS["Undefined"]
+                                    : "",
+                              }}
+                              align="center"
+                            >
+                              {row.stepsUndefined}
+                            </TableCell>
+                            <TableCell
+                              className={classes.border}
+                              sx={{
+                                bgcolor:
+                                  !row.stepsPending == 0
+                                    ? COLORS["Pending"]
+                                    : "",
+                              }}
+                              align="center"
+                            >
+                              {row.stepsPending}
+                            </TableCell>
+                            <TableCell
+                              className={classes.border}
+                              sx={{
+                                bgcolor:
+                                  !row.stepsTotal == 0 ? COLORS["Total"] : "",
+                              }}
+                              align="center"
+                            >
+                              {row.stepsTotal}
+                            </TableCell>
+                            <TableCell
+                              className={classes.border}
+                              sx={{
+                                bgcolor:
+                                  !row.stepsPassed == 0 ? COLORS["Passed"] : "",
+                              }}
+                              align="center"
+                            >
+                              {row.scenariosPassed}
+                            </TableCell>
+                            <TableCell
+                              className={classes.border}
+                              sx={{
+                                bgcolor:
+                                  !row.stepsFailed == 0 ? COLORS["Failed"] : "",
+                              }}
+                              align="center"
+                            >
+                              {row.scenariosFailed}
+                            </TableCell>
+                            <TableCell
+                              className={classes.border}
+                              sx={{
+                                bgcolor:
+                                  !row.stepsTotal == 0 ? COLORS["Total"] : "",
+                              }}
+                              align="center"
+                            >
+                              {row.scenariosTotal}
+                            </TableCell>
+                            <TableCell
+                              className={classes.border}
+                              align="center"
+                            >
+                              {row.duration}
+                            </TableCell>
+                            <TableCell
+                              className={classes.border}
+                              sx={{ bgcolor: COLORS[row.status] }}
+                              align="center"
+                            >
+                              {row.status}
+                            </TableCell>
+                          </TableRow>
+                        ))}
                       </React.Fragment>
                     );
                   })
-                  
-                       
                 : null}
-           
-                    {/* <TableRow>
+
+              {/* <TableRow>
                        <TableCell className={classes.border} >
                         <Typography   className={classes.summaryItem}>summary</Typography>
                         </TableCell>
@@ -490,8 +629,7 @@ export default function ComparisonTable() {
                        
                   
                     </TableRow> */}
-              
-                
+
               {paddingHeight > 0 && (
                 <TableRow
                   style={{
@@ -503,7 +641,7 @@ export default function ComparisonTable() {
               )}
             </TableBody>
           </Table>
-        </TableContainer>   
+        </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
@@ -513,19 +651,15 @@ export default function ComparisonTable() {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-       
-       
       </Paper>
-     
     </Box>
   );
 }
-const useStyles =makeStyles({
-border:{
-  border:"1px solid black !important"
-},
-summaryItem:{
-  fontWeight:"700 !important"
-},
-
-})
+const useStyles = makeStyles({
+  border: {
+    border: "1px solid black !important",
+  },
+  summaryItem: {
+    fontWeight: "700 !important",
+  },
+});

@@ -8,15 +8,17 @@ const ChartSummery = () => {
   const { data, setCounterData } = useReportData();
   const [chartData, setChartData] = useState([]);
 
+  // Loading chart data...........
   useEffect(() => {
     const { chartData, counterData } = cucumberCustomObject(data);
     setCounterData(counterData);
     setChartData(chartData);
   }, [data, setCounterData]);
+
   return (
     <>
       <Typography mt={5} my={5} align="center" variant="h2">
-        CHART SAMMERY
+        CHART SUMMERY
       </Typography>
       <Box
         id="pichart"

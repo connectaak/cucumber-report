@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
-import CounterCart from "../components/CounterCart";
+import ReportMetricCard from "../components/ReportMetricCard";
 import useReportData from "../hooks/useReportData";
 import totalReports from "../assets/images/icons/report.png";
 import features from "../assets/images/icons/features.png";
@@ -13,8 +13,28 @@ import startTime from "../assets/images/icons/starttime.png";
 const ReportMetrics = () => {
   const logos = [features, scenarios, steps, duration];
   const { counterData, totalReport } = useReportData();
-
   const classes = useStyles();
+  // Create a new Date object
+  const today = new Date();
+
+  // Get the current date components
+  const month = today.getMonth() + 1; // Month is zero-based, so add 1
+  const day = today.getDate();
+  const year = today.getFullYear();
+
+  // Format the date as a string in MM/DD/YYYY format
+  const formattedDate =
+    (month < 10 ? "0" : "") +
+    month +
+    "/" +
+    (day < 10 ? "0" : "") +
+    day +
+    "/" +
+    year;
+  const formattedTime = today.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
     <>
@@ -22,23 +42,23 @@ const ReportMetrics = () => {
         REPORT METRICS
       </Typography>
       <Box id="counter" className={classes.container}>
-        <CounterCart
+        <ReportMetricCard
           title="Total Reports"
-          value={totalReport}
+          value1={totalReport}
           logo={totalReports}
         />
         {counterData.map((item, index) => (
-          <CounterCart
+          <ReportMetricCard
             key={index}
             title={item.title}
-            value={item.value}
+            value1={item.value}
             logo={logos[index]}
           />
         ))}
-        <CounterCart
+        <ReportMetricCard
           title="Start Time"
-          value="3/26/2023"
-          time="20:30"
+          value1={formattedDate}
+          value2={formattedTime}
           logo={startTime}
         />
       </Box>
