@@ -14,6 +14,7 @@ import {
   YAxis,
 } from "recharts";
 import PichartFooter from "./PichartFooter";
+import ChartSummeryTooltip from "./ChartSummeryTooltip";
 
 const COLORS = {
   passed: "#00C49F",
@@ -96,7 +97,7 @@ const PichartCart = ({ title, data }) => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis datakey="value" />
-              <Tooltip />
+              <Tooltip content={<ChartSummeryTooltip title={title} />} />
               <Bar dataKey="value">
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[entry.name]} />

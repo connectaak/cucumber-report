@@ -1,12 +1,6 @@
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { Button, FormControl, MenuItem, Select } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import {
@@ -115,18 +109,25 @@ const TrendChart = ({ data: chartData, title, steps }) => {
           {title}
         </Typography>
         <Box className={classes.secondContainer}>
-          <Button
-            variant="contained"
-            style={{ backgroundColor: "#0476B5" }}
-            onClick={handleSort}
-          >
-            Sort {sortOrder === "asc" ? "Ascending" : "Descending"}
-          </Button>
+          <Box>
+            <Typography variant="formlabel">Features Sort </Typography>
+            <Button
+              variant="contained"
+              style={{ backgroundColor: "#0476B5", display: "block" }}
+              onClick={handleSort}
+            >
+              Sort {sortOrder === "asc" ? "Ascending" : "Descending"}
+            </Button>
+          </Box>
           {!steps && (
             <FormControl
               sx={{ m: 1, minWidth: 120, border: "none" }}
               size="small"
             >
+              {" "}
+              {/* <InputLabel> */}
+              <Typography variant="formlabel">Features</Typography>
+              {/* </InputLabel> */}
               {/* <InputLabel id="demo-simple-select-label">All</InputLabel> */}
               <Select
                 value={selectedType}
@@ -172,6 +173,7 @@ const TrendChart = ({ data: chartData, title, steps }) => {
             {/* <InputLabel id="demo-simple-select-label-1">
               Duration Time
             </InputLabel> */}
+            <Typography variant="formlabel">Duration Time</Typography>
             <Select
               value={durationTime}
               onChange={handleDurationTime}
