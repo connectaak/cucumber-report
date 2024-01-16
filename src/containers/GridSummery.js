@@ -1,5 +1,5 @@
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
-import { TextField } from "@mui/material";
+import { FormControl, MenuItem, Select, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -18,6 +18,7 @@ import * as React from "react";
 import { CSVLink } from "react-csv";
 import useReportData from "../hooks/useReportData";
 import { cucumberCustomObject } from "../utils/getCucumberCustomObj";
+import { getSecondsToDuration } from "../utils/nanosecondConverter";
 
 const DEFAULT_ORDER = "asc";
 const DEFAULT_ORDER_BY = "calories";
@@ -229,7 +230,7 @@ export default function GridSummery() {
   const [rowsPerPage, setRowsPerPage] = React.useState(DEFAULT_ROWS_PER_PAGE);
   const [paddingHeight, setPaddingHeight] = React.useState(0);
   const { data } = useReportData();
-
+  const [durationTime, setDurationTime] = React.useState(1);
   const [search, setSearch] = React.useState("");
   const [rows, setRows] = React.useState([]);
   const [counterData, setCounterData] = React.useState([]);
@@ -283,7 +284,32 @@ export default function GridSummery() {
     }
     setSelected([]);
   };
+  const handleDurationTime = (e) => {
+    const durationValue = e.target.value;
+    const { gridData } = cucumberCustomObject(data);
+    setDurationTime(gridData);
+    if (durationValue === 1) {
+      setRows(gridData);
+    } else if (durationValue === 2) {
+      const newData = gridData.map((feature) => {
+        return {
+          ...feature,
+          duration: getSecondsToDuration(feature.duration).totalMinutes, // You can replace this with your desired update logic
+        };
+      });
 
+      setRows(newData);
+    } else {
+      const newData = gridData.map((feature) => {
+        return {
+          ...feature,
+
+          duration: getSecondsToDuration(feature.duration).totalHours, // You can replace this with your desired update logic
+        };
+      });
+      setRows(newData);
+    }
+  };
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -433,7 +459,6 @@ export default function GridSummery() {
     (totalStepsPending / totalStepsTotal) *
     100
   ).toFixed(0);
-
   const totalScenariosPassedPercent = (
     (totalScenariosPassed / totalScenariosTotal) *
     100
@@ -452,7 +477,10 @@ export default function GridSummery() {
     totalScenariosFailedPercent,
     totalFeatures,
   };
-
+  // Use the reduce function to calculate the sum of all durations
+  const totalDuration = rows.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue.duration;
+  }, 0);
   return (
     <Box id="#grid" sx={{ margin: "20px" }}>
       <Typography mt={5} my={5} align="center" variant="h2">
@@ -478,15 +506,42 @@ export default function GridSummery() {
           <CSVLink data={csvFile}>
             <DownloadForOfflineIcon sx={{ color: "#0476B5" }} />
           </CSVLink>
-          <TextField
-            size="small"
-            id="outlined-basic"
-            onChange={(e) => setSearch(e.target.value)}
-            label="Search"
-            variant="outlined"
-            type="search"
-            placeholder="Search by Feature name"
-          />
+          <Box sx={{ display: "flex", alignItems: "center", gap: 5 }}>
+            <Box>
+              <Typography display="block" variant="formlabel">
+                Search
+              </Typography>
+              <TextField
+                size="small"
+                id="outlined-basic"
+                onChange={(e) => setSearch(e.target.value)}
+                // label="Search"
+                variant="outlined"
+                type="search"
+                placeholder="Search by Feature name"
+              />
+            </Box>
+            <FormControl sx={{ minWidth: 200, border: "none" }} size="small">
+              <Typography variant="formlabel">Duration Time</Typography>
+              <Select
+                value={durationTime}
+                onChange={handleDurationTime}
+                labelId="demo-simple-select-label-1"
+                id="demo-simple-select"
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem value={1}>
+                  <em>Second</em>
+                </MenuItem>
+                <MenuItem value={2}>
+                  <em>Minute</em>
+                </MenuItem>
+                <MenuItem value={3}>
+                  <em>Hour</em>
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
         </Box>
         <TableContainer>
           <Table
@@ -691,7 +746,8 @@ export default function GridSummery() {
                 </TableCell>
                 <TableCell className={classes.border} align="center">
                   <Typography className={classes.summaryItem}>
-                    {counterData[3]?.value}
+                    {/* {counterData[3]?.value} */}
+                    {totalDuration}
                   </Typography>
                 </TableCell>
                 <TableCell className={classes.border} align="center">

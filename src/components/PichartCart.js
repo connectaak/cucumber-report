@@ -55,6 +55,7 @@ const PichartCart = ({ title, data }) => {
         <Switch
           checked={checked}
           onChange={handleChange}
+          title={checked ? "BarChart" : "PieChart"}
           inputProps={{ "aria-label": "controlled" }}
         />
       </Box>

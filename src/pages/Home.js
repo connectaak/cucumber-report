@@ -4,7 +4,7 @@ import { makeStyles } from "@mui/styles";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import React, { Fragment, useRef, useState } from "react";
-import GridSummery from "../components/GridSummery";
+import GridSummery from "../containers/GridSummery";
 import ReportMetrics from "../containers/ReportMetrics";
 import ChartSummery from "../containers/ChartSummery";
 import DurationSummery from "../containers/DurationSummery";

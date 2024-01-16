@@ -5,14 +5,13 @@ import { Box } from "@mui/material";
 
 const ChartSummeryTooltip = ({ active, payload, title }) => {
   const classes = useStyles();
-
+  console.log(payload);
   if (active && payload && payload.length) {
     return (
       <Box>
         <Box className={classes.container}>
-          <p className={classes.lebel}>{payload[0].name}</p>
           <p className={classes.lebel}>
-            {title} : {payload[0].value}
+            {payload[0].payload.name} : {payload[0].value}
           </p>
         </Box>
       </Box>
