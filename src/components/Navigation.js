@@ -47,93 +47,101 @@ const Navigation = () => {
         <NavLink activeClassName="is-active" className={classes.text} to="/">
           <img className={classes.logo} src={logo} alt="" />
         </NavLink>
-        <Box className={classes.subContainer}>
-          <NavLink
-            activeClassName="is-active"
-            style={({ isActive, isPending }) => {
-              return {
-                color: "black",
-                // background:isActive?"#FFDAB9":"white"
-              };
-            }}
-            className={classes.text}
-            to="/"
-          >
-            <Typography>HOME</Typography>
-          </NavLink>
-          <NavLink
-            style={({ isActive, isPending }) => {
-              return {
-                color: "black",
-                background: isActive ? "#0476B5" : "",
-              };
-            }}
-            className={classes.text}
-            to="/comparison"
-          >
-            <Typography>COMPARISON</Typography>
-          </NavLink>
-          {data.length > 0 && (
-            <>
-              <NavLink
-                style={({ isActive, isPending }) => {
-                  return {
-                    color: "black",
-                    background: isActive ? "#0476B5" : "",
-                  };
-                }}
-                className={classes.text}
-                to="/json"
-              >
-                <Typography>JSON</Typography>
-              </NavLink>
-              {location.pathname === "/" && (
-                <Scrollspy
-                  className={classes.spyContainer}
-                  items={["counter", "pichart", "trendchart", "grid"]}
-                  currentClassName={classes.current}
+        <Box>
+          <Box className={classes.subContainer}>
+            <NavLink
+              activeClassName="is-active"
+              style={({ isActive, isPending }) => {
+                return {
+                  color: "black",
+                  // background:isActive?"#FFDAB9":"white"
+                };
+              }}
+              className={classes.text}
+              to="/"
+            >
+              <Typography>HOME</Typography>
+            </NavLink>
+            <NavLink
+              style={({ isActive, isPending }) => {
+                return {
+                  color: "black",
+                  background: isActive ? "#0476B5" : "",
+                };
+              }}
+              className={classes.text}
+              to="/comparison"
+            >
+              <Typography>COMPARISON</Typography>
+            </NavLink>
+            {data.length > 0 && (
+              <>
+                <NavLink
+                  style={({ isActive, isPending }) => {
+                    return {
+                      color: "black",
+                      background: isActive ? "#0476B5" : "",
+                    };
+                  }}
+                  className={classes.text}
+                  to="/json"
                 >
-                  <HashLink
-                    sx={{ color: "text.primary" }}
-                    className={classes.text}
-                    to="#counter"
-                  >
-                    <Typography>METRICS</Typography>
-                  </HashLink>
-                  <HashLink
-                    sx={{ color: "text.primary" }}
-                    className={classes.text}
-                    to="/#pichart"
-                  >
-                    <Typography>CHART</Typography>
-                  </HashLink>
-                  <HashLink
-                    sx={{ color: "text.primary" }}
-                    className={classes.text}
-                    to="#trendchart"
-                  >
-                    <Typography>DURATION</Typography>
-                  </HashLink>
-                  <HashLink
-                    sx={{ color: "text.primary" }}
-                    className={classes.text}
-                    to="#grid"
-                  >
-                    <Typography>GRID</Typography>
-                  </HashLink>
-                </Scrollspy>
-              )}
-            </>
-          )}
-
-          <FileUpload />
-          <IconButton onClick={colorMode.toggleColorMode} color="inherit">
-            {theme.palette.mode === "dark" ? (
-              <Brightness7Icon />
-            ) : (
-              <Brightness4Icon />
+                  <Typography>JSON</Typography>
+                </NavLink>
+              </>
             )}
-          </IconButton>
+
+            <FileUpload />
+            <IconButton onClick={colorMode.toggleColorMode} color="inherit">
+              {theme.palette.mode === "dark" ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon />
+              )}
+            </IconButton>
+          </Box>
+          <Box>
+            {data.length > 0 && (
+              <>
+                {location.pathname === "/" && (
+                  <Scrollspy
+                    className={classes.spyContainer}
+                    items={["counter", "pichart", "trendchart", "grid"]}
+                    currentClassName={classes.current}
+                  >
+                    <HashLink
+                      sx={{ color: "text.primary" }}
+                      className={classes.text}
+                      to="#counter"
+                    >
+                      <Typography>METRICS</Typography>
+                    </HashLink>
+                    <HashLink
+                      sx={{ color: "text.primary" }}
+                      className={classes.text}
+                      to="/#pichart"
+                    >
+                      <Typography>CHART</Typography>
+                    </HashLink>
+                    <HashLink
+                      sx={{ color: "text.primary" }}
+                      className={classes.text}
+                      to="#trendchart"
+                    >
+                      <Typography>DURATION</Typography>
+                    </HashLink>
+                    <HashLink
+                      sx={{ color: "text.primary" }}
+                      className={classes.text}
+                      to="#grid"
+                    >
+                      <Typography>GRID</Typography>
+                    </HashLink>
+                  </Scrollspy>
+                )}
+              </>
+            )}
+          </Box>
         </Box>
       </Box>
 
