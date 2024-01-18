@@ -182,6 +182,7 @@ export const cucumberCustomObject = (jsonData) => {
       scenariosPassed: item.scenariosPassed,
       scenariosFailed: item.scenariosFailed,
       scenariosTotal: item.scenariosTotal,
+      row_duration: NanosecondsConverter(item.featureDuration).totalDuration,
       duration: NanosecondsConverter(item.featureDuration).totalSeconds,
       status: item.featureStatus,
     };

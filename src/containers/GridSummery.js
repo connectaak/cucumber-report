@@ -126,6 +126,12 @@ const headCells = [
     label: "Total",
   },
   {
+    id: "row_duration",
+    numeric: true,
+    disablePadding: false,
+    label: "Row Duration",
+  },
+  {
     id: "duration",
     numeric: true,
     disablePadding: false,
@@ -679,6 +685,9 @@ export default function GridSummery() {
                           {row.scenariosTotal}
                         </TableCell>
                         <TableCell className={classes.border} align="center">
+                          {row.row_duration}
+                        </TableCell>
+                        <TableCell className={classes.border} align="center">
                           {row.duration}
                         </TableCell>
                         <TableCell
@@ -742,6 +751,12 @@ export default function GridSummery() {
                 <TableCell className={classes.border} align="center">
                   <Typography className={classes.summaryItem}>
                     {gridSummary.totalScenariosTotal}
+                  </Typography>
+                </TableCell>
+                <TableCell className={classes.border} align="center">
+                  <Typography className={classes.summaryItem}>
+                    {counterData[3]?.value}
+                    {/* {totalDuration} */}
                   </Typography>
                 </TableCell>
                 <TableCell className={classes.border} align="center">
