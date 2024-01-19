@@ -74,22 +74,6 @@ const Navigation = () => {
             >
               <Typography>COMPARISON</Typography>
             </NavLink>
-            {data.length > 0 && (
-              <>
-                <NavLink
-                  style={({ isActive, isPending }) => {
-                    return {
-                      color: "black",
-                      background: isActive ? "#0476B5" : "",
-                    };
-                  }}
-                  className={classes.text}
-                  to="/json"
-                >
-                  <Typography>JSON</Typography>
-                </NavLink>
-              </>
-            )}
 
             <FileUpload />
             <IconButton onClick={colorMode.toggleColorMode} color="inherit">
@@ -102,8 +86,21 @@ const Navigation = () => {
           </Box>
           <Box>
             {data.length > 0 && (
-              <>
-                {location.pathname === "/" && (
+              <Box display="flex" alignItems="center">
+                <NavLink
+                  style={({ isActive, isPending }) => {
+                    return {
+                      color: "black",
+                      background: isActive ? "#0476B5" : "",
+                    };
+                  }}
+                  className={classes.text}
+                  to="/json"
+                >
+                  <Typography>JSON</Typography>
+                </NavLink>
+
+                {!location.pathname.includes("comparison") && (
                   <Scrollspy
                     className={classes.spyContainer}
                     items={["counter", "pichart", "trendchart", "grid"]}
@@ -139,7 +136,7 @@ const Navigation = () => {
                     </HashLink>
                   </Scrollspy>
                 )}
-              </>
+              </Box>
             )}
           </Box>
         </Box>

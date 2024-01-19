@@ -37,7 +37,7 @@ const TrendChart = ({ data: chartData, title, steps }) => {
   useEffect(() => {
     setDuration(chartData);
   }, [chartData]);
-  console.log(duration);
+
   const handleDurationTime = (e) => {
     const durationValue = e.target.value;
     setDurationTime(durationValue);
@@ -234,10 +234,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     margin: "10px",
     padding: "10px",
+    borderRadius: 10,
+    boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.3) !important",
   },
   chartContainer: {
     width: "100%",
     height: 400,
+
     marginTop: theme.spacing(2),
   },
   header: {
