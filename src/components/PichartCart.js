@@ -23,8 +23,8 @@ const COLORS = {
   pending: "#FFBB28",
   undefined: "#B068F9",
 };
-const PichartCart = ({ title, data }) => {
-  const classes = useStyles();
+const PichartCart = ({ title, data, details }) => {
+  const classes = useStyles({ details });
   const [checked, setChecked] = React.useState(true);
 
   const handleChange = (event) => {

@@ -19,6 +19,7 @@ import { CSVLink } from "react-csv";
 import useReportData from "../hooks/useReportData";
 import { cucumberCustomObject } from "../utils/getCucumberCustomObj";
 import { getSecondsToDuration } from "../utils/nanosecondConverter";
+import { Link } from "react-router-dom";
 
 const DEFAULT_ORDER = "asc";
 const DEFAULT_ORDER_BY = "calories";
@@ -588,9 +589,12 @@ export default function GridSummery() {
                           scope="row"
                           padding="none"
                         >
-                          <Typography sx={{ paddingLeft: "10px" }}>
-                            {row.name}
-                          </Typography>
+                          <Link to={`/details/${index}`}>
+                            {" "}
+                            <Typography sx={{ paddingLeft: "10px" }}>
+                              {row.name}
+                            </Typography>
+                          </Link>
                         </TableCell>
                         <TableCell
                           className={classes.border}
