@@ -43,7 +43,7 @@ const ReportMetrics = () => {
       </Typography>
       <Box id="counter" className={classes.container}>
         <ReportMetricCard
-          title="Total Reports"
+          title="Reports Count"
           value1={totalReport}
           logo={totalReports}
         />

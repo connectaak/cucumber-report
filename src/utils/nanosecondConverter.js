@@ -39,7 +39,7 @@ export const getSecondsToDuration = (totalSeconds) => {
   const totalMinutes = Math.floor(totalSeconds / 60);
 
   // Calculate total hours
-  const totalHours = Math.floor(totalSeconds / 3600);
+  const totalHours = (totalSeconds / 3600).toFixed(2);
 
   // Output the result
   return {

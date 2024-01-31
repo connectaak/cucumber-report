@@ -10,6 +10,7 @@ import ProjectThemeProvider from "./context/ColoProvider";
 import ReportProvider from "./context/usePichart";
 import { StylesProvider } from "@material-ui/core/styles";
 import Json from "./pages/Json";
+import Details from "./pages/details";
 
 export default function App() {
   const classes = useStyles();
@@ -37,6 +38,7 @@ export default function App() {
                 <Route exact path="/" element={<Home />} />
                 <Route path="/json" element={<Json />} />
                 <Route path="/comparison" element={<Comparison />} />
+                <Route path="/details/:id" element={<Details />} />
               </Routes>
             </Box>
           </HashRouter>

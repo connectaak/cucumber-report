@@ -14,6 +14,7 @@ import {
   YAxis,
 } from "recharts";
 import PichartFooter from "./PichartFooter";
+import ChartSummeryTooltip from "./ChartSummeryTooltip";
 
 const COLORS = {
   passed: "#00C49F",
@@ -22,8 +23,8 @@ const COLORS = {
   pending: "#FFBB28",
   undefined: "#B068F9",
 };
-const PichartCart = ({ title, data }) => {
-  const classes = useStyles();
+const PichartCart = ({ title, data, details }) => {
+  const classes = useStyles({ details });
   const [checked, setChecked] = React.useState(true);
 
   const handleChange = (event) => {
@@ -54,6 +55,7 @@ const PichartCart = ({ title, data }) => {
         <Switch
           checked={checked}
           onChange={handleChange}
+          title={checked ? "BarChart" : "PieChart"}
           inputProps={{ "aria-label": "controlled" }}
         />
       </Box>
@@ -96,7 +98,7 @@ const PichartCart = ({ title, data }) => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
               <YAxis datakey="value" />
-              <Tooltip />
+              <Tooltip content={<ChartSummeryTooltip title={title} />} />
               <Bar dataKey="value">
                 {data.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[entry.name]} />
