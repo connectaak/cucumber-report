@@ -47,8 +47,8 @@ const Details = () => {
 
   return (
     <div className={classes.container}>
-      <Typography marginBottom="20px" variant="h3">
-        {" "}
+      <Typography align="center" marginBottom="20px" variant="h3">
+        SCENARIO DETAILS
       </Typography>
       {/* <Typography variant="body1">
         <span>Description:</span> The scenarios have been scripted twice So the
