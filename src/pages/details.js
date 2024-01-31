@@ -21,6 +21,13 @@ const Details = () => {
   const { data, setCounterData } = useReportData();
   const [chartData, setChartData] = useState([]);
   const [scenarioDetails, setScenarioDetails] = useState();
+  const COLORS = {
+    passed: "#00C49F",
+    failed: "#FF0000",
+    skipped: "#0088FE",
+    pending: "#FFBB28",
+    undefined: "#B068F9",
+  };
   // Loading chart data...........
   useEffect(() => {
     const newData = data.filter((item, index) => index == id);
@@ -30,6 +37,7 @@ const Details = () => {
         stepName: step.name,
         stepKeyword: step.keyword,
         resultDuration: step.result.duration,
+        resultStatus: step.result.status,
       }));
 
       return {
@@ -99,9 +107,13 @@ const Details = () => {
                 {scenario.steps?.map((step, index) => (
                   <Box display="flex" justifyContent="space-between">
                     <Box key={step} display="flex" gap="10px">
-                      <CheckCircleIcon />
+                      <CheckCircleIcon
+                        style={{ color: COLORS[step.resultStatus] }}
+                      />
                       <Typography variant="body1">
-                        <span>{step.stepKeyword}</span>
+                        <span style={{ color: COLORS[step.resultStatus] }}>
+                          {step.stepKeyword}
+                        </span>
                         {step.stepName}
                       </Typography>
                     </Box>
