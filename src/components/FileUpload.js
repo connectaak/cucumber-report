@@ -42,7 +42,6 @@ const FileUpload = () => {
             setCompareData([...compareData, ...[featuresData]]);
           } else {
             setData([...data, ...cucumberJsonObject]);
-            console.log("data added");
           }
           setIsSuccess(true);
           setTotalReport(totalReport + 1);
@@ -73,7 +72,7 @@ const FileUpload = () => {
         }
       } catch (err) {
         // if any error, Code throws the error
-        console.log(err, "error");
+
         swal({
           title: "Oops",
           text: "Please upload a cucumber json file",

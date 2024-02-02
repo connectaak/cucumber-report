@@ -182,7 +182,7 @@ function EnhancedTableHead(props) {
         <TableCell
           sx={{ bgcolor: COLORS["Header"] }}
           className={classes.border}
-          colSpan={2}
+          colSpan={3}
           align="center"
         >
           <Typography>Features</Typography>{" "}
@@ -839,7 +839,12 @@ export default function GridSummery() {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[
+            { label: "All", value: rows.length + 1 },
+            5,
+            10,
+            25,
+          ]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}

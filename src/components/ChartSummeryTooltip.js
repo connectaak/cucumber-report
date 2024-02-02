@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 
 const ChartSummeryTooltip = ({ active, payload, title }) => {
   const classes = useStyles();
-  console.log(payload);
+
   if (active && payload && payload.length) {
     return (
       <Box>
