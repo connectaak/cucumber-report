@@ -5,7 +5,7 @@ import { getSecondsToDuration } from "../utils/nanosecondConverter";
 
 const DurationSummeryTooltip = ({ active, payload, label, summaryCompare }) => {
   const classes = useStyles();
-  // console.log(payload[0].value, "data");
+
   if (active && payload && payload.length) {
     return (
       <Box>

@@ -31,7 +31,7 @@ const Details = () => {
   // Loading chart data...........
   useEffect(() => {
     const newData = data.filter((item, index) => index == id);
-    // console.log(JSON.stringify(newData[0]), "newData.");
+
     const scenarioData = newData[0]?.elements?.map((scenario) => {
       const stepsData = scenario.steps?.map((step) => ({
         stepName: step.name,
@@ -46,7 +46,7 @@ const Details = () => {
         steps: stepsData,
       };
     });
-    console.log(scenarioData, "kdfk");
+
     setScenarioDetails(scenarioData);
     const { chartData, counterData } = cucumberCustomObject(newData);
     setCounterData(counterData);
