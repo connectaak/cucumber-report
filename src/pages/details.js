@@ -13,6 +13,10 @@ import useReportData from "../hooks/useReportData";
 import { cucumberCustomObject } from "../utils/getCucumberCustomObj";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import {
+  NanosecondsConverter,
+  getSecondsToDuration,
+} from "../utils/nanosecondConverter";
 
 const Details = () => {
   const { id } = useParams();
@@ -118,7 +122,7 @@ const Details = () => {
                       </Typography>
                     </Box>
                     <Typography variant="body1">
-                      {step.resultDuration}
+                      {NanosecondsConverter(step.resultDuration).totalDuration}
                     </Typography>
                   </Box>
                 ))}

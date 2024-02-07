@@ -16,12 +16,11 @@ const ChartSummery = () => {
   }, [data, setCounterData]);
 
   return (
-    <>
+    <Box id="pichart" pt="80px">
       <Typography mt={5} my={5} align="center" variant="h2">
         CHART SUMMERY
       </Typography>
       <Box
-        id="pichart"
         style={{
           display: "flex",
           flexWrap: "wrap ",
@@ -34,7 +33,7 @@ const ChartSummery = () => {
           <PichartCart key={index} data={item.data} title={item.title} />
         ))}
       </Box>
-    </>
+    </Box>
   );
 };
 

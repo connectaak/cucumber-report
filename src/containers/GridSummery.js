@@ -489,7 +489,7 @@ export default function GridSummery() {
     return accumulator + currentValue.duration;
   }, 0);
   return (
-    <Box id="#grid" sx={{ margin: "20px" }}>
+    <Box id="gridtable" sx={{ margin: "20px" }}>
       <Typography mt={5} my={5} align="center" variant="h2">
         GRID SUMMERY
       </Typography>

@@ -1,6 +1,8 @@
 // const dateFns = require("date-fns");
 export const NanosecondsConverter = (milliseconds) => {
   // Calculate hours, minutes, and seconds
+  // milliseconds = milliseconds / 1000000;
+
   const hours = Math.floor(milliseconds / (1000 * 60 * 60));
   const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
   const seconds = Math.floor((milliseconds % (1000 * 60)) / 1000);

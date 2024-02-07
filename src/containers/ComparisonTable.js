@@ -349,56 +349,6 @@ export default function ComparisonTable() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const classes = useStyles();
-  // let csvFile=rows.map(item=>{
-  //   return[item.name,
-  //     item.stepsPassed,
-  //     item.stepsFailed,
-  //     item.stepsSkipped,
-  //     item.stepsUndefined,
-  //     item.stepsPending,
-  //     item.stepsTotal,
-  //     item.scenariosPassed,
-  //     item.scenariosFailed,
-  //     item.scenariosTotal,
-  //     item.duration,
-  //     item.status]
-  // })
-  // csvFile.unshift(["Features","stepsPassed","stepsFailed","stepsSkipped","stepsUndefined","stepsPending","stepsTotal","scenariosPassed","scenariosFailed","scenariosTotal","duration","status"])
-
-  // let totalStepsPassed = 0;
-  // let totalStepsFailed = 0;
-  // let totalStepsSkipped = 0;
-  // let totalStepsUndefined = 0;
-  // let totalStepsPending = 0;
-  // let totalStepsTotal = 0;
-  // let totalScenariosPassed = 0;
-  // let totalScenariosFailed = 0;
-  // let totalScenariosTotal = 0;
-
-  // React.useEffect(()=>{
-  //   for (let i = 0; i < rows.length; i++) {
-  //     const item = rows[i];
-  //     totalStepsPassed += item.stepsPassed;
-  //     totalStepsFailed += item.stepsFailed;
-  //     totalStepsSkipped += item.stepsSkipped;
-  //     totalStepsUndefined += item.stepsUndefined;
-  //     totalStepsPending += item.stepsPending;
-  //     totalStepsTotal += item.stepsTotal;
-  //     totalScenariosPassed += item.scenariosPassed;
-  //     totalScenariosFailed += item.scenariosFailed;
-  //     totalScenariosTotal += item.scenariosTotal;
-  //   }
-
-  // },[rows])
-  // const gridSummary={totalStepsPassed,
-  //   totalStepsFailed ,
-  // totalStepsSkipped,
-  //  totalStepsUndefined,
-  //  totalStepsPending,
-  //  totalStepsTotal,
-  //  totalScenariosPassed,
-  //  totalScenariosFailed,
-  //  totalScenariosTotal}
 
   return (
     <Box sx={{ margin: "20px" }}>
@@ -587,48 +537,6 @@ export default function ComparisonTable() {
                     );
                   })
                 : null}
-
-              {/* <TableRow>
-                       <TableCell className={classes.border} >
-                        <Typography   className={classes.summaryItem}>summary</Typography>
-                        </TableCell>
-                        
-                       <TableCell className={classes.border}   align="center">
-                        <Typography className={classes.summaryItem} >{gridSummary.totalStepsPassed}</Typography>
-                        </TableCell>
-                       <TableCell className={classes.border}   align="center">
-                        <Typography className={classes.summaryItem} >{gridSummary.totalStepsFailed}</Typography>
-                        </TableCell>
-                       <TableCell className={classes.border}   align="center">
-                        <Typography className={classes.summaryItem}>{gridSummary.totalStepsSkipped}</Typography>
-                        </TableCell>
-                       <TableCell className={classes.border}   align="center">
-                        <Typography className={classes.summaryItem} >{gridSummary.totalStepsUndefined}</Typography>
-                        </TableCell>
-                       <TableCell className={classes.border}   align="center">
-                        <Typography className={classes.summaryItem}>{gridSummary.totalStepsPending}</Typography>
-                        </TableCell>
-                       <TableCell className={classes.border}   align="center">
-                        <Typography className={classes.summaryItem}>{gridSummary.totalStepsTotal}</Typography>
-                        </TableCell>
-                       <TableCell className={classes.border}   align="center">
-                        <Typography className={classes.summaryItem} >{gridSummary.totalScenariosPassed}</Typography>
-                        </TableCell>
-                       <TableCell className={classes.border}   align="center">
-                        <Typography  className={classes.summaryItem}>{gridSummary.totalScenariosFailed}</Typography>
-                        </TableCell>
-                       <TableCell className={classes.border}   align="center">
-                        <Typography className={classes.summaryItem} >{gridSummary.totalScenariosTotal}</Typography>
-                        </TableCell>
-                       <TableCell className={classes.border}   align="center">
-                        <Typography className={classes.summaryItem} >{counterData[3].value}</Typography>
-                        </TableCell>
-                       <TableCell className={classes.border}   align="center">
-                        <Typography className={classes.summaryItem} >--</Typography>
-                        </TableCell>
-                       
-                  
-                    </TableRow> */}
 
               {paddingHeight > 0 && (
                 <TableRow
