@@ -200,10 +200,10 @@ const TrendChart = ({ data: chartData, title, steps }) => {
       </Box>
 
       <div className={classes.chartContainer}>
-        <ResponsiveContainer width="100%" height={400}>
+        <div style={{ width: "100%", overflowX: "auto" }}>
           <BarChart
-            width="100%"
-            height={400}
+            width={duration.length < 20 ? 1700 : duration.length * 70}
+            height={350}
             data={duration}
             margin={{
               top: 5,
@@ -216,13 +216,17 @@ const TrendChart = ({ data: chartData, title, steps }) => {
             <XAxis dataKey="name" />
             <YAxis datakey="duration" />
             <Tooltip content={<DurationSummeryTooltip />} />
-            <Bar dataKey="duration">
+            <Bar dataKey="duration" barSize={30}>
               {duration.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[entry.status]} />
+                <Cell
+                  width={50}
+                  key={`cell-${index}`}
+                  fill={COLORS[entry.status]}
+                />
               ))}
             </Bar>
           </BarChart>
-        </ResponsiveContainer>
+        </div>
       </div>
     </Box>
   );
@@ -240,8 +244,10 @@ const useStyles = makeStyles((theme) => ({
   chartContainer: {
     width: "100%",
     height: 400,
-
-    marginTop: theme.spacing(2),
+    // width: '100%',
+    // height: "300px",
+    // overflowX: "auto",
+    // marginTop: theme.spacing(2),
   },
   header: {
     display: "flex",

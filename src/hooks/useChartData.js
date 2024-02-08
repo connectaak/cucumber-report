@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 
 const useChartData = () => {
   const [data, setData] = React.useState([]);
+  const [ReportData, setReportData] = React.useState([]);
   const [compareData, setCompareData] = React.useState([]);
   const [isSuccess, setIsSuccess] = React.useState(false);
   const [counterData, setCounterData] = React.useState([]);
   const [totalReport, setTotalReport] = React.useState(0);
   const [customData, setCustomData] = React.useState([]);
 
+  console.log(ReportData, "ReportData");
   const getCustomData = (data) => {
     if (data.length > 0) {
       let output = [];
@@ -40,24 +42,26 @@ const useChartData = () => {
       //   });
       //   output.push(featureObj);
       // });
-      data.forEach((feature) => {
-        feature.elements.forEach((scenario) => {
-          scenario.steps.forEach((step) => {
-            output.push({
-              featureId: feature.id,
-              featureName: feature.name,
-              featureDescription: feature.elements[0].description,
-              featureUri: feature.uri,
-              featureTags: feature.tags,
-              scenarioId: scenario.id,
-              scenarioName: scenario.name,
-              scenarioTags: scenario.tags,
-              stepName: step.name,
-              stepResultStatus: step.result.status,
-              stepResultDuration: step.result.duration,
-              stepTags: step.tags,
-              reportId: feature.id,
-              reportName: feature.name,
+      ReportData.forEach((report, index) => {
+        report.data.forEach((feature) => {
+          feature.elements.forEach((scenario) => {
+            scenario.steps.forEach((step) => {
+              output.push({
+                featureId: feature.id,
+                featureName: feature.name,
+                featureDescription: feature.elements[0].description,
+                featureUri: feature.uri,
+                featureTags: feature.tags,
+                scenarioId: scenario.id,
+                scenarioName: scenario.name,
+                scenarioTags: scenario.tags,
+                stepName: step.name,
+                stepResultStatus: step.result.status,
+                stepResultDuration: step.result.duration,
+                stepTags: step.tags,
+                reportId: index + 1,
+                reportName: report.reportName,
+              });
             });
           });
         });
@@ -73,6 +77,8 @@ const useChartData = () => {
   return {
     data,
     setData,
+    ReportData,
+    setReportData,
     setIsSuccess,
     isSuccess,
     counterData,

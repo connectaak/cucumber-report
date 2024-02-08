@@ -7,7 +7,7 @@ import { cucumberCustomObject } from "../utils/getCucumberCustomObj";
 const ChartSummery = () => {
   const { data, setCounterData } = useReportData();
   const [chartData, setChartData] = useState([]);
-
+  console.log(data, "data");
   // Loading chart data...........
   useEffect(() => {
     const { chartData, counterData } = cucumberCustomObject(data);
