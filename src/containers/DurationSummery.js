@@ -27,7 +27,7 @@ export default function DurationSummery() {
   };
   const { scenarios, features, steps } = getTrendChartData(data);
   return (
-    <Box id="trendchart" sx={{ width: "100%" }}>
+    <Box id="trendchart" pt="80px" sx={{ width: "100%" }}>
       <Typography mt={5} my={5} align="center" variant="h2">
         DURATION SUMMERY
       </Typography>

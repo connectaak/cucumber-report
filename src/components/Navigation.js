@@ -15,6 +15,7 @@ import { ColorModeContext } from "../context/ColoProvider";
 import useReportData from "../hooks/useReportData";
 import FileUpload from "./FileUpload";
 import { HashLink } from "react-router-hash-link";
+
 const Navigation = () => {
   const theme = useTheme();
   const colorMode = React.useContext(ColorModeContext);
@@ -38,6 +39,7 @@ const Navigation = () => {
   return (
     <>
       <Box
+        id="header"
         sx={{
           bgcolor: "background.default",
           display: { xs: "none", md: "flex" },
@@ -103,12 +105,13 @@ const Navigation = () => {
                 {!location.pathname.includes("comparison") && (
                   <Scrollspy
                     className={classes.spyContainer}
-                    items={["counter", "pichart", "trendchart", "grid"]}
+                    items={["counter", "pichart", "trendchart", "gridtable"]}
                     currentClassName={classes.current}
                   >
                     <HashLink
                       sx={{ color: "text.primary" }}
                       className={classes.text}
+                      smooth
                       to="#counter"
                     >
                       <Typography>METRICS</Typography>
@@ -116,7 +119,8 @@ const Navigation = () => {
                     <HashLink
                       sx={{ color: "text.primary" }}
                       className={classes.text}
-                      to="/#pichart"
+                      to="#pichart"
+                      smooth
                     >
                       <Typography>CHART</Typography>
                     </HashLink>
@@ -124,13 +128,15 @@ const Navigation = () => {
                       sx={{ color: "text.primary" }}
                       className={classes.text}
                       to="#trendchart"
+                      smooth
                     >
                       <Typography>DURATION</Typography>
                     </HashLink>
                     <HashLink
                       sx={{ color: "text.primary" }}
                       className={classes.text}
-                      to="#grid"
+                      to="#gridtable"
+                      smooth
                     >
                       <Typography>GRID</Typography>
                     </HashLink>
@@ -298,7 +304,8 @@ const useStyles = makeStyles({
     position: "sticky",
     top: 0,
     zIndex: "10",
-    marginBottom: "10px",
+    // height: 110,
+    // marginBottom: "10px",
     // borderRadius:"5px",
     backgroundColor: "#FCD73C !important",
     // boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.3)',

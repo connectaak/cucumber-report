@@ -37,11 +37,11 @@ const ReportMetrics = () => {
   });
   console.log(counterData[3]?.value, "Duration Data");
   return (
-    <>
+    <Box pt="80px" id="counter">
       <Typography mt={5} my={5} align="center" variant="h2">
         REPORT METRICS
       </Typography>
-      <Box id="counter" className={classes.container}>
+      <Box className={classes.container}>
         <ReportMetricCard
           title="Reports Count"
           value1={totalReport}
@@ -62,7 +62,7 @@ const ReportMetrics = () => {
           logo={startTime}
         />
       </Box>
-    </>
+    </Box>
   );
 };
 

@@ -18,13 +18,14 @@ const features = [
 ];
 
 const Home = () => {
-  const { data } = useReportData();
+  const { data, customData } = useReportData();
   const classes = useStyles();
   const ref = useRef();
   const [featuresItems, setfeaturesItems] = useState(features);
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
 
+  console.log(customData, "customData");
   //const handle drag sorting.................
   const handleSort = (e) => {
     //duplicate items

@@ -17,6 +17,8 @@ const FileUpload = () => {
   const {
     setData,
     data,
+    setReportData,
+    ReportData,
     setIsSuccess,
     setTotalReport,
     compareData,
@@ -36,12 +38,18 @@ const FileUpload = () => {
         if (content) {
           validateCucumberData(JSON.parse(content));
           const cucumberJsonObject = JSON.parse(content);
+          const cucuberReportObject = {
+            data: cucumberJsonObject,
+          };
+          cucuberReportObject.reportName = file?.name?.split(".")[0];
+          console.log(cucuberReportObject, "cucumberJsonObject");
           if (location.pathname === "/comparison") {
             const { featuresData } = getComparisonData(cucumberJsonObject);
 
             setCompareData([...compareData, ...[featuresData]]);
           } else {
             setData([...data, ...cucumberJsonObject]);
+            setReportData([...ReportData, cucuberReportObject]);
           }
           setIsSuccess(true);
           setTotalReport(totalReport + 1);
