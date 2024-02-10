@@ -9,7 +9,6 @@ const useChartData = () => {
   const [totalReport, setTotalReport] = React.useState(0);
   const [customData, setCustomData] = React.useState([]);
 
-  console.log(ReportData, "ReportData");
   const getCustomData = (data) => {
     if (data.length > 0) {
       let output = [];

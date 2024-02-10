@@ -294,6 +294,7 @@ export default function GridSummery() {
   const handleDurationTime = (e) => {
     const durationValue = e.target.value;
     const { gridData } = cucumberCustomObject(data);
+
     setDurationTime(durationValue);
     if (durationValue === 1) {
       setRows(gridData);
