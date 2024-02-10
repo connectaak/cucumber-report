@@ -42,7 +42,6 @@ const FileUpload = () => {
             data: cucumberJsonObject,
           };
           cucuberReportObject.reportName = file?.name?.split(".")[0];
-          console.log(cucuberReportObject, "cucumberJsonObject");
           if (location.pathname === "/comparison") {
             const { featuresData } = getComparisonData(cucumberJsonObject);
 

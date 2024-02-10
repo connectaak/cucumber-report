@@ -102,45 +102,62 @@ const Navigation = () => {
                   <Typography>JSON</Typography>
                 </NavLink>
 
-                {!location.pathname.includes("comparison") && (
-                  <Scrollspy
-                    className={classes.spyContainer}
-                    items={["counter", "pichart", "trendchart", "gridtable"]}
-                    currentClassName={classes.current}
+                {!location.pathname.includes("comparison") &&
+                  !location.pathname.includes("json") &&
+                  !location.pathname.includes("details") && (
+                    <Scrollspy
+                      className={classes.spyContainer}
+                      items={["counter", "pichart", "trendchart", "gridtable"]}
+                      currentClassName={classes.current}
+                    >
+                      <HashLink
+                        sx={{ color: "text.primary" }}
+                        className={classes.text}
+                        smooth
+                        to="#counter"
+                      >
+                        <Typography>METRICS</Typography>
+                      </HashLink>
+                      <HashLink
+                        sx={{ color: "text.primary" }}
+                        className={classes.text}
+                        to="#pichart"
+                        smooth
+                      >
+                        <Typography>CHART</Typography>
+                      </HashLink>
+                      <HashLink
+                        sx={{ color: "text.primary" }}
+                        className={classes.text}
+                        to="#trendchart"
+                        smooth
+                      >
+                        <Typography>DURATION</Typography>
+                      </HashLink>
+                      <HashLink
+                        sx={{ color: "text.primary" }}
+                        className={classes.text}
+                        to="#gridtable"
+                        smooth
+                      >
+                        <Typography>GRID</Typography>
+                      </HashLink>
+                    </Scrollspy>
+                  )}
+                {location.pathname.includes("details") && (
+                  <NavLink
+                    activeClassName="is-active"
+                    style={({ isActive, isPending }) => {
+                      return {
+                        color: "black",
+                        // background:isActive?"#FFDAB9":"white"
+                      };
+                    }}
+                    className={classes.text}
+                    to="/"
                   >
-                    <HashLink
-                      sx={{ color: "text.primary" }}
-                      className={classes.text}
-                      smooth
-                      to="#counter"
-                    >
-                      <Typography>METRICS</Typography>
-                    </HashLink>
-                    <HashLink
-                      sx={{ color: "text.primary" }}
-                      className={classes.text}
-                      to="#pichart"
-                      smooth
-                    >
-                      <Typography>CHART</Typography>
-                    </HashLink>
-                    <HashLink
-                      sx={{ color: "text.primary" }}
-                      className={classes.text}
-                      to="#trendchart"
-                      smooth
-                    >
-                      <Typography>DURATION</Typography>
-                    </HashLink>
-                    <HashLink
-                      sx={{ color: "text.primary" }}
-                      className={classes.text}
-                      to="#gridtable"
-                      smooth
-                    >
-                      <Typography>GRID</Typography>
-                    </HashLink>
-                  </Scrollspy>
+                    <Typography>Back To Report</Typography>
+                  </NavLink>
                 )}
               </Box>
             )}

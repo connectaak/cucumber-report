@@ -35,7 +35,7 @@ const ReportMetrics = () => {
     hour: "2-digit",
     minute: "2-digit",
   });
-  console.log(counterData[3]?.value, "Duration Data");
+
   return (
     <Box pt="80px" id="counter">
       <Typography mt={5} my={5} align="center" variant="h2">
