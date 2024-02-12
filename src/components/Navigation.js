@@ -87,7 +87,7 @@ const Navigation = () => {
             </IconButton>
           </Box>
           <Box>
-            {data.length > 0 && (
+            {!location.pathname.includes("comparison") && data.length > 0 && (
               <Box display="flex" alignItems="center">
                 <NavLink
                   style={({ isActive, isPending }) => {
@@ -103,7 +103,6 @@ const Navigation = () => {
                 </NavLink>
 
                 {!location.pathname.includes("comparison") &&
-                  !location.pathname.includes("json") &&
                   !location.pathname.includes("details") && (
                     <Scrollspy
                       className={classes.spyContainer}
@@ -114,14 +113,14 @@ const Navigation = () => {
                         sx={{ color: "text.primary" }}
                         className={classes.text}
                         smooth
-                        to="#counter"
+                        to="/#counter"
                       >
                         <Typography>METRICS</Typography>
                       </HashLink>
                       <HashLink
                         sx={{ color: "text.primary" }}
                         className={classes.text}
-                        to="#pichart"
+                        to="/#pichart"
                         smooth
                       >
                         <Typography>CHART</Typography>
@@ -129,7 +128,7 @@ const Navigation = () => {
                       <HashLink
                         sx={{ color: "text.primary" }}
                         className={classes.text}
-                        to="#trendchart"
+                        to="/#trendchart"
                         smooth
                       >
                         <Typography>DURATION</Typography>
@@ -137,7 +136,7 @@ const Navigation = () => {
                       <HashLink
                         sx={{ color: "text.primary" }}
                         className={classes.text}
-                        to="#gridtable"
+                        to="/#gridtable"
                         smooth
                       >
                         <Typography>GRID</Typography>

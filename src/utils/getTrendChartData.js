@@ -10,7 +10,7 @@ export const getTrendChartData = (data) => {
   let stepNumber = 1;
 
   data?.forEach((feature) => {
-    const featureName = `Feature: ${feature.name}`;
+    const featureName = feature.name;
     let featureStatus = "passed"; // default status is passed
     let featureDuration = 0;
     feature?.elements?.forEach((scenario) => {
