@@ -5,11 +5,11 @@ export const getTrendChartData = (data) => {
   let features = [];
   let steps = [];
 
-  let featureNumber = 1;
-  let scenarioNumber = 1;
+  // let featureNumber = 1;
+  // let scenarioNumber = 1;
   let stepNumber = 1;
 
-  data?.forEach((feature) => {
+  data?.forEach((feature, index) => {
     const featureName = feature.name;
     let featureStatus = "passed"; // default status is passed
     let featureDuration = 0;
@@ -23,6 +23,7 @@ export const getTrendChartData = (data) => {
         }
         scenarioDuration += step?.result?.duration || 0; // add duration to scenario duration
         steps.push({
+          id: index + 1,
           name: `Step ${stepNumber++}`,
           duration: NanosecondsConverter(step?.result?.duration || 0)
             .totalSeconds, // keep duration in original format (microseconds)
@@ -33,6 +34,7 @@ export const getTrendChartData = (data) => {
       });
       featureDuration += scenarioDuration;
       scenarios.push({
+        id: index + 1,
         name: scenarioName,
         duration: NanosecondsConverter(scenarioDuration).totalSeconds, // keep duration in original format (microseconds)
         featureName,
@@ -43,14 +45,15 @@ export const getTrendChartData = (data) => {
       }
     });
     features.push({
+      id: index + 1,
       name: featureName,
       duration: NanosecondsConverter(featureDuration).totalSeconds, // keep duration in original format (microseconds)
       status: featureStatus,
     });
   });
-  return {
-    features,
-    scenarios,
-    steps,
-  };
+  return [
+    { title: "Features", data: features },
+    { title: "Scenarios", data: scenarios },
+    { title: "Steps", data: steps },
+  ];
 };

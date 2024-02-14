@@ -9,7 +9,14 @@ import TrendChart from "../components/TrendChart";
 import useReportData from "../hooks/useReportData";
 import { tabProps } from "../utils/tabProps";
 import { getTrendChartData } from "../utils/getTrendChartData";
-import { Typography } from "@mui/material";
+import {
+  Typography,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem,
+} from "@mui/material";
+import { CheckCircle } from "@mui/icons-material";
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -19,13 +26,51 @@ TabPanel.propTypes = {
 
 export default function DurationSummery() {
   const [value, setValue] = useState(0);
+  const [isToggled, setIsToggled] = useState(false);
+  const [durationData, setDurationData] = useState([]);
   const { data } = useReportData();
+  const [selectedChartData, setSelectedChartData] = useState([]);
+  const objectList = getTrendChartData(data)[0]?.data;
 
+  // Handle trend chart data selection
+  const handleChartDataSelection = (event) => {
+    const selectedValues = event.target.value;
+    if (selectedValues.find((item) => item == "select-all")) {
+      setIsToggled((prevState) => !prevState);
+      if (isToggled) {
+        setSelectedChartData(objectList);
+        setDurationData(getTrendChartData(data));
+      } else {
+        setSelectedChartData([]);
+        setDurationData([
+          { title: "Feature", data: [] },
+          { title: "Scenarios", data: [] },
+          { title: "Steps", data: [] },
+        ]);
+      }
+    } else {
+      const selectedObjects = objectList.filter((obj) =>
+        selectedValues.includes(obj.id)
+      );
+      setSelectedChartData(selectedObjects);
+      const selectedData = getTrendChartData(data).map((duration) => ({
+        ...duration,
+        data: duration.data.filter((item) => selectedValues.includes(item.id)),
+      }));
+      setDurationData(selectedData);
+    }
+  };
   // Tab Navigate...........
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const { scenarios, features, steps } = getTrendChartData(data);
+
+  React.useEffect(() => {
+    if (data) {
+      setDurationData(getTrendChartData(data));
+    }
+  }, [data]);
+
   return (
     <Box id="trendchart" pt="80px" sx={{ width: "100%" }}>
       <Typography mt={5} my={5} align="center" variant="h2">
@@ -50,16 +95,54 @@ export default function DurationSummery() {
           <Tab label="Scenarios" {...tabProps(1)} />
           <Tab label="Steps/Tests" {...tabProps(2)} />
         </Tabs>
+
+        <FormControl sx={{ width: 300, marginLeft: "30px" }}>
+          <Typography variant="formlabel">Select By Featues </Typography>
+          <Select
+            multiple
+            value={selectedChartData.map((obj) => obj.id)}
+            onChange={handleChartDataSelection}
+            renderValue={(selected) =>
+              selectedChartData.map((obj) => obj.name).join(", ")
+            }
+          >
+            <MenuItem key="select-all" value="select-all">
+              <CheckCircle
+                sx={{
+                  visibility:
+                    selectedChartData?.length === objectList?.length
+                      ? "visible"
+                      : "hidden",
+                  marginRight: "8px",
+                }}
+              />
+              All
+            </MenuItem>
+
+            {objectList?.map((obj) => (
+              <MenuItem key={obj.id} value={obj.id}>
+                <CheckCircle
+                  sx={{
+                    visibility: selectedChartData
+                      .map((obj) => obj.id)
+                      .includes(obj.id)
+                      ? "visible"
+                      : "hidden",
+                    marginRight: "8px",
+                  }}
+                />
+                {obj.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
-      <TabPanel value={value} index={0}>
-        <TrendChart data={features} title="Feature" />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <TrendChart data={scenarios} title="Scenarios" />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <TrendChart data={steps} title="Steps/Tests" steps />
-      </TabPanel>
+      {durationData &&
+        durationData?.map((duration, index) => (
+          <TabPanel value={value} index={index}>
+            <TrendChart {...duration} />
+          </TabPanel>
+        ))}
     </Box>
   );
 }

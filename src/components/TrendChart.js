@@ -8,7 +8,6 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -16,7 +15,7 @@ import {
 import DurationSummeryTooltip from "./DurationSummeryTooltip";
 import { getSecondsToDuration } from "../utils/nanosecondConverter";
 
-const TrendChart = ({ data: chartData, title, steps }) => {
+const TrendChart = ({ data: chartData, title }) => {
   const COLORS = {
     passed: "#00C49F",
     failed: "#FF0000",
@@ -25,13 +24,10 @@ const TrendChart = ({ data: chartData, title, steps }) => {
     undefined: "#B068F9",
   };
   const classes = useStyles();
-  // const [data, setData] = useState(chartData)
+
   const [duration, setDuration] = useState(chartData);
   const [sortOrder, setSortOrder] = useState("asc");
-  const [selectedType, setSelectedType] = useState({
-    name: "all",
-    data: chartData,
-  });
+
   const [durationTime, setDurationTime] = useState(1);
 
   useEffect(() => {
@@ -63,11 +59,11 @@ const TrendChart = ({ data: chartData, title, steps }) => {
       setDuration(newData);
     }
   };
-  const handleChange = (event) => {
-    // setData(event.target.value.data);
-    setDuration(event.target.value.data);
-    setSelectedType(event.target.value);
-  };
+  // const handleChange = (event) => {
+  // setData(event.target.value.data);
+  // setDuration(event.target.value.data);
+  // setSelectedType(event.target.value);
+  // };
   const handleSort = () => {
     // Duration Low To High
     const durationLowToHigh = [
@@ -89,19 +85,19 @@ const TrendChart = ({ data: chartData, title, steps }) => {
     }
   };
 
-  const featureData = {};
-  chartData.forEach((scenario) => {
-    if (!featureData[scenario.featureName]) {
-      featureData[scenario.featureName] = {
-        name: scenario.featureName,
-        data: [],
-      };
-    }
-    featureData[scenario.featureName].data.push(scenario);
-  });
+  // const featureData = {};
+  // chartData?.forEach((scenario) => {
+  //   if (!featureData[scenario.featureName]) {
+  //     featureData[scenario.featureName] = {
+  //       name: scenario.featureName,
+  //       data: [],
+  //     };
+  //   }
+  //   featureData[scenario.featureName].data.push(scenario);
+  // });
 
-  const allData = { name: "all", data: chartData };
-
+  // const allData = { name: "all", data: chartData };
+  if (!duration) return;
   return (
     <Box className={classes.root}>
       <Box className={classes.header}>
@@ -119,53 +115,7 @@ const TrendChart = ({ data: chartData, title, steps }) => {
               Sort {sortOrder === "asc" ? "Ascending" : "Descending"}
             </Button>
           </Box>
-          {!steps && (
-            <FormControl
-              sx={{ m: 1, minWidth: 120, border: "none" }}
-              size="small"
-            >
-              {" "}
-              {/* <InputLabel> */}
-              <Typography variant="formlabel">Features</Typography>
-              {/* </InputLabel> */}
-              {/* <InputLabel id="demo-simple-select-label">All</InputLabel> */}
-              <Select
-                value={selectedType}
-                onChange={handleChange}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                inputProps={{ "aria-label": "Without label" }}
-                renderValue={(selected) => {
-                  if (selected.name === "all") {
-                    return <em>All</em>;
-                  } else {
-                    return selected.name;
-                  }
-                }}
-              >
-                <MenuItem value={allData}>
-                  <em>All</em>
-                </MenuItem>
-                {title === "Scenarios"
-                  ? Object.values(featureData).map((item, index) => {
-                      const data = { name: item.name, data: item.data };
-                      return (
-                        <MenuItem key={index} value={data}>
-                          <em>{item.name}</em>
-                        </MenuItem>
-                      );
-                    })
-                  : chartData.map((item, index) => {
-                      const data = { name: item.name, data: [item] };
-                      return (
-                        <MenuItem key={index} value={data}>
-                          {item.name}
-                        </MenuItem>
-                      );
-                    })}
-              </Select>
-            </FormControl>
-          )}
+
           <FormControl
             sx={{ m: 1, minWidth: 200, border: "none" }}
             size="small"

@@ -28,7 +28,6 @@ const Comparison = () => {
       data: item,
     };
   });
-
   // Handle Drop Down................
   const handleChangeDropDown = (event) => {
     const selectedValues = event.target.value;
