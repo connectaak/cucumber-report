@@ -150,10 +150,10 @@ const TrendChart = ({ data: chartData, title }) => {
       </Box>
 
       <div className={classes.chartContainer}>
-        <div style={{ width: "100%", overflowX: "auto" }}>
+        <div style={{ width: "100%", overflowX: "auto", height: "100%" }}>
           <BarChart
             width={duration.length < 20 ? 1700 : duration.length * 70}
-            height={350}
+            height={360}
             data={duration}
             margin={{
               top: 5,
@@ -196,7 +196,7 @@ const useStyles = makeStyles((theme) => ({
     height: 400,
     // width: '100%',
     // height: "300px",
-    // overflowX: "auto",
+
     // marginTop: theme.spacing(2),
   },
   header: {
