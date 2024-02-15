@@ -1,8 +1,9 @@
 import DownloadIcon from "@mui/icons-material/Download";
 import { Box, Button, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+// import html2canvas from "html2canvas";
+// import jsPDF from "jspdf";
+import html2pdf from "html2pdf.js";
 import React, { Fragment, useRef, useState } from "react";
 import GridSummery from "../containers/GridSummery";
 import ReportMetrics from "../containers/ReportMetrics";
@@ -62,24 +63,50 @@ const Home = () => {
   };
 
   // Export  PDF ..................
+
   const handlePdfExport = () => {
-    html2canvas(ref.current, { scale: 2 }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("l", "mm", [
-        ref.current.offsetWidth,
-        ref.current.offsetHeight,
-      ]);
-      pdf.addImage(
-        imgData,
-        "PNG",
-        0,
-        0,
-        ref.current.offsetWidth,
-        ref.current.offsetHeight
-      );
-      pdf.save("website-screen.pdf");
-    });
+    const element = document.documentElement;
+
+    // Zoom out the content using CSS transformation
+    element.style.transform = "scale(0.8)"; // Adjust the scale factor as needed
+
+    const options = {
+      margin: 0.5, // Optional - set the margin
+      filename: "website-screen.pdf",
+      image: { type: "png", quality: 1 }, // Set the image quality to 1 (maximum quality)
+      html2canvas: { scale: 2 }, // Optional - adjust the html2canvas scale
+      jsPDF: {
+        unit: "pt",
+        format: "letter",
+        orientation: "landscape",
+        width: "wrap",
+      }, // Set the PDF width to 'wrap'
+    };
+
+    html2pdf().set(options).from(element).save();
+
+    // Reset the transformation after generating the PDF
+    element.style.transform = "none";
   };
+
+  // const handlePdfExport = () => {
+  //   html2canvas(ref.current, { scale: 2 }).then((canvas) => {
+  //     const imgData = canvas.toDataURL("image/png");
+  //     const pdf = new jsPDF("l", "mm", [
+  //       ref.current.offsetWidth,
+  //       ref.current.offsetHeight,
+  //     ]);
+  //     pdf.addImage(
+  //       imgData,
+  //       "PNG",
+  //       0,
+  //       0,
+  //       ref.current.offsetWidth,
+  //       ref.current.offsetHeight
+  //     );
+  //     pdf.save("website-screen.pdf");
+  //   });
+  // };
 
   return (
     <Fragment>
