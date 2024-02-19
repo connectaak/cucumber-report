@@ -10,12 +10,14 @@ import ReportMetrics from "../containers/ReportMetrics";
 import ChartSummery from "../containers/ChartSummery";
 import DurationSummery from "../containers/DurationSummery";
 import useReportData from "../hooks/useReportData";
+import GridCompareSection from "../containers/GridCompareSection";
 
 const features = [
   <ReportMetrics />,
   <ChartSummery />,
   <DurationSummery />,
   <GridSummery />,
+  <GridCompareSection />,
 ];
 
 const Home = () => {
