@@ -10,7 +10,7 @@ import { getReportCompareGrid } from "../utils/getReportCompareGrid";
 
 const GridCompareSection = () => {
   const [previousData, setPreviousData] = useState();
-  const { data } = useReportData();
+  const { data, customData } = useReportData();
   const [gridCompareData, setGridCompareData] = useState([]);
   const handleFileUpload = (event) => {
     event.preventDefault();
@@ -22,13 +22,13 @@ const GridCompareSection = () => {
         // Try to run this code
         const content = readerEvent.target.result;
         if (content) {
-          validateCucumberData(JSON.parse(content));
+          // validateCucumberData(JSON.parse(content));
           const cucumberJsonObject = JSON.parse(content);
           //   const cucuberReportObject = {
           //     data: cucumberJsonObject,
           //   };
           //   cucuberReportObject.reportName = file?.name?.split(".")[0];
-
+          console.log(cucumberJsonObject, "contetn");
           setPreviousData(cucumberJsonObject);
         }
       } catch (err) {
@@ -45,14 +45,33 @@ const GridCompareSection = () => {
       event.target.value = null;
     };
   };
+  const today = new Date();
+  // Get the current date components
+  const month = today.getMonth() + 1; // Month is zero-based, so add 1
+  const day = today.getDate();
+  const year = today.getFullYear();
+
+  // Format the date as a string in MM/DD/YYYY format
+  const formattedDate =
+    (month < 10 ? "0" : "") +
+    month +
+    "/" +
+    (day < 10 ? "0" : "") +
+    day +
+    "/" +
+    year;
   // Example usage:
   useEffect(() => {
-    if (data && previousData) {
-      const report = getReportCompareGrid(data, previousData);
+    if (customData && previousData) {
+      const compareJson = [
+        previousData,
+        { datetime: formattedDate, data: customData },
+      ];
+      const report = getReportCompareGrid(compareJson);
 
       setGridCompareData(report);
     }
-  }, [data, previousData]);
+  }, [customData, previousData]);
   const classes = useStyles();
   return (
     <Box sx={{ margin: "100px 0" }}>

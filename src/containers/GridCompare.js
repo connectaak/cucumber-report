@@ -64,82 +64,81 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-// Head Cells.........
-const headCells = [
-  {
-    id: "featureId",
-    numeric: false,
-    disablePadding: true,
-    label: "Id",
-  },
-  {
-    id: "featureName",
-    numeric: false,
-    disablePadding: true,
-    label: "Features",
-  },
-  {
-    id: "previousDuration",
-    numeric: true,
-    disablePadding: false,
-    label: "Previous Duration",
-  },
-  {
-    id: "newDuration",
-    numeric: true,
-    disablePadding: false,
-    label: "New Duration",
-  },
-];
+// const headCells = [
+//   {
+//     id: "featureId",
+//     numeric: false,
+//     disablePadding: true,
+//     label: "Id",
+//   },
+//   {
+//     id: "featureName",
+//     numeric: false,
+//     disablePadding: true,
+//     label: "Features",
+//   },
+//   {
+//     id: "previousDuration",
+//     numeric: true,
+//     disablePadding: false,
+//     label: "Previous Duration",
+//   },
+//   {
+//     id: "newDuration",
+//     numeric: true,
+//     disablePadding: false,
+//     label: "New Duration",
+//   },
+// ];
 
 // Table Head.........
-function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } = props;
-  const createSortHandler = (newOrderBy) => (event) => {
-    onRequestSort(event, newOrderBy);
-  };
-  const classes = useStyles();
-  return (
-    <TableHead>
-      <TableRow>
-        {headCells.map((headCell, index) => (
-          <TableCell
-            key={headCell.id}
-            align="center"
-            padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-            className={classes.border}
-            // colSpan={index==0&&"2"}
-            sx={{ bgcolor: COLORS["Header"] }}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-              // colSpan={headCell.id=="name"&&"2"}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
+// function EnhancedTableHead(props) {
+//   const { order, orderBy, onRequestSort } = props;
+//   const createSortHandler = (newOrderBy) => (event) => {
+//     onRequestSort(event, newOrderBy);
+//   };
+//   const classes = useStyles();
+//   return (
+//     <TableHead>
+//       <TableRow>
+//         {headCells.map((headCell, index) => (
+//           <TableCell
+//             key={headCell.id}
+//             align="center"
+//             padding={headCell.disablePadding ? "none" : "normal"}
+//             sortDirection={orderBy === headCell.id ? order : false}
+//             className={classes.border}
+//             // colSpan={index==0&&"2"}
+//             sx={{ bgcolor: COLORS["Header"] }}
+//           >
+//             <TableSortLabel
+//               active={orderBy === headCell.id}
+//               direction={orderBy === headCell.id ? order : "asc"}
+//               onClick={createSortHandler(headCell.id)}
+//               // colSpan={headCell.id=="name"&&"2"}
+//             >
+//               {headCell.label}
+//               {orderBy === headCell.id ? (
+//                 <Box component="span" sx={visuallyHidden}>
+//                   {order === "desc" ? "sorted descending" : "sorted ascending"}
+//                 </Box>
+//               ) : null}
+//             </TableSortLabel>
+//           </TableCell>
+//         ))}
+//       </TableRow>
+//     </TableHead>
+//   );
+// }
 
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
-};
+// EnhancedTableHead.propTypes = {
+//   numSelected: PropTypes.number.isRequired,
+//   onRequestSort: PropTypes.func.isRequired,
+//   onSelectAllClick: PropTypes.func.isRequired,
+//   order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+//   orderBy: PropTypes.string.isRequired,
+//   rowCount: PropTypes.number.isRequired,
+// };
 
 export default function GridSCompare({ gridCompareData }) {
   const [order, setOrder] = React.useState(DEFAULT_ORDER);
@@ -324,6 +323,9 @@ export default function GridSCompare({ gridCompareData }) {
   //   "status",
   // ]);
 
+  // Head Cells.........
+
+  const headCells = gridCompareData[0] ? Object.keys(gridCompareData[0]) : null;
   return (
     <Box id="gridcompare" sx={{ margin: "20px" }}>
       <Typography mt={5} my={5} align="center" variant="h2">
@@ -337,75 +339,33 @@ export default function GridSCompare({ gridCompareData }) {
           boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.3)",
         }}
       >
-        {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
-        {/* <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "10px",
-          }}
-        >
-          <CSVLink data={csvFile}>
-            <DownloadForOfflineIcon sx={{ color: "#0476B5" }} />
-          </CSVLink>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 5 }}>
-            <Box>
-              <Typography display="block" variant="formlabel">
-                Search
-              </Typography>
-              <TextField
-                size="small"
-                id="outlined-basic"
-                onChange={(e) => setSearch(e.target.value)}
-                // label="Search"
-                variant="outlined"
-                type="search"
-                placeholder="Search by Feature name"
-              />
-            </Box>
-            <FormControl sx={{ minWidth: 200, border: "none" }} size="small">
-              <Typography variant="formlabel">Duration Time</Typography>
-              <Select
-                value={durationTime}
-                onChange={handleDurationTime}
-                labelId="demo-simple-select-label-1"
-                id="demo-simple-select"
-                inputProps={{ "aria-label": "Without label" }}
-              >
-                <MenuItem value={1}>
-                  <em>Second</em>
-                </MenuItem>
-                <MenuItem value={2}>
-                  <em>Minute</em>
-                </MenuItem>
-                <MenuItem value={3}>
-                  <em>Hour</em>
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </Box> */}
         <TableContainer>
           <Table
             sx={{ minWidth: 750, border: "1px solid gray" }}
             aria-labelledby="tableTitle"
             size="small"
           >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              // onRequestSort={handleRequestSort}
-              // rowCount={1}
-              // csvFile={csvFile}
-            />
+            <TableHead>
+              <TableRow>
+                {headCells?.map((headCell, index) => (
+                  <TableCell
+                    key={index}
+                    align="center"
+                    padding={headCell.disablePadding ? "none" : "normal"}
+                    sortDirection={orderBy === headCell.id ? order : false}
+                    className={classes.border}
+                    sx={{ bgcolor: COLORS["Header"] }}
+                  >
+                    <TableSortLabel>{headCell}</TableSortLabel>
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
             <TableBody>
               {gridCompareData
                 ? gridCompareData?.map((row, index) => {
                     const isItemSelected = isSelected(row.name);
-                    const labelId = `enhanced-table-checkbox-${index}`;
+                    // const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
                       <TableRow
@@ -418,36 +378,15 @@ export default function GridSCompare({ gridCompareData }) {
                         selected={isItemSelected}
                         sx={{ cursor: "pointer" }}
                       >
-                        <TableCell
-                          className={classes.border}
-                          component="th"
-                          id={labelId}
-                          scope="row"
-                          padding="none"
-                        >
-                          {" "}
-                          <Typography align="center">
-                            {row.featureId}
-                          </Typography>
-                        </TableCell>
-                        <TableCell
-                          className={classes.border}
-                          sx={{ paddingLeft: "10px" }}
-                        >
-                          {row.featureName}
-                        </TableCell>
-                        <TableCell className={classes.border} align="center">
-                          {row.previousDuration}
-                        </TableCell>
-                        <TableCell
-                          className={classes.border}
-                          sx={{
-                            bgcolor: !row.status == 0 ? COLORS[row.status] : "",
-                          }}
-                          align="center"
-                        >
-                          {row.newDuration}
-                        </TableCell>
+                        {headCells.map((cell, index) => (
+                          <TableCell
+                            key={index}
+                            className={classes.border}
+                            sx={{ paddingLeft: "10px" }}
+                          >
+                            {row[cell]}
+                          </TableCell>
+                        ))}
                       </TableRow>
                     );
                   })

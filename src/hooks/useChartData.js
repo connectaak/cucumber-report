@@ -12,6 +12,8 @@ const useChartData = () => {
   const getCustomData = (data) => {
     if (data.length > 0) {
       let output = [];
+
+      // nested data
       // data?.forEach((feature) => {
       //   let featureObj = {
       //     featureId: feature.id,
@@ -41,16 +43,21 @@ const useChartData = () => {
       //   });
       //   output.push(featureObj);
       // });
+
+      // flat Data
       ReportData.forEach((report, index) => {
         report.data.forEach((feature) => {
+          const featureOutput = {
+            featureId: feature.id,
+            featureName: feature.name,
+            featureDescription: feature.elements[0].description,
+            featureUri: feature.uri,
+            featureTags: feature.tags,
+            details: [],
+          };
           feature.elements.forEach((scenario) => {
             scenario.steps.forEach((step) => {
-              output.push({
-                featureId: feature.id,
-                featureName: feature.name,
-                featureDescription: feature.elements[0].description,
-                featureUri: feature.uri,
-                featureTags: feature.tags,
+              featureOutput.details.push({
                 scenarioId: scenario.id,
                 scenarioName: scenario.name,
                 scenarioTags: scenario.tags,
@@ -63,6 +70,7 @@ const useChartData = () => {
               });
             });
           });
+          output.push(featureOutput);
         });
       });
 

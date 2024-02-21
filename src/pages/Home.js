@@ -11,7 +11,21 @@ import ChartSummery from "../containers/ChartSummery";
 import DurationSummery from "../containers/DurationSummery";
 import useReportData from "../hooks/useReportData";
 import GridCompareSection from "../containers/GridCompareSection";
+const today = new Date();
+// Get the current date components
+const month = today.getMonth() + 1; // Month is zero-based, so add 1
+const day = today.getDate();
+const year = today.getFullYear();
 
+// Format the date as a string in MM/DD/YYYY format
+const formattedDate =
+  (month < 10 ? "0" : "") +
+  month +
+  "/" +
+  (day < 10 ? "0" : "") +
+  day +
+  "/" +
+  year;
 const features = [
   <ReportMetrics />,
   <ChartSummery />,
@@ -27,6 +41,25 @@ const Home = () => {
   const [featuresItems, setfeaturesItems] = useState(features);
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
+
+  const exportJSON = () => {
+    const jsonString = JSON.stringify(
+      { datetime: formattedDate, data: customData },
+      null,
+      2
+    ); // Pretty print with indentation of 2 spaces
+
+    const blob = new Blob([jsonString], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `grid_json_${formattedDate}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
 
   console.log(customData, "customData");
   //const handle drag sorting.................
@@ -125,6 +158,7 @@ const Home = () => {
             >
               PDF
             </Button>
+            <button onClick={exportJSON}>Export JSON</button>
           </div>
           <div ref={ref}>
             {featuresItems.map((EventComp, index) => {
