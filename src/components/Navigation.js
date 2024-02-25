@@ -106,7 +106,13 @@ const Navigation = () => {
                   !location.pathname.includes("details") && (
                     <Scrollspy
                       className={classes.spyContainer}
-                      items={["counter", "pichart", "trendchart", "gridtable"]}
+                      items={[
+                        "counter",
+                        "pichart",
+                        "trendchart",
+                        "gridtable",
+                        "gridcompare",
+                      ]}
                       currentClassName={classes.current}
                     >
                       <HashLink
@@ -140,6 +146,14 @@ const Navigation = () => {
                         smooth
                       >
                         <Typography>GRID</Typography>
+                      </HashLink>
+                      <HashLink
+                        sx={{ color: "text.primary" }}
+                        className={classes.text}
+                        to="/#gridcompare"
+                        smooth
+                      >
+                        <Typography>GRID COMPARE</Typography>
                       </HashLink>
                     </Scrollspy>
                   )}
