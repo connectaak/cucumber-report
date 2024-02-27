@@ -329,7 +329,7 @@ export default function GridSCompare({ gridCompareData }) {
   return (
     <Box id="gridcompare" sx={{ margin: "20px" }}>
       <Typography mt={5} my={5} align="center" variant="h2">
-        GRID COMPARE
+        GRID DURATION COMPARE
       </Typography>
 
       <Paper

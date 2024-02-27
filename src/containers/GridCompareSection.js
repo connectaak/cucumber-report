@@ -39,8 +39,6 @@ const GridCompareSection = () => {
         const content = readerEvent.target.result;
         if (content) {
           const cucumberJsonObject = JSON.parse(content);
-
-          console.log(cucumberJsonObject, "contetn");
           setPreviousData([...previousData, cucumberJsonObject]);
         }
       } catch (err) {
