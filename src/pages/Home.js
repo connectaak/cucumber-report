@@ -11,6 +11,7 @@ import ChartSummery from "../containers/ChartSummery";
 import DurationSummery from "../containers/DurationSummery";
 import useReportData from "../hooks/useReportData";
 import GridCompareSection from "../containers/GridCompareSection";
+import { NanosecondsConverter } from "../utils/nanosecondConverter";
 const today = new Date();
 // Get the current date components
 const month = today.getMonth() + 1; // Month is zero-based, so add 1
@@ -41,7 +42,7 @@ const Home = () => {
   const [featuresItems, setfeaturesItems] = useState(features);
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
-
+  console.log(NanosecondsConverter(15000000000).totalDuration);
   const exportJSON = () => {
     const jsonString = JSON.stringify(
       { datetime: formattedDate, data: customData },
