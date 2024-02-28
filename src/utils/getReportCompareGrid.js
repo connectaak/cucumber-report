@@ -11,10 +11,13 @@ export function getReportCompareGrid(data) {
     for (const rowData of entry.data) {
       const id = rowData.featureId;
       const name = rowData.featureName;
-      const duration = rowData.details.reduce(
-        (acc, curr) => acc + curr.stepResultDuration,
-        0
-      );
+      const duration =
+        rowData.details.length > 0
+          ? rowData.details.reduce((acc, curr) => {
+              const durationValue = parseFloat(curr.stepResultDuration);
+              return isNaN(durationValue) ? acc : acc + durationValue;
+            }, 0)
+          : 0;
       let row = formattedRows.find((item) => item.id === id);
 
       // If the row for the ID does not exist, create it
