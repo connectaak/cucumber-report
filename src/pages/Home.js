@@ -17,7 +17,10 @@ const today = new Date();
 const month = today.getMonth() + 1; // Month is zero-based, so add 1
 const day = today.getDate();
 const year = today.getFullYear();
-
+// Get the current time components
+const hours = today.getHours();
+const minutes = today.getMinutes();
+const seconds = today.getSeconds();
 // Format the date as a string in MM/DD/YYYY format
 const formattedDate =
   (month < 10 ? "0" : "") +
@@ -27,6 +30,9 @@ const formattedDate =
   day +
   "/" +
   year;
+const formattedTime = `${hours < 10 ? "0" + hours : hours}:${
+  minutes < 10 ? "0" + minutes : minutes
+}:${seconds < 10 ? "0" + seconds : seconds}`;
 const features = [
   <ReportMetrics />,
   <ChartSummery />,
@@ -42,10 +48,10 @@ const Home = () => {
   const [featuresItems, setfeaturesItems] = useState(features);
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
-  console.log(NanosecondsConverter(15000000000).totalDuration);
+
   const exportJSON = () => {
     const jsonString = JSON.stringify(
-      { datetime: formattedDate, data: customData },
+      { datetime: formattedDate + "-" + formattedTime, data: customData },
       null,
       2
     ); // Pretty print with indentation of 2 spaces

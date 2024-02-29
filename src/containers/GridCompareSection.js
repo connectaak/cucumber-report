@@ -14,7 +14,10 @@ const GridCompareSection = () => {
   const month = today.getMonth() + 1; // Month is zero-based, so add 1
   const day = today.getDate();
   const year = today.getFullYear();
-
+  // Get the current time components
+  const hours = today.getHours();
+  const minutes = today.getMinutes();
+  const seconds = today.getSeconds();
   // Format the date as a string in MM/DD/YYYY format
   const formattedDate =
     (month < 10 ? "0" : "") +
@@ -24,40 +27,85 @@ const GridCompareSection = () => {
     day +
     "/" +
     year;
+
+  const formattedTime = `${hours < 10 ? "0" + hours : hours}:${
+    minutes < 10 ? "0" + minutes : minutes
+  }:${seconds < 10 ? "0" + seconds : seconds}`;
+
   const { data, customData } = useReportData();
   const [previousData, setPreviousData] = useState([]);
   const [gridCompareData, setGridCompareData] = useState([]);
 
+  // const handleFileUpload = (event) => {
+  //   event.preventDefault();
+  //   const file = event.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.readAsText(file);
+  //   reader.onload = async (readerEvent) => {
+  //     try {
+  //       // Try to run this code
+  //       const content = readerEvent.target.result;
+  //       if (content) {
+  //         const cucumberJsonObject = JSON.parse(content);
+  //         setPreviousData([...previousData, cucumberJsonObject]);
+  //       }
+  //     } catch (err) {
+  //       // if any error, Code throws the error
+
+  //       swal({
+  //         title: "Oops",
+  //         text: "Please upload a cucumber json file",
+  //         icon: "warning",
+  //         button: "ok",
+  //       });
+  //     }
+
+  //     event.target.value = null;
+  //   };
+  // };
+
   const handleFileUpload = (event) => {
     event.preventDefault();
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsText(file);
-    reader.onload = async (readerEvent) => {
-      try {
-        // Try to run this code
-        const content = readerEvent.target.result;
-        if (content) {
-          const cucumberJsonObject = JSON.parse(content);
-          setPreviousData([...previousData, cucumberJsonObject]);
+    // Access all selected files
+    const files = event.target.files;
+
+    // Iterate over all files
+    Array.from(files).forEach((file) => {
+      const reader = new FileReader();
+      reader.readAsText(file);
+
+      reader.onload = async (readerEvent) => {
+        try {
+          // Try to run this code
+          const content = readerEvent.target.result;
+          if (content) {
+            const cucumberJsonObject = JSON.parse(content);
+            // Assuming setPreviousData is a state updater function, you might need to adjust this
+            // to correctly handle multiple updates in a row.
+            setPreviousData((prevData) => [...prevData, cucumberJsonObject]);
+          }
+        } catch (err) {
+          // if any error occurs, show the error
+          swal({
+            title: "Oops",
+            text: "Please upload a valid cucumber JSON file",
+            icon: "warning",
+            button: "ok",
+          });
         }
-      } catch (err) {
-        // if any error, Code throws the error
+      };
 
-        swal({
-          title: "Oops",
-          text: "Please upload a cucumber json file",
-          icon: "warning",
-          button: "ok",
-        });
-      }
-
+      // This will clear the input after the files have been processed
+      // so the same files can be uploaded again if needed
       event.target.value = null;
-    };
+    });
   };
 
   useEffect(() => {
-    const customDataJson = { datetime: formattedDate, data: customData };
+    const customDataJson = {
+      datetime: formattedDate + "-" + formattedTime,
+      data: customData,
+    };
     setPreviousData([customDataJson]);
   }, [customData]);
   // Example usage:
@@ -76,6 +124,7 @@ const GridCompareSection = () => {
           id="file_1"
           name="file"
           accept=".json"
+          multiple
           style={{ display: "none" }}
           onChange={(event) => {
             handleFileUpload(event);

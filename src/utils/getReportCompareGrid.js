@@ -7,6 +7,7 @@ export function getReportCompareGrid(data) {
 
   // Iterate over each datetime entry
   for (const entry of data) {
+    let counter = 1;
     // Iterate over each data entry within the datetime
     for (const rowData of entry.data) {
       const id = rowData.featureId;
@@ -24,13 +25,14 @@ export function getReportCompareGrid(data) {
       if (!row) {
         row = {
           id: id,
-          name: name,
+          Id: counter++,
+          Feature_Name: name,
         };
         formattedRows.push(row);
       }
 
       // Assign the value for the current date
-      row[`date-${entry.datetime}`] =
+      row[`datetime-${entry.datetime}`] =
         NanosecondsConverter(duration).totalDuration;
     }
   }
