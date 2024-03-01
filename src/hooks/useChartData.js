@@ -48,6 +48,8 @@ const useChartData = () => {
       ReportData.forEach((report, index) => {
         report.data.forEach((feature) => {
           const featureOutput = {
+            reportId: index + 1,
+            reportName: report.reportName,
             featureId: feature.id,
             featureName: feature.name,
             featureDescription: feature.elements[0].description,
@@ -65,8 +67,6 @@ const useChartData = () => {
                 stepResultStatus: step.result.status,
                 stepResultDuration: step.result.duration,
                 stepTags: step.tags,
-                reportId: index + 1,
-                reportName: report.reportName,
               });
             });
           });

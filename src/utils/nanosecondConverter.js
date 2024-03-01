@@ -1,31 +1,24 @@
-// const dateFns = require("date-fns");
-export const NanosecondsConverter = (milliseconds) => {
-  milliseconds = milliseconds / 1000000;
-  const hours = Math.floor(milliseconds / (1000 * 60 * 60));
-  const minutes = Math.floor((milliseconds % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((milliseconds % (1000 * 60)) / 1000);
+import { format, addSeconds } from "date-fns";
 
-  const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-  // // Use differenceInHours
-  // const hoursDifference = dateFns.differenceInHours(
-  //   new Date(0),
-  //   new Date(0).setHours(hours, minutes, seconds)
-  // );
+export const NanosecondsConverter = (nanoseconds) => {
+  // Convert nanoseconds to milliseconds
+  const milliseconds = nanoseconds / 1000000;
 
-  // // Format the result
-  // const formattedResult = dateFns.format(
-  //   new Date(0).setHours(hoursDifference),
-  //   "HH:mm:ss"
-  // );
+  // Calculate total seconds
+  const totalSeconds = milliseconds / 1000;
 
-  // Format the result
-  // const formattedResult = format(
-  //   new Date(0).setHours(hours, minutes, seconds),
-  //   "HH:mm:ss"
-  // );
+  // Calculate hours, minutes, and seconds
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = Math.floor(totalSeconds % 60);
+
+  // Format the components to always have two digits
+  const formattedHours = hours.toString().padStart(2, "0");
+  const formattedMinutes = minutes.toString().padStart(2, "0");
+  const formattedSeconds = seconds.toString().padStart(2, "0");
 
   return {
-    totalDuration: `${hours}:${minutes}:${seconds}`,
+    totalDuration: `${formattedHours}:${formattedMinutes}:${formattedSeconds}`,
     totalSeconds,
   };
 };

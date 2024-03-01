@@ -152,7 +152,7 @@ export default function GridSCompare({ gridCompareData }) {
   // const [durationTime, setDurationTime] = React.useState(1);
   // const [search, setSearch] = React.useState("");
   const [rows, setRows] = React.useState([]);
-  const [counterData, setCounterData] = React.useState([]);
+
   // React.useEffect(() => {
   //   // const { gridData, counterData: cdata } = cucumberCustomObject(data);
   //   setRows(GridSCompare);
@@ -347,7 +347,7 @@ export default function GridSCompare({ gridCompareData }) {
           >
             <TableHead>
               <TableRow>
-                {headCells?.map((headCell, index) => (
+                {headCells?.slice(1)?.map((headCell, index) => (
                   <TableCell
                     key={index}
                     align="center"
@@ -378,7 +378,7 @@ export default function GridSCompare({ gridCompareData }) {
                         selected={isItemSelected}
                         sx={{ cursor: "pointer" }}
                       >
-                        {headCells.map((cell, index) => (
+                        {headCells?.slice(1)?.map((cell, index) => (
                           <TableCell
                             key={index}
                             className={classes.border}
