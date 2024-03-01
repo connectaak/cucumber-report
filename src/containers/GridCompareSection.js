@@ -7,31 +7,9 @@ import UploadFileRoundedIcon from "@mui/icons-material/UploadFileRounded";
 import { makeStyles } from "@mui/styles";
 import useReportData from "../hooks/useReportData";
 import { getReportCompareGrid } from "../utils/getReportCompareGrid";
+import { getCurrentDateAndTime } from "../utils/getCurrentDateAndTime";
 
 const GridCompareSection = () => {
-  const today = new Date();
-  // Get the current date components
-  const month = today.getMonth() + 1; // Month is zero-based, so add 1
-  const day = today.getDate();
-  const year = today.getFullYear();
-  // Get the current time components
-  const hours = today.getHours();
-  const minutes = today.getMinutes();
-  const seconds = today.getSeconds();
-  // Format the date as a string in MM/DD/YYYY format
-  const formattedDate =
-    (month < 10 ? "0" : "") +
-    month +
-    "/" +
-    (day < 10 ? "0" : "") +
-    day +
-    "/" +
-    year;
-
-  const formattedTime = `${hours < 10 ? "0" + hours : hours}:${
-    minutes < 10 ? "0" + minutes : minutes
-  }:${seconds < 10 ? "0" + seconds : seconds}`;
-
   const { data, customData } = useReportData();
   const [previousData, setPreviousData] = useState([]);
   const [gridCompareData, setGridCompareData] = useState([]);
@@ -103,7 +81,7 @@ const GridCompareSection = () => {
 
   useEffect(() => {
     const customDataJson = {
-      datetime: formattedDate + "-" + formattedTime,
+      datetime: getCurrentDateAndTime(),
       data: customData,
     };
     setPreviousData([customDataJson]);

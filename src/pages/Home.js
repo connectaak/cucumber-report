@@ -12,27 +12,8 @@ import DurationSummery from "../containers/DurationSummery";
 import useReportData from "../hooks/useReportData";
 import GridCompareSection from "../containers/GridCompareSection";
 import { NanosecondsConverter } from "../utils/nanosecondConverter";
-const today = new Date();
-// Get the current date components
-const month = today.getMonth() + 1; // Month is zero-based, so add 1
-const day = today.getDate();
-const year = today.getFullYear();
-// Get the current time components
-const hours = today.getHours();
-const minutes = today.getMinutes();
-const seconds = today.getSeconds();
-// Format the date as a string in MM/DD/YYYY format
-const formattedDate =
-  (month < 10 ? "0" : "") +
-  month +
-  "/" +
-  (day < 10 ? "0" : "") +
-  day +
-  "/" +
-  year;
-const formattedTime = `${hours < 10 ? "0" + hours : hours}:${
-  minutes < 10 ? "0" + minutes : minutes
-}:${seconds < 10 ? "0" + seconds : seconds}`;
+import { getCurrentDateAndTime } from "../utils/getCurrentDateAndTime";
+
 const features = [
   <ReportMetrics />,
   <ChartSummery />,
@@ -48,10 +29,12 @@ const Home = () => {
   const [featuresItems, setfeaturesItems] = useState(features);
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
+  const currentDateTime = getCurrentDateAndTime();
 
+  console.log(customData, "customedate");
   const exportJSON = () => {
     const jsonString = JSON.stringify(
-      { datetime: formattedDate + "-" + formattedTime, data: customData },
+      { datetime: currentDateTime, data: customData },
       null,
       2
     ); // Pretty print with indentation of 2 spaces
@@ -61,7 +44,7 @@ const Home = () => {
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = `grid_json_${formattedDate}.json`;
+    a.download = `${customData[0].reportName}_grid_json_${currentDateTime}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
