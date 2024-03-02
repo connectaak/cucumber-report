@@ -126,6 +126,7 @@ const GridCompareSection = () => {
           </Typography>
         </Paper> */}
       </div>
+
       {previousData && data && (
         <GridSCompare gridCompareData={gridCompareData} />
       )}

@@ -33,7 +33,7 @@ export function getReportCompareGrid(data) {
       }
 
       // Assign the value for the current date
-      row[`${reportName}-${entry.datetime}`] =
+      row[`${reportName}-${entry.datetime}-duration`] =
         NanosecondsConverter(duration).totalDuration;
     }
   }
