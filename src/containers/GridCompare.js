@@ -378,15 +378,32 @@ export default function GridSCompare({ gridCompareData }) {
                         selected={isItemSelected}
                         sx={{ cursor: "pointer" }}
                       >
-                        {headCells?.slice(1)?.map((cell, index) => (
-                          <TableCell
-                            key={index}
-                            className={classes.border}
-                            sx={{ paddingLeft: "10px" }}
-                          >
-                            {row[cell]}
-                          </TableCell>
-                        ))}
+                        {headCells?.slice(1)?.map((cell, index, array) => {
+                          const currentValue = row[cell];
+                          const previousValue =
+                            index > 0 ? row[array[index - 1]] : null;
+
+                          // Check if any of the values include "duration"
+
+                          return (
+                            <TableCell
+                              key={index}
+                              className={classes.border}
+                              sx={{
+                                paddingLeft: "10px",
+                                bgcolor:
+                                  index === 0 || index === 1 || index == 2
+                                    ? "#ffffff"
+                                    : previousValue > currentValue
+                                    ? COLORS["Passed"]
+                                    : previousValue < currentValue &&
+                                      COLORS["Failed"],
+                              }}
+                            >
+                              {currentValue}
+                            </TableCell>
+                          );
+                        })}
                       </TableRow>
                     );
                   })

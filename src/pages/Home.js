@@ -11,7 +11,6 @@ import ChartSummery from "../containers/ChartSummery";
 import DurationSummery from "../containers/DurationSummery";
 import useReportData from "../hooks/useReportData";
 import GridCompareSection from "../containers/GridCompareSection";
-import { NanosecondsConverter } from "../utils/nanosecondConverter";
 import { getCurrentDateAndTime } from "../utils/getCurrentDateAndTime";
 
 const features = [

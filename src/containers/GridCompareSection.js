@@ -90,6 +90,8 @@ const GridCompareSection = () => {
   useEffect(() => {
     if (previousData.length > 1) {
       const report = getReportCompareGrid(previousData);
+      console.log("report", report);
+      console.log("previousData", previousData);
       setGridCompareData(report);
     }
   }, [customData, previousData]);
@@ -126,6 +128,7 @@ const GridCompareSection = () => {
           </Typography>
         </Paper> */}
       </div>
+
       {previousData && data && (
         <GridSCompare gridCompareData={gridCompareData} />
       )}
