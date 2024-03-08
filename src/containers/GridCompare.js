@@ -325,7 +325,15 @@ export default function GridSCompare({ gridCompareData }) {
 
   // Head Cells.........
 
-  const headCells = gridCompareData[0] ? Object.keys(gridCompareData[0]) : null;
+  const uniqueKeys = new Set();
+
+  gridCompareData.forEach((obj) => {
+    Object.keys(obj).forEach((key) => {
+      uniqueKeys.add(key);
+    });
+  });
+
+  const headCells = Array.from(uniqueKeys);
   return (
     <Box id="gridcompare" sx={{ margin: "20px" }}>
       <Typography mt={5} my={5} align="center" variant="h2">

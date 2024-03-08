@@ -8,11 +8,14 @@ import { makeStyles } from "@mui/styles";
 import useReportData from "../hooks/useReportData";
 import { getReportCompareGrid } from "../utils/getReportCompareGrid";
 import { getCurrentDateAndTime } from "../utils/getCurrentDateAndTime";
+import GridHeatmap from "./GridHeatmap";
+import { getGridHeatMapData } from "../utils/getGridHeatMapData";
 
 const GridCompareSection = () => {
   const { data, customData } = useReportData();
   const [previousData, setPreviousData] = useState([]);
   const [gridCompareData, setGridCompareData] = useState([]);
+  const [heatMapData, setHeatMapData] = useState([]);
 
   // const handleFileUpload = (event) => {
   //   event.preventDefault();
@@ -72,9 +75,6 @@ const GridCompareSection = () => {
           });
         }
       };
-
-      // This will clear the input after the files have been processed
-      // so the same files can be uploaded again if needed
       event.target.value = null;
     });
   };
@@ -89,10 +89,13 @@ const GridCompareSection = () => {
   // Example usage:
   useEffect(() => {
     if (previousData.length > 1) {
+      console.log(previousData);
       const report = getReportCompareGrid(previousData);
-      console.log("report", report);
-      console.log("previousData", previousData);
+      // const heatMapData = getGridHeatMapData(previousData);
+
+      console.log(JSON.stringify(report), "rekfk");
       setGridCompareData(report);
+      // setHeatMapData(heatMapData);
     }
   }, [customData, previousData]);
   const classes = useStyles();
@@ -128,10 +131,13 @@ const GridCompareSection = () => {
           </Typography>
         </Paper> */}
       </div>
-
       {previousData && data && (
         <GridSCompare gridCompareData={gridCompareData} />
       )}
+      {/* {previousData && heatMapData && (
+        <GridHeatmap gridCompareData={heatMapData} />
+      )}{" "} */}
+      {/* <GridHeatmap /> */}
     </Box>
   );
 };
