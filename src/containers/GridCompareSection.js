@@ -91,11 +91,11 @@ const GridCompareSection = () => {
     if (previousData.length > 1) {
       console.log(previousData);
       const report = getReportCompareGrid(previousData);
-      // const heatMapData = getGridHeatMapData(previousData);
+      const heatMapData = getGridHeatMapData(previousData);
 
       console.log(JSON.stringify(report), "rekfk");
       setGridCompareData(report);
-      // setHeatMapData(heatMapData);
+      setHeatMapData(heatMapData);
     }
   }, [customData, previousData]);
   const classes = useStyles();
@@ -134,9 +134,9 @@ const GridCompareSection = () => {
       {previousData && data && (
         <GridSCompare gridCompareData={gridCompareData} />
       )}
-      {/* {previousData && heatMapData && (
+      {previousData && heatMapData && (
         <GridHeatmap gridCompareData={heatMapData} />
-      )}{" "} */}
+      )}{" "}
       {/* <GridHeatmap /> */}
     </Box>
   );

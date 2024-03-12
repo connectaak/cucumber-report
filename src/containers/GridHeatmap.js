@@ -2,17 +2,25 @@ import React from "react";
 import { HeatMapGrid } from "react-grid-heatmap";
 
 const GridHeatmap = ({ gridCompareData }) => {
-  const xLabels = gridCompareData[0] ? Object.keys(gridCompareData[0]) : null;
-  console.log(gridCompareData, "hello");
-  const yLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
-  // const yLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
-  const data = new Array(yLabels.length)
-    .fill(0)
-    .map(() =>
-      new Array(xLabels?.length)
-        .fill(0)
-        .map(() => Math.floor(Math.random() * 5 + 5))
-    );
+  const uniqueKeys = new Set();
+
+  gridCompareData.forEach((obj) => {
+    Object.keys(obj).forEach((key) => {
+      uniqueKeys.add(key);
+    });
+  });
+  const xLabels = Array.from(uniqueKeys);
+
+  const result = [];
+
+  gridCompareData.forEach((obj) => {
+    const newRow = xLabels.slice(1).map((key) => {
+      return obj.hasOwnProperty(key) ? obj[key] : "";
+    });
+    result.push(newRow);
+  });
+
+  const data = result;
 
   return (
     <div
@@ -23,17 +31,18 @@ const GridHeatmap = ({ gridCompareData }) => {
     >
       <HeatMapGrid
         data={data}
-        xLabels={xLabels}
-        yLabels={yLabels}
+        xLabels={xLabels.slice(1)}
+        // yLabels={yLabels}
         // Reder cell with tooltip
-        cellRender={(x, y, value) => (
-          <div title={`Pos(${x}, ${y}) = ${value}`}>{value}</div>
-        )}
-        xLabelsStyle={(index) => ({
-          color: index % 2 ? "transparent" : "#777",
-          fontSize: ".65rem",
-          background: "blue",
-        })}
+        cellRender={(x, y, value) => {
+          console.log(x, y, value);
+          return <div title={`Pos(${x}, ${y}) = ${value}`}>{value}</div>;
+        }}
+        // xLabelsStyle={(index) => ({
+        //   color: index % 2 ? "transparent" : "#777",
+        //   fontSize: ".65rem",
+        //   // background: "blue",
+        // })}
         yLabelsStyle={() => ({
           fontSize: ".65rem",
           textTransform: "uppercase",
