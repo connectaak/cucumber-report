@@ -1,5 +1,16 @@
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import { HeatMapGrid } from "react-grid-heatmap";
+
+const COLORS = {
+  Passed: "#8fdc93",
+  Failed: "#f29191",
+  Skipped: "#83abf9",
+  Pending: "#f3f68b",
+  Undefined: "#f7b96f",
+  Total: "#d3d1d2",
+  Header: "#60cbf1",
+};
 
 const GridHeatmap = ({ gridCompareData }) => {
   const uniqueKeys = new Set();
@@ -29,20 +40,35 @@ const GridHeatmap = ({ gridCompareData }) => {
         fontFamily: "sans-serif",
       }}
     >
+      <Typography mt={5} my={5} align="center" variant="h2">
+        HEATMAP GRID COMPARE
+      </Typography>
+
       <HeatMapGrid
         data={data}
         xLabels={xLabels.slice(1)}
-        // yLabels={yLabels}
-        // Reder cell with tooltip
         cellRender={(x, y, value) => {
           console.log(x, y, value);
-          return <div title={`Pos(${x}, ${y}) = ${value}`}>{value}</div>;
+          return (
+            <Box
+              sx={{
+                paddingLeft: "10px",
+                // bgcolor:
+                //   index === 0 || index === 1 || index == 2
+                //     ? "#ffffff"
+                //     : previousValue > currentValue
+                //     ? COLORS["Passed"]
+                //     : previousValue < currentValue && COLORS["Failed"],
+              }}
+            >
+              {value}
+            </Box>
+          );
         }}
-        // xLabelsStyle={(index) => ({
-        //   color: index % 2 ? "transparent" : "#777",
-        //   fontSize: ".65rem",
-        //   // background: "blue",
-        // })}
+        xLabelsStyle={(index) => ({
+          fontSize: "14px",
+          // background: "blue",
+        })}
         yLabelsStyle={() => ({
           fontSize: ".65rem",
           textTransform: "uppercase",
@@ -50,8 +76,9 @@ const GridHeatmap = ({ gridCompareData }) => {
         })}
         cellStyle={(_x, _y, ratio) => ({
           background: `rgb(12, 160, 44, ${ratio})`,
-          fontSize: ".7rem",
+          fontSize: "16px",
           color: `rgb(0, 0, 0, ${ratio / 2 + 0.4})`,
+          margin: "10px",
         })}
         cellHeight="1.5rem"
         xLabelsPos="top"
