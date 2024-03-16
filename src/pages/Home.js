@@ -30,7 +30,6 @@ const Home = () => {
   const dragOverItem = useRef(null);
   const currentDateTime = getCurrentDateAndTime();
 
-  console.log(customData, "customedate");
   const exportJSON = () => {
     const jsonString = JSON.stringify(
       { datetime: currentDateTime, data: customData },

@@ -32,7 +32,7 @@ const GridHeatmap = ({ gridCompareData }) => {
   });
 
   const data = result;
-
+  console.log(gridCompareData, "gridCompareData");
   return (
     <div
       style={{
@@ -48,22 +48,12 @@ const GridHeatmap = ({ gridCompareData }) => {
         data={data}
         xLabels={xLabels.slice(1)}
         cellRender={(x, y, value) => {
-          console.log(x, y, value);
-          return (
-            <Box
-              sx={{
-                paddingLeft: "10px",
-                // bgcolor:
-                //   index === 0 || index === 1 || index == 2
-                //     ? "#ffffff"
-                //     : previousValue > currentValue
-                //     ? COLORS["Passed"]
-                //     : previousValue < currentValue && COLORS["Failed"],
-              }}
-            >
-              {value}
-            </Box>
-          );
+          const currentValue = value;
+          if (data && data[y] && x > 0) {
+            const previousValue = x > 0 ? data[y][x - 1] : null;
+            console.log(currentValue, previousValue, "pr b");
+          }
+          return <Box>{value}</Box>;
         }}
         xLabelsStyle={(index) => ({
           fontSize: "14px",
@@ -74,12 +64,47 @@ const GridHeatmap = ({ gridCompareData }) => {
           textTransform: "uppercase",
           color: "#777",
         })}
-        cellStyle={(_x, _y, ratio) => ({
-          background: `rgb(12, 160, 44, ${ratio})`,
-          fontSize: "16px",
-          color: `rgb(0, 0, 0, ${ratio / 2 + 0.4})`,
-          margin: "10px",
-        })}
+        // cellStyle={(_x, _y, ratio, value) => {
+        //   console.log(_x, _y, ratio, value);
+        //   return {
+        //     background: `rgb(12, 160, 44, ${ratio})`,
+        //     fontSize: "16px",
+        //     color: `rgb(0, 0, 0, ${ratio / 2 + 0.4})`,
+        //     margin: "10px",
+        //   };
+        // }}
+        cellStyle={(x, y, ratio, value) => {
+          // Initial settings
+          let cellBackground = "#ffffff"; // Default white background for cells
+          let textColor = `rgb(0, 0, 0, ${ratio / 2 + 0.4})`;
+
+          if (data && data[y] && x > 0) {
+            // Ensuring 'data[y]' exists and 'x > 0' to avoid '-1' index
+            const previousValue = data[y][x - 1];
+            // console.log(previousValue, "balue");
+            // Proceed with comparison only if previousValue is defined
+            if (previousValue !== undefined) {
+              if (value > previousValue) {
+                cellBackground = COLORS.Passed; // Value increase
+              } else if (value < previousValue) {
+                cellBackground = COLORS.Failed; // Value decrease
+              }
+              // Unchanged values or specific conditions can be handled here
+            }
+          }
+
+          // Customize for specific cell positions if necessary
+          if (x === 0 || x === 1 || x === 2) {
+            cellBackground = "#ffffff"; // Example: specific columns with unique background
+          }
+
+          return {
+            background: cellBackground,
+            fontSize: "16px",
+            color: textColor,
+            margin: "10px",
+          };
+        }}
         cellHeight="1.5rem"
         xLabelsPos="top"
         onClick={(x, y) => alert(`Clicked (${x}, ${y})`)}
