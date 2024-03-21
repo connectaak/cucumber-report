@@ -193,7 +193,7 @@ const useStyles = makeStyles({
     justifyContent: "end",
     position: "fixed",
     // top: '75px',
-    bottom: "80px",
+    bottom: "20px",
     left: "5px",
     width: "100%",
     margin: "10px 0",
