@@ -65,7 +65,7 @@ export function getReportCompareGrid(data) {
           : 0;
 
       // Unique key for each report's duration based on its name and the entry datetime
-      const durationKey = `${reportData.reportName}-${entry.datetime}-duration`;
+      const durationKey = `${reportData.reportName}_${entry.datetime}_duration`;
       row[durationKey] = NanosecondsConverter(duration).totalDuration;
     });
   });

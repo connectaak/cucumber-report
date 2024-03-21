@@ -10,6 +10,7 @@ import { getReportCompareGrid } from "../utils/getReportCompareGrid";
 import { getCurrentDateAndTime } from "../utils/getCurrentDateAndTime";
 import GridHeatmap from "./GridHeatmap";
 import { getGridHeatMapData } from "../utils/getGridHeatMapData";
+import TestHeatMap from "./TestHeatMap";
 
 const GridCompareSection = () => {
   const { data, customData } = useReportData();
@@ -89,13 +90,10 @@ const GridCompareSection = () => {
   // Example usage:
   useEffect(() => {
     if (previousData.length > 1) {
-      console.log(previousData);
       const report = getReportCompareGrid(previousData);
-      // const heatMapData = getGridHeatMapData(previousData);
-
-      console.log(JSON.stringify(report), "rekfk");
+      const heatMapData = getGridHeatMapData(previousData);
       setGridCompareData(report);
-      // setHeatMapData(heatMapData);
+      setHeatMapData(heatMapData);
     }
   }, [customData, previousData]);
   const classes = useStyles();
@@ -137,6 +135,9 @@ const GridCompareSection = () => {
       {/* {previousData && heatMapData && (
         <GridHeatmap gridCompareData={heatMapData} />
       )}{" "} */}
+      {previousData && heatMapData && (
+        <TestHeatMap gridCompareData={heatMapData} />
+      )}{" "}
       {/* <GridHeatmap /> */}
     </Box>
   );
