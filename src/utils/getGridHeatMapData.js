@@ -31,8 +31,8 @@ export function getGridHeatMapData(data) {
       }
 
       // Assign the value for the current date
-      row[`${reportName}-${entry.datetime}-duration`] =
-        NanosecondsConverter(duration).totalSeconds;
+      row[`${reportName}-${entry.datetime}-duration`] = duration;
+      // NanosecondsConverter(duration).totalSeconds;
     }
   }
   return formattedRows;

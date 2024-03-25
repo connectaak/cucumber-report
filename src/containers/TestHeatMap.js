@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { HeatMapGrid } from "react-grid-heatmap";
+import { NanosecondsConverter } from "../utils/nanosecondConverter";
 
 // const xLabels = new Array(24).fill(0).map((_, i) => `${i}`);
 
@@ -15,7 +16,7 @@ const TestHeatMap = ({ gridCompareData }) => {
   const xLabels = Array.from(uniqueKeys);
 
   const yLabels = gridCompareData.map((r) => {
-    return r.Feature_Name;
+    return r.Feature_Name.slice(0, 30);
   });
   yLabels.unshift("Report Name");
 
@@ -28,7 +29,7 @@ const TestHeatMap = ({ gridCompareData }) => {
     result.push(newRow);
   });
   const data = result;
-  const highestValue = Math.max(...data.flat());
+
   return (
     <div
       style={{
@@ -44,18 +45,20 @@ const TestHeatMap = ({ gridCompareData }) => {
           xLabels={xLabels.slice(3)}
           yLabels={yLabels}
           cellRender={(x, y, value) => (
-            <div title={`Pos(${x}, ${y}) = ${value}`}>{value}</div>
+            <div title={`Pos(${x}, ${y}) = ${value}`}>
+              {value && NanosecondsConverter(value).totalDuration}
+            </div>
           )}
           xLabelsStyle={(index) => ({
             fontSize: "14px",
             margin: "0 10px",
-            width: "250px",
+            width: "220px",
           })}
           yLabelsStyle={() => ({
             fontSize: "14px",
             textTransform: "uppercase",
             margin: "10px 0",
-            width: "250px",
+            width: "280px",
           })}
           cellStyle={(_x, _y, ratio) => {
             if (ratio === 1) {
