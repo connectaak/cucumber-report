@@ -51,35 +51,48 @@ const TestHeatMap = ({ gridCompareData }) => {
           )}
           xLabelsStyle={(index) => ({
             fontSize: "14px",
-            margin: "0 10px",
+            height: "50px",
+
+            border: "1px solid grey",
             width: "220px",
           })}
           yLabelsStyle={() => ({
-            fontSize: "14px",
+            fontSize: "16px",
             textTransform: "uppercase",
-            margin: "10px 0",
+            height: "50px",
+
             width: "280px",
+            border: "1px solid grey",
           })}
           cellStyle={(_x, _y, ratio) => {
             if (ratio === 1) {
               return {
                 background: "red",
                 fontSize: "16px",
-                margin: "10px",
+                height: "50px",
+
+                borderRadius: "0",
                 color: "white",
+                border: "1px solid grey",
               };
             } else if (ratio === 0) {
               return {
                 background: "white",
                 fontSize: "16px",
-                margin: "10px",
+                border: "1px solid grey",
+                height: "50px",
+                borderRadius: "0",
+
                 color: "black",
               };
             } else {
               return {
                 background: `rgb(12, 160, 44, ${1 - ratio})`,
                 fontSize: "16px",
-                margin: "10px",
+                border: "1px solid grey",
+                height: "50px",
+                borderRadius: "0",
+
                 color: `rgb(0, 0, 0, ${(1 - ratio) / 2 + 0.4})`,
               };
             }
@@ -88,6 +101,7 @@ const TestHeatMap = ({ gridCompareData }) => {
           xLabelsPos="top"
           onClick={(x, y) => alert(`Clicked (${x}, ${y})`)}
           yLabelsPos="left"
+
           // square
         />
       </div>
